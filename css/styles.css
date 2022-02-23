@@ -1,7 +1,75 @@
-.col1 {
-    background-color: red;
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+/*--------------------------------------------------------------
+# NAVBAR
+--------------------------------------------------------------*/
+.navbar {
+  /* position: fixed; */
+  z-index: 500;
+  transition: background-color 200ms linear;
+  background-color: #fff;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  max-height: 76px;
+  width: 100%;
 }
 
-.col2{
-    background-color: blue;
+.navbar-brand img {
+  height: 50px;
+}
+
+.navbar-brand span {
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  color: var(--main-blue);
+  padding-left: 1rem;
+}
+
+.nav-link,
+.nav-link :visited {
+  text-decoration: none;
+  color: var(--main-blue);
+}
+
+.nav-link.active {
+  font-weight: 700;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--main-yellow);
+}
+
+.navbar-toggler-icon > i {
+  color: #fff;
+}
+
+.admin-name:hover {
+  color: var(--main-blue);
+}
+
+/*--------------------------------------------------------------
+# MAIN
+--------------------------------------------------------------*/
+main {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/*--------------------------------------------------------------
+# INDEX
+--------------------------------------------------------------*/
+.landing .hero {
+  background-color: lavender;
+}
+
+.landing .hero img {
+  width: 100%;
+}
+
+/*--------------------------------------------------------------
+# FOOTER
+--------------------------------------------------------------*/
+footer {
+  background-color: darkslategray ;
+  color: #fff;
 }
