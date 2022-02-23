@@ -6,10 +6,10 @@ include('common/website_info.php');
 
 <!DOCTYPE html>
 <html lang="en">
-<?= head("Admin Dashboard"); ?>
+<?= head("Candidates List"); ?>
 
 <body>
-    <?= navbar("dashboard"); ?>
+    <?= navbar("candidates"); ?>
     <main></main>
     <?=footer()?>  
     <script src="js/bootstrap.bundle.js"></script>

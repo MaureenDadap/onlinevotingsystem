@@ -12,3 +12,4 @@ function Connect()
 
     return $conn;
 }
+?>

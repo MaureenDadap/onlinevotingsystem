@@ -1,10 +1,30 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+/*--------------------------------------------------------------
+# COMMON
+--------------------------------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+body{
+  min-height: 100vh;
+}
 
 /*--------------------------------------------------------------
 # NAVBAR
 --------------------------------------------------------------*/
 .navbar {
-  /* position: fixed; */
   z-index: 500;
   transition: background-color 200ms linear;
   background-color: #fff;
@@ -20,31 +40,26 @@
 .navbar-brand span {
   font-size: 1.5rem !important;
   font-weight: 700;
-  color: var(--main-blue);
+  color: black;
   padding-left: 1rem;
+}
+
+.nav-item {
+  margin-left: 1rem;
 }
 
 .nav-link,
 .nav-link :visited {
   text-decoration: none;
-  color: var(--main-blue);
+  color: black;
 }
 
 .nav-link.active {
   font-weight: 700;
 }
 
-.nav-link:focus,
-.nav-link:hover {
-  color: var(--main-yellow);
-}
-
 .navbar-toggler-icon > i {
-  color: #fff;
-}
-
-.admin-name:hover {
-  color: var(--main-blue);
+  color: black;
 }
 
 /*--------------------------------------------------------------
@@ -70,6 +85,6 @@ main {
 # FOOTER
 --------------------------------------------------------------*/
 footer {
-  background-color: darkslategray ;
+  background-color: rgb(57, 47, 79) ;
   color: #fff;
 }
