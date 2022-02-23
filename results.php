@@ -27,17 +27,20 @@ include('common/website_info.php');
     </header>
     <main class="results">
         <div class="container">
-            <div class="row text-center justify-content-center mb-5">
+            <div class="row text-center justify-content-center my-4">
                <?=resultsCandidate("President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
             </div>
-            <div class="row text-center justify-content-center mb-5">
+            <hr>
+            <div class="row text-center justify-content-center my-4">
                <?=resultsCandidate("Vice President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
             </div>
-            <div class="row text-center justify-content-center mb-5">
+            <hr>
+            <div class="row text-center justify-content-center my-4 gy-4">
                <?=resultsCandidate("Secretary", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
                <?=resultsCandidate("Treasurer", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
             </div>
-            <div class="row text-center justify-content-center mb-5">
+            <hr>
+            <div class="row text-center justify-content-center my-4 gy-4">
                <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
                <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
                <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>

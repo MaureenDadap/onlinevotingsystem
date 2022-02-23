@@ -13,7 +13,10 @@ include('common/website_info.php');
     <?= navbar("") ?>
     <main>
         <div class="container">
-            <h2 class="text-center">Welcome to <span><?= $website_name ?></span></h2>
+            <div class="text-center">
+                <h2>Welcome to <span><?= $website_name ?></span></h2>
+                <p>Cast your votes or manage students by logging in.</p>
+            </div>
             <div class="row mt-5 justify-content-center align-items-center">
                 <div class="col-md-6 col-lg-4">
                     <img src="images/sammy-logget-out.png" alt="art" class="w-100">
