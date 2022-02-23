@@ -14,13 +14,12 @@ include('common/website_info.php');
         <div class="container py-5">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md ">
-                    <h1 class="display-1"><?= $website_name ?></h1>
-                    <p class="lead">We are bringing the student council elections closer to you.
-                        <br>Smooth. Efficient. Secure.
-                    </p>
+                    <h1 class="">We bring the student council elections closer to you.</h1>
+                    <p class="lead">Available to you even in you own home.
+                    <br>Smooth. Efficient. Secure.</p>
                 </div>
                 <div class="col-md">
-                    <img src="images/undraw_voting_nvu7.svg" alt="">
+                    <img src="images/sammy-34.png" alt="hero image">
                 </div>
             </div>
         </div>
@@ -28,10 +27,11 @@ include('common/website_info.php');
     <main>
         <div class="container">
             <div class="row justify-content-center my-3 text-center">
-                <div class="col-8 shadow-md py-4">
-                    <h2>The student council election is ongoing</h2>
-                    <p>Open from February 15, 2022 - February 16, 2022</p>
-                    <a href="voting.php" class="btn btn-lg btn-primary">Go to voting form</a>
+                <div class="col-8 shadow-lg py-5">
+                    <h2>The student council election is <strong><span class="text-success">ongoing</span></strong></h2>
+                    <h5>Open from February 15, 2022 - February 16, 2022</h5>
+                    <a href="candidates-list.php" class="my-4 btn btn-lg btn-outline-secondary">View Candidates</a>
+                    <a href="voting.php" class="my-4 btn btn-lg btn-default">Vote Here</a>
                 </div>
             </div>
         </div>

@@ -14,12 +14,16 @@ include('common/website_info.php');
     <?= footer() ?>
     <script src="js/bootstrap.bundle.js"></script>
     <script>
-        window.addEventListener('beforeunload', function(e) {
-            // Cancel the event
-            e.preventDefault();
-            // Chrome requires returnValue to be set
-            e.returnValue = '';
-        });
+        window.onbeforeunload = function() {
+            return 'Are you sure? Your work will be lost. ';
+        };
+
+        // window.addEventListener('beforeunload', function(e) {
+        //     // Cancel the event
+        //     e.preventDefault();
+        //     // Chrome requires returnValue to be set
+        //     e.returnValue = '';
+        // });
     </script>
 </body>
 

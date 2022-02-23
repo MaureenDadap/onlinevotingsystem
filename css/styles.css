@@ -13,12 +13,31 @@ h6 {
   font-family: "Poppins", sans-serif;
 }
 
-h1 {
+h1,
+h2 {
   font-weight: 700;
 }
 
-body{
+body {
   min-height: 100vh;
+}
+
+.btn-default {
+  color: #fff;
+  background-color: #ff6947;
+  border-color: #ff6947;
+}
+.btn-default:hover {
+  color: #fff;
+  background-color: #d35134;
+  border-color: #d35134;
+}
+
+.btn-default:focus {
+  color: #fff;
+  background-color: #d35134;
+  border-color: #ff6947;
+  box-shadow: none;
 }
 
 /*--------------------------------------------------------------
@@ -34,28 +53,42 @@ body{
 }
 
 .navbar-brand img {
-  height: 50px;
+  height: 35px;
 }
 
 .navbar-brand span {
   font-size: 1.5rem !important;
   font-weight: 700;
-  color: black;
   padding-left: 1rem;
 }
 
+.navbar-brand,
+.navbar-brand:hover,
+.nav-link,
+.nav-link :visited {
+  color: #2e2a3b;
+}
+
 .nav-item {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 .nav-link,
 .nav-link :visited {
+  font-weight: 700;
   text-decoration: none;
-  color: black;
 }
 
+.nav-link:hover,
+.nav-link:active,
+.nav-link:focus,
 .nav-link.active {
-  font-weight: 700;
+  color: #21a0aa;
+}
+
+.dropdown-item.active,
+.dropdown-item.active {
+  background-color: #21a0aa;
 }
 
 .navbar-toggler-icon > i {
@@ -74,17 +107,49 @@ main {
 # INDEX
 --------------------------------------------------------------*/
 .landing .hero {
-  background-color: lavender;
+  background-color: #fdf2d6;
+  color: #280f1f;
 }
 
+/* .landing .hero h1 {
+  font-size: 3rem;
+} */
+
 .landing .hero img {
-  width: 100%;
+  width: 90%;
+}
+
+/*--------------------------------------------------------------
+# RESULTS
+--------------------------------------------------------------*/
+header.results {
+  background-color: #fdf2d6;
+  color: #280f1f;
+}
+
+.results h4 {
+  font-weight: 700;
+  color: #ff6947;
+  margin-bottom: 1rem;
+}
+
+.results h5 {
+  font-weight: 700;
+}
+
+.results .candidate-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
 }
 
 /*--------------------------------------------------------------
 # FOOTER
 --------------------------------------------------------------*/
 footer {
-  background-color: rgb(57, 47, 79) ;
+  /* background-color: rgb(57, 47, 79); */
+  background-color: #5b2448;
   color: #fff;
 }

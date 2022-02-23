@@ -74,7 +74,7 @@ function navbar($page)
         </ul>
          </li>
             <li class="nav-item">
-            <a href="login.php" class="btn btn-primary">Login</a>
+            <a href="login.php" class="btn btn-default">Login</a>
             </li>  
         </ul>';
   }
@@ -89,9 +89,20 @@ function footer()
   echo '<footer>
   <div class="container">
       <div class="row justify-content-center py-5 text-center">
-          <h4 class="display-3">' . $website_name . '</h4>
+          <h1>' . $website_name . '</h1>
           <p class="lead">We bring the elections closer to you.</p>
       </div>
   </div>
 </footer>';
+}
+
+function resultsCandidate($position, $name, $image, $section)
+{
+  echo '
+  <div class="col">
+  <h4>'.$position.'</h4>
+  <img class="candidate-img" alt="candidate" src="'.$image.'">
+  <h5>'.$name.'</h5>
+  <h6>'.$section.'</h6>
+</div>';
 }

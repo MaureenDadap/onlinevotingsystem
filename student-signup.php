@@ -41,7 +41,10 @@ if (isset($_POST['submit'])) {
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
-                <div class="col-lg-4">
+                <div class="col-md-6 col-lg-4">
+                    <img src="images/sammy-workflow.png" alt="art" class="w-100">
+                </div>
+                <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-header">Create Account</div>
                         <div class="card-body">
@@ -68,7 +71,7 @@ if (isset($_POST['submit'])) {
                                     <option value="2">BSIS</option>
                                     <option value="3">BMMA</option>
                                 </select>
-                                <button type="submit" name="submit" class="btn btn-lg btn-primary w-100">Sign Up</button>
+                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100">Sign Up</button>
                             </form>
                         </div>
                     </div>

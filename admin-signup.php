@@ -22,8 +22,6 @@ if (isset($_POST['submit'])) {
 
     $conn->close();
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +38,10 @@ if (isset($_POST['submit'])) {
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
-                <div class="col-lg-4">
+                <div class="col-md-6 col-lg-4">
+                    <img src="images/sammy-35.png" alt="art" class="w-100">
+                </div>
+                <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-header">Create Account</div>
                         <div class="card-body">
@@ -61,7 +62,7 @@ if (isset($_POST['submit'])) {
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
 
-                                <button type="submit" name="submit" class="btn btn-lg btn-primary w-100">Sign Up</button>
+                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100">Sign Up</button>
                             </form>
                         </div>
                     </div>
