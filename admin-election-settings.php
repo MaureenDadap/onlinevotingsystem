@@ -3,9 +3,12 @@ session_start();
 require_once('common/components.php');
 include('common/website_info.php');
 //hellolllo
+// hi
+// he
 ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
 <?= head("Admin Dashboard: Election Settings"); ?>
 
