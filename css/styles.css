@@ -40,6 +40,10 @@ body {
   box-shadow: none;
 }
 
+/* img.error {
+  height: 20rem;
+} */
+
 /*--------------------------------------------------------------
 # NAVBAR
 --------------------------------------------------------------*/
@@ -165,6 +169,23 @@ main.admin {
 }
 
 /*--------------------------------------------------------------
+# CANDIDATE CARD
+--------------------------------------------------------------*/
+.card.candidate h5 {
+  font-weight: 700;
+  color: #ff6947;
+}
+
+.candidate-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  align-self: center;
+}
+
+/*--------------------------------------------------------------
 # RESULTS
 --------------------------------------------------------------*/
 header.results {
@@ -180,14 +201,6 @@ header.results {
 
 .results h5 {
   font-weight: 700;
-}
-
-.results .candidate-img {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 1rem;
 }
 
 /*--------------------------------------------------------------
