@@ -2,6 +2,7 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
+// hello
 ?>
 
 <!DOCTYPE html>
