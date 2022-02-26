@@ -3,10 +3,6 @@ session_start();
 require_once('common/components.php');
 include('common/website_info.php');
 require_once('utils/register.php');
-
-if (isset($_POST['submit'])) {
-    studentSignUp();
-}
 ?>
 
 <!DOCTYPE html>
@@ -41,20 +37,31 @@ if (isset($_POST['submit'])) {
                                     <span class="input-group-text bi-person-fill"></span>
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
+                                <label for="program" class="form-label">Program</label>
+                                <select class="form-select mb-2" id="program" name="program" required>
+                                    <option value="BSCS">BSCS</option>
+                                    <option value="BSIT">BSIT</option>
+                                    <option value="BSIS">BSIS</option>
+                                    <option value="BSMMA">BSMMA</option>
+                                </select>
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
-                                <label for="program" class="form-label">Program</label>
-                                <select class="form-select mb-5" id="program" required>
-                                    <option selected>BSCS</option>
-                                    <option value="1">BSIT</option>
-                                    <option value="2">BSIS</option>
-                                    <option value="3">BMMA</option>
-                                </select>
-                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100">Sign Up</button>
+                                <label for="password2" class="form-label">Re-type your password</label>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text bi-lock-fill"></span>
+                                    <input type="password" class="form-control" id="password2" name="password2" required>
+                                </div>
+                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
+                                <?php
+                                if (isset($_POST['submit'])) {
+                                    studentSignUp();
+                                }
+                                ?>
                             </form>
+                            <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +69,7 @@ if (isset($_POST['submit'])) {
         </div>
     </main>
 
-    <?= footer() ?>
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

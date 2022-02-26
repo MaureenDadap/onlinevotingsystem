@@ -71,7 +71,7 @@ include('common/website_info.php');
         </main>
     <?php } ?>
 
-    <?= footer() ?>
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
     <script>
         window.onbeforeunload = function() {

@@ -48,7 +48,7 @@ include('common/website_info.php');
             </div>
         </div>
     </main>
-    <?= footer() ?>
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

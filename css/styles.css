@@ -4,6 +4,15 @@
 /*--------------------------------------------------------------
 # COMMON
 --------------------------------------------------------------*/
+
+body {
+  min-height: 100vh;
+  /* TODO: remove below code if it breaks pages */
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 h1,
 h2,
 h3,
@@ -18,13 +27,15 @@ h2 {
   font-weight: 700;
 }
 
-body {
-  min-height: 100vh;
-  /* TODO: remove below code if it breaks pages */
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between;
+a {
+  text-decoration: none;
+  color: #ff6947;
 }
+
+a:hover {
+  color: #d35134;
+}
+
 
 .btn-default {
   color: #fff;
@@ -44,9 +55,6 @@ body {
   box-shadow: none;
 }
 
-/* img.error {
-  height: 20rem;
-} */
 
 /*--------------------------------------------------------------
 # NAVBAR

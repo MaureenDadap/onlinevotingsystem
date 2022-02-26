@@ -8,14 +8,22 @@ function adminSignUp()
     $username = $conn->escape_string($_POST['username']);
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
-    $is_admin = 1;
-    $query = 'INSERT INTO users(username, email, password, is_admin) VALUES(?,?,?,?)';
+    $password2 = $conn->escape_string($_POST['password2']);
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('sssi', $username, $email, $password, $is_admin);
-    $stmt->execute();
-    $conn->close();
-    header('location: login.php');
+    if ($password != $password2)
+        echo '<div class="alert alert-danger" role="alert">
+        Pasword does not match.
+        </div>';
+    else {
+        $is_admin = 1;
+        $query = 'INSERT INTO users(username, email, password, is_admin) VALUES(?,?,?,?)';
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('sssi', $username, $email, $password, $is_admin);
+        $stmt->execute();
+        $conn->close();
+        header('location: login.php');
+    }
 }
 
 

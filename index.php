@@ -6,7 +6,7 @@ include('common/website_info.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 <?= head("Home"); ?>
 
 <body class="landing">
@@ -34,8 +34,7 @@ include('common/website_info.php');
             </div>
         </div>
     </div>
-    <?= footer() ?>
-
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

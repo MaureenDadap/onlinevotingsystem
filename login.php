@@ -32,18 +32,17 @@ include('common/website_info.php');
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
                                 <label for="password" class="form-label">Password</label>
-                                <div class="input-group mb-5">
+                                <div class="input-group mb-4">
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-4">Log In</button>
                                 <?php
                                 if (isset($_POST['submit'])) {
-                                    if (!empty($_POST['username']) && !empty($_POST['password'])) {
-                                        logIn();
-                                    }
+                                    logIn();
                                 } ?>
                             </form>
+                            <p class="text-center">Don't have an account? <br> <a href="student-signup.php">Register as Student</a> or <a href="admin-signup.php">Register as Admin</a></p>
                         </div>
                     </div>
                 </div>
@@ -51,7 +50,7 @@ include('common/website_info.php');
         </div>
     </main>
 
-    <?= footer() ?>
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 
