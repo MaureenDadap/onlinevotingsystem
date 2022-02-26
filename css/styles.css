@@ -118,8 +118,14 @@ main {
 /*--------------------------------------------------------------
 # ADMIN DASHBOARD
 --------------------------------------------------------------*/
+body.admin {
+  overflow-y: hidden;
+}
+
 main.admin {
-  min-height: 90vh;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .sidebar {
@@ -145,6 +151,17 @@ main.admin {
 .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #21a0aa;
+}
+
+@media (max-width: 992px) {
+  body.admin {
+    overflow-y: auto;
+    /* height: fit-content; */
+  }
+
+  main.admin {
+    overflow-y: hidden;
+  }
 }
 
 /*--------------------------------------------------------------

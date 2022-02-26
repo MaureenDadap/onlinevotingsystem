@@ -8,19 +8,59 @@ include('common/website_info.php');
 <html lang="en">
 <?= head("Admin Dashboard"); ?>
 
-<body>
+<body class="admin">
     <div class="row">
         <div class="col-lg-3">
-            <?=sidebar("dashboard")?>
+            <?= sidebar("dashboard") ?>
         </div>
         <div class="col-lg-9">
             <main class="admin">
-                <h1>Content Here</h1>
+                <div class="container">
+                    <h1>Admin Dashboard</h1>
+                    <hr>
+                    <div class="row my-4">
+                        <h5>Election Candidates</h5>
+                        <div class="col">
+                            <div class="card py-5 text-center">
+                                <h1>3</h1>
+                                <h6>Partylists</h6>
+                            </div>
+                        </div>
+                        <div class="col">
+                        <div class="card py-5 text-center">
+                                <h1>30</h1>
+                                <h6>Candidates</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-4">
+                        <h5>Election Voters</h5>
+                        <div class="col">
+                            <div class="card py-5 text-center">
+                                <h1>100</h1>
+                                <h6>Voters</h6>
+                            </div>
+                        </div>
+                        <div class="col">
+                        <div class="card py-5 text-center">
+                                <h1>67</h1>
+                                <h6>Votes</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-4">
+                        <h5>Election Details</h5>
+                        <div class="col">
+                            <div class="card py-5 text-center">
+                                <h1>February 16 - February 17</h1>
+                                <h6>Election Duration</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
-
-    <?= footer() ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

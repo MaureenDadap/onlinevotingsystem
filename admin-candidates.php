@@ -8,19 +8,19 @@ include('common/website_info.php');
 <html lang="en">
 <?= head("Admin Dashboard: Candidates"); ?>
 
-<body>
-    <div class="row">
+<body class="admin">
+    <div class="admin row">
         <div class="col-lg-3">
-            <?=sidebar("candidate")?>
+            <?= sidebar("candidate") ?>
         </div>
         <div class="col-lg-9">
             <main class="admin">
-                <h1>Content Here</h1>
+                <div class="container">
+                    <h1>Election Candidates</h1>
+                </div>
             </main>
         </div>
     </div>
-
-    <?= footer() ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 
