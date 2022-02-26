@@ -47,12 +47,12 @@ include('common/website_info.php');
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password2" name="password2" required>
                                 </div>
-                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                                 <?php
                                 if (isset($_POST['submit'])) {
                                     adminSignUp();
                                 }
                                 ?>
+                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                             </form>
                             <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>
                         </div>
@@ -62,7 +62,7 @@ include('common/website_info.php');
         </div>
     </main>
 
-    <?php include 'common/footer.php';?>
+    <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

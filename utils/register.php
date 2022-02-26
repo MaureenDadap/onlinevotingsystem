@@ -9,13 +9,13 @@ function adminSignUp()
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $password2 = $conn->escape_string($_POST['password2']);
+    $is_admin = 1;
 
     if ($password != $password2)
         echo '<div class="alert alert-danger" role="alert">
         Pasword does not match.
         </div>';
     else {
-        $is_admin = 1;
         $query = 'INSERT INTO users(username, email, password, is_admin) VALUES(?,?,?,?)';
 
         $stmt = $conn->prepare($query);
@@ -35,11 +35,19 @@ function studentSignUp()
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $program = $conn->escape_string($_POST['program']);
-    $query = 'INSERT INTO users(username, email, password, program) VALUES(?,?,?,?)';
+    $password2 = $conn->escape_string($_POST['password2']);
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('ssss', $username, $email, $password, $program);
-    $stmt->execute();
-    $conn->close();
-    header('location: login.php');
+    if ($password != $password2)
+        echo '<div class="alert alert-danger" role="alert">
+        Pasword does not match.
+        </div>';
+    else {
+        $query = 'INSERT INTO users(username, email, password, program) VALUES(?,?,?,?)';
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssss', $username, $email, $password, $program);
+        $stmt->execute();
+        $conn->close();
+        header('location: login.php');
+    }
 }
