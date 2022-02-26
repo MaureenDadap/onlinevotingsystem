@@ -51,10 +51,10 @@ function navbar($page)
 	        <ul class="navbar-nav ms-auto">
 	        <li class="nav-item"><a href="candidates-list.php" class="nav-link ';
       if ($page === "candidates") echo ' active';
-      echo '"><span class="bi-list"></span> Candidates</a></li>
+      echo '"><span class="bi-people-fill"></span> Candidates</a></li>
 	        <li class="nav-item"><a href="voting.php" class="nav-link ';
       if ($page === "voting") echo ' active';
-      echo '"><span class="bi-person-fill"></span> Voting Ballot 
+      echo '"><span class="bi-clipboard-check-fill"></span> Voting Ballot 
 	            </a></li>
               <li class="nav-item">
               <a href="utils/logout.php" class="btn btn-danger">Log out</a>
