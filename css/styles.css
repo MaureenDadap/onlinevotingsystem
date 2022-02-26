@@ -111,12 +111,40 @@ main {
   color: #280f1f;
 }
 
-/* .landing .hero h1 {
-  font-size: 3rem;
-} */
-
 .landing .hero img {
   width: 90%;
+}
+
+/*--------------------------------------------------------------
+# ADMIN DASHBOARD
+--------------------------------------------------------------*/
+main.admin {
+  min-height: 90vh;
+}
+
+.sidebar {
+  height: 100%;
+  z-index: 500;
+  background-color: #fff;
+  box-shadow: 3px 0px 5px 0px rgb(0 0 0 / 0.1), 3px 0px 5px 0px rgb(0 0 0 / 0.1);
+}
+
+.sidebar .brand span,
+.sidebar .brand span:hover {
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  color: #2e2a3b;
+}
+
+.sidebar .brand img {
+  height: 35px;
+  margin-right: 8px;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #21a0aa;
 }
 
 /*--------------------------------------------------------------

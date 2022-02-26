@@ -6,12 +6,12 @@ include('common/website_info.php');
 
 <!DOCTYPE html>
 <html lang="en">
-<?= head("Admin Dashboard"); ?>
+<?= head("Admin Dashboard: Partylists"); ?>
 
 <body>
     <div class="row">
         <div class="col-lg-3">
-            <?=sidebar("dashboard")?>
+            <?=sidebar("party")?>
         </div>
         <div class="col-lg-9">
             <main class="admin">
