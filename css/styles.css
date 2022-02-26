@@ -20,6 +20,10 @@ h2 {
 
 body {
   min-height: 100vh;
+  /* TODO: remove below code if it breaks pages */
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .btn-default {
