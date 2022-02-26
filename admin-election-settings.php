@@ -17,6 +17,7 @@ include('common/website_info.php');
             <main class="admin">
                 <div class="container">
                     <h1>Election Settings</h1>
+                    <hr>
                 </div>
             </main>
         </div>
