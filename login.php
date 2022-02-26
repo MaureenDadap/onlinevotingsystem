@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('utils/connection.php');
+require_once('utils/signin.php');
 require_once('common/components.php');
 include('common/website_info.php');
 ?>
@@ -40,30 +40,7 @@ include('common/website_info.php');
                                 <?php
                                 if (isset($_POST['submit'])) {
                                     if (!empty($_POST['username']) && !empty($_POST['password'])) {
-                                        // Define $username and $password
-                                        $username = $_POST['username'];
-                                        $password = $_POST['password'];
-                                        $conn = Connect();
-
-                                        // SQL query to fetch information of registerd users and finds user match.
-                                        $query = "SELECT username, password FROM users WHERE username=? AND password=? LIMIT 1";
-
-                                        $stmt = $conn->prepare($query);
-                                        $stmt->bind_param("ss", $username, $password);
-                                        $stmt->execute();
-                                        $stmt->bind_result($username, $password);
-                                        $stmt->store_result();
-
-                                        if ($stmt->fetch()) {
-                                            $_SESSION['user_type'] = 'student'; // Initializing Session
-                                            header("location: index.php"); // Redirecting To Other Page
-                                        } else {
-                                            echo '
-                                            <div class="alert alert-danger" role="alert">
-                                            Invalid user!
-                                            </div>';
-                                        }
-                                        mysqli_close($conn); // Closing Connection
+                                        logIn();
                                     }
                                 } ?>
                             </form>

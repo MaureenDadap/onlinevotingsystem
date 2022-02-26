@@ -1,27 +1,13 @@
 <?php
 session_start();
 require_once('common/components.php');
-require_once 'utils/connection.php';
+require_once('utils/register.php');
 include('common/website_info.php');
 
 if (isset($_POST['submit'])) {
-    $conn = Connect();
-
-    $username = $conn->real_escape_string($_POST['username']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = $conn->real_escape_string($_POST['password']);
-
-    $query = "INSERT into admins(username,email,password) VALUES('" . $username . "','" . $email . "','" . $password . "')";
-    $success = $conn->query($query);
-
-    if (!$success) {
-        $error = ("Couldnt enter data: " . $conn->error);
-    } else {
-        $response = "success";
-    }
-
-    $conn->close();
+    adminSignUp();
 }
+
 ?>
 
 <!DOCTYPE html>

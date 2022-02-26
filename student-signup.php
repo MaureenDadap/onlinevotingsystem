@@ -2,28 +2,10 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
-require_once 'utils/connection.php';
-
+require_once('utils/register.php');
 
 if (isset($_POST['submit'])) {
-    $conn = Connect();
-
-    $username = $conn->real_escape_string($_POST['username']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = $conn->real_escape_string($_POST['password']);
-    $program = $conn->real_escape_string($_POST['program']);
-
-    $query = "INSERT into students(username,email,password, program) VALUES('" . $username . "','" . $email . "','" . $password . "','" . $program . "')";
-    $success = $conn->query($query);
-
-    if (!$success) {
-        $error = ("Couldnt enter data: " . $conn->error);
-    } else {
-        $response = "success";
-        header('location: index.php');
-    }
-
-    $conn->close();
+    studentSignUp();
 }
 ?>
 
