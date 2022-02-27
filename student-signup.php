@@ -2,7 +2,33 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
-require_once('utils/register.php');
+require_once 'utils/connection.php';
+
+function studentSignUp()
+{
+    $conn = Connect();
+
+    $username = $conn->escape_string($_POST['username']);
+    $email = $conn->escape_string($_POST['email']);
+    $password = $conn->escape_string($_POST['password']);
+    $program = $conn->escape_string($_POST['program']);
+    $password2 = $conn->escape_string($_POST['password2']);
+
+    if ($password != $password2)
+        echo '<div class="alert alert-danger" role="alert">
+        Pasword does not match.
+        </div>';
+    else {
+        $query = 'INSERT INTO users(username, email, password, program) VALUES(?,?,?,?)';
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssss', $username, $email, $password, $program);
+        $stmt->execute();
+        $conn->close();
+        header('location: login.php');
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
