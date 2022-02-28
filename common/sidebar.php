@@ -4,7 +4,7 @@ include 'website_info.php';
 <ul class="nav nav-pills flex-column px-2 py-4 sidebar">
     <li class="nav-item brand">
         <a class="nav-link" href="index.php">
-            <img src="images/logo.png" alt="logo">
+            <img src="images/logo-white.png" alt="logo">
             <span><?= $website_name; ?></span>
         </a>
     </li>
@@ -26,5 +26,5 @@ include 'website_info.php';
             <span class="bi-gear"></span> Election Settings</a>
     </li>
     <hr>
-    <a href="utils/logout.php" class="btn btn-outline-danger mx-4">Log Out</a>
+    <a href="utils/logout.php" class="btn btn-danger mx-4">Log Out</a>
 </ul>';
