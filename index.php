@@ -2,11 +2,10 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
-// sana all
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 <?= head("Home"); ?>
 
 <body class="landing">
@@ -35,8 +34,7 @@ include('common/website_info.php');
             </div>
         </div>
     </div>
-    <?= footer() ?>
-
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 
