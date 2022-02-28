@@ -2,7 +2,7 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
-require_once 'connection.php';
+require_once 'utils/connection.php';
 
 function logIn()
 {

@@ -147,7 +147,7 @@ main.admin {
 .sidebar {
   height: 100%;
   z-index: 500;
-  background-color: #fff;
+  background-color: white;
   box-shadow: 3px 0px 5px 0px rgb(0 0 0 / 0.1), 3px 0px 5px 0px rgb(0 0 0 / 0.1);
 }
 
@@ -161,6 +161,10 @@ main.admin {
 .sidebar .brand img {
   height: 35px;
   margin-right: 8px;
+}
+
+.sidebar .nav-item {
+  margin: 0;
 }
 
 .nav-pills .nav-link.active,

@@ -10,10 +10,10 @@ include('common/website_info.php');
 
 <body class="admin">
     <div class="admin row">
-        <div class="col-lg-3">
+        <div class="col-xl-2 col-lg-3 col-md-4">
             <?= sidebar("candidate") ?>
         </div>
-        <div class="col-lg-9">
+        <div class="col-xl-10 col-lg-9 col-md-8">
             <main class="admin">
                 <div class="container">
                     <h1>Election Candidates</h1>
