@@ -2,7 +2,6 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
-// hello world this is me
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +9,7 @@ include('common/website_info.php');
 <?= head("Home"); ?>
 
 <body class="landing">
+    
     <?= navbar("") ?>
     <div class="hero">
         <div class="container py-5">
