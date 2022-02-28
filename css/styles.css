@@ -8,7 +8,7 @@
 body {
   min-height: 100vh;
   /* TODO: remove below code if it breaks pages */
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -36,7 +36,6 @@ a:hover {
   color: #d35134;
 }
 
-
 .btn-default {
   color: #fff;
   background-color: #ff6947;
@@ -54,7 +53,6 @@ a:hover {
   border-color: #ff6947;
   box-shadow: none;
 }
-
 
 /*--------------------------------------------------------------
 # NAVBAR
@@ -147,7 +145,7 @@ main.admin {
 .sidebar {
   height: 100%;
   z-index: 500;
-  background-color: #fff;
+  background-color: #5b2448;
   box-shadow: 3px 0px 5px 0px rgb(0 0 0 / 0.1), 3px 0px 5px 0px rgb(0 0 0 / 0.1);
 }
 
@@ -155,7 +153,6 @@ main.admin {
 .sidebar .brand span:hover {
   font-size: 1.5rem !important;
   font-weight: 700;
-  color: #2e2a3b;
 }
 
 .sidebar .brand img {
@@ -163,10 +160,26 @@ main.admin {
   margin-right: 8px;
 }
 
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #21a0aa;
+.sidebar .nav-item {
+  margin: 0;
+}
+
+.sidebar .brand span,
+.nav-pills .nav-link {
+  color: #ffffff;
+}
+
+.nav-pills .nav-link:hover {
+  color: #ff6947;
+}
+
+.nav-pills .nav-link.active {
+  color: #2e2a3b;
+  background-color: #ffffff;
+}
+
+.sidebar .danger {
+  margin: 0;
 }
 
 @media (max-width: 992px) {
