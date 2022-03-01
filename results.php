@@ -41,14 +41,14 @@ include('common/website_info.php');
             </div>
             <hr>
             <div class="row text-center justify-content-center my-4 gy-4">
-               <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+               <?=resultsCandidate("1st Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+               <?=resultsCandidate("2nd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+               <?=resultsCandidate("3rd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+               <?=resultsCandidate("4th Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
             </div>
         </div>
     </main>
-    <?= footer() ?>
+    <?php include 'common/footer.php';?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 
