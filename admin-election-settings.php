@@ -19,6 +19,15 @@ include('common/website_info.php');
                 <div class="container">
                     <h1>Election Settings</h1>
                     <hr>
+                    <div class="admin card">
+                        <form action="" method="POST">
+                            <h5>Set Election Opening</h5>
+                            <input type="datetime-local" class="my-2">
+                            <h5 class="mt-2">Set Election Closing</h5>
+                            <input type="datetime-local" class="my-2"> <br>
+                            <button type="submit" name="submit" class="btn btn-default mt-2">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </main>
         </div>
