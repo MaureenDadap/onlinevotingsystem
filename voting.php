@@ -2,6 +2,7 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
+require_once 'utils/get-candidates.php';
 ?>
 
 <!DOCTYPE html>
@@ -41,17 +42,34 @@ include('common/website_info.php');
                 </div>
             </header>
             <main>
-                <div class="container">
-                    <h3>President</h3>
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                        <div class="card candidate p-4">
-                            <img src="images/college-student-budget.jpg" class="candidate-img" alt="candidate">
-                            <div class="card-body">
-                                <h5 class="card-title">Jane Doe</h5>
-                                <p class="card-text">I am going to make this university great again</p>
-                            </div>
+                <div class="container voting">
+                    <form action="" method="POST">
+                        <!-- ======= Presidents Row ======= -->
+                        <h3 class="text-center">President</h3>
+                        <?php
+                        if (getCandidates('President') && getCandidates('President')->num_rows > 0) { ?>
+                            <div class="d-flex justify-content-center mb-5">
+                                <?php
+                                $result = getCandidates("President");
+                                while ($data = $result->fetch_assoc()) {
+                                ?>
+                                    <div class="voting card m-3">
+                                        <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                        <div class="form-check align-self-center m-3">
+                                            <input class="form-check-input" type="radio" name="president" value="<?php echo $data['id'] ?>">
+                                            <label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label>
+                                        </div>
+                                    </div>
+                                <?php  } ?>
+                            </div> <?php } else { ?>
+
+                            <h5 class="py-5 text-center">No candidates in the database.</h5>
+                        <?php  } ?>
+                        <!-- End Presidents Row -->
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-default" name="submit">Submit my Vote</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </main>
         <?php }
@@ -71,8 +89,9 @@ include('common/website_info.php');
         </main>
     <?php } ?>
 
-    <?php include 'common/footer.php';?>
+    <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         window.onbeforeunload = function() {
             return 'Are you sure? Your work will be lost. ';

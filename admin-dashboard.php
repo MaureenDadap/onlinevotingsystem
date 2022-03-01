@@ -21,13 +21,13 @@ include('common/website_info.php');
                     <div class="row my-4">
                         <h5>Election Candidates</h5>
                         <div class="col">
-                            <div class="card py-5 text-center">
+                            <div class="admin card py-5 text-center">
                                 <h1>3</h1>
                                 <h6>Partylists</h6>
                             </div>
                         </div>
                         <div class="col">
-                        <div class="card py-5 text-center">
+                        <div class="admin card py-5 text-center">
                                 <h1>30</h1>
                                 <h6>Candidates</h6>
                             </div>
@@ -36,13 +36,13 @@ include('common/website_info.php');
                     <div class="row my-4">
                         <h5>Election Voters</h5>
                         <div class="col">
-                            <div class="card py-5 text-center">
+                            <div class="admin card py-5 text-center">
                                 <h1>100</h1>
                                 <h6>Voters</h6>
                             </div>
                         </div>
                         <div class="col">
-                        <div class="card py-5 text-center">
+                        <div class="admin card py-5 text-center">
                                 <h1>67</h1>
                                 <h6>Votes</h6>
                             </div>
@@ -51,7 +51,7 @@ include('common/website_info.php');
                     <div class="row my-4">
                         <h5>Election Details</h5>
                         <div class="col">
-                            <div class="card py-5 text-center">
+                            <div class="admin card py-5 text-center">
                                 <h1>February 16 - February 17</h1>
                                 <h6>Election Duration</h6>
                             </div>

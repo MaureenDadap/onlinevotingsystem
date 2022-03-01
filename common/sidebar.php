@@ -13,10 +13,10 @@ include 'website_info.php';
         <a class="nav-link <?php if ($page === 'dashboard') echo ' active'; ?>" href="admin-dashboard.php">
             <span class="bi-speedometer"></span> Admin Dashboard</a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link <?php if ($page === 'party') echo ' active'; ?>" href="admin-partylist.php">
             <span class="bi-list"></span> Partylists</a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link <?php if ($page === 'candidate') echo ' active'; ?>" href="admin-candidates.php">
             <span class="bi-person"></span> Candidates</a>
