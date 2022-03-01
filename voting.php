@@ -66,6 +66,7 @@ require_once 'utils/get-candidates.php';
                             <h5 class="py-5 text-center">No candidates in the database.</h5>
                         <?php  } ?>
                         <!-- End Presidents Row -->
+                        
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-default" name="submit">Submit my Vote</button>
                         </div>
