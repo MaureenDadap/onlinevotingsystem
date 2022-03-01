@@ -56,5 +56,4 @@ include("website_info.php");
                 </ul> <?php } ?>
         </div>
     </div>
-
 </nav>

@@ -64,12 +64,19 @@ function studentSignUp()
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
                                 <label for="program" class="form-label">Program</label>
-                                <select class="form-select mb-2" id="program" name="program" required>
-                                    <option value="BSCS">BSCS</option>
-                                    <option value="BSIT">BSIT</option>
-                                    <option value="BSIS">BSIS</option>
-                                    <option value="BSMMA">BSMMA</option>
-                                </select>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text bi-easel2-fill"></span>
+                                    <select class="form-select" id="program" name="program" required>
+                                        <option value="BSCS">BSCS</option>
+                                        <option value="BSIT">BSIT</option>
+                                        <option value="BSIS">BSIS</option>
+                                        <option value="BSMMA">BSMMA</option>
+                                        <option value="BSCS">BSA</option>
+                                        <option value="BSIT">BSPSYCH</option>
+                                        <option value="BSIS">BSBA</option>
+                                        <option value="BSMMA">BSCE</option>
+                                    </select>
+                                </div>
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text bi-lock-fill"></span>
