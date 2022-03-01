@@ -224,6 +224,11 @@ main.admin {
   align-self: center;
 }
 
+.voting .candidate-img {
+  object-fit: cover;
+  border-radius: 0;
+}
+
 /*--------------------------------------------------------------
 # RESULTS
 --------------------------------------------------------------*/

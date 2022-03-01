@@ -2,6 +2,7 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
+require_once 'utils/get-candidates.php';
 
 require_once 'utils/connection.php';
 
@@ -22,26 +23,6 @@ if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
     } else if ($_POST['submit'] == "edit") {
         $response = "edit";
     }
-}
-
-function getCandidates($pos_selected)
-{
-    //TODO VALIDATE/SANITIZE
-    $conn = Connect();
-    if ($pos_selected != "") {
-        $query = "SELECT * FROM candidates WHERE position=?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $pos_selected);
-    } else {
-        $query = "SELECT * FROM candidates";
-        $stmt = $conn->prepare($query);
-    }
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $conn->close();
-
-    return $result;
 }
 
 function getCandidate($candidateId)
