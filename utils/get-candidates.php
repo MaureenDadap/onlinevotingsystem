@@ -1,5 +1,6 @@
 <?php
 require_once 'connection.php';
+require_once 'get-election-times.php';
 
 function getCandidates($position)
 {
@@ -12,6 +13,31 @@ function getCandidates($position)
     } else {
         $query = "SELECT * FROM candidates";
         $stmt = $conn->prepare($query);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $conn->close();
+
+    return $result;
+}
+
+function getCandidatesVotes($position, $id)
+{
+    //TODO VALIDATE/SANITIZE
+    $conn = Connect();
+    $startDate = getStartDate();
+    $endDate = getEndDate();
+
+    if ($id == "") {
+        $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.position=? AND b.datetime BETWEEN ? AND ? GROUP BY a.id ORDER BY VOTES DESC";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('sss', $position, $startDate, $endDate);
+    } else {
+        $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.id=? AND b.datetime BETWEEN ? AND ? ORDER BY VOTES DESC LIMIT 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('iss', $id, $startDate, $endDate);
     }
 
     $stmt->execute();

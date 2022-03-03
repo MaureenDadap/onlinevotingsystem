@@ -5,22 +5,30 @@ include('common/website_info.php');
 require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
 
-$user_id = $_SESSION['user_id'];
+if (isset($_SESSION['id']))
+    $user_id = $_SESSION['id'];
 $startDate = getStartDate();
 $endDate = getEndDate();
 
-function checkIfVoted()
+function checkIfVoted($user_id, $startDate, $endDate)
 {
     $conn = Connect();
-    $query = "SELECT * FROM votes WHERE user_id =? AND datetime BETWEEN ? AND ?";
+    $userVotes = 0;
+    $query = "SELECT COUNT(*) as total FROM votes WHERE user_id =? AND datetime BETWEEN ? AND ?";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param('iss', $user_id, $startDate, $endDate);
     $stmt->execute();
     $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        while ($data = $result->fetch_assoc()) {
+            $userVotes = $data['total'];
+        }
+    }
+
     $conn->close();
 
-    return $result;
+    return $userVotes;
 }
 
 function insertVote($user_id, $candidate_id, $position)
@@ -78,11 +86,11 @@ if (isset($_POST['submit'])) {
             <main>
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col">
+                        <div class="col-md-7">
                             <h1>You do not have access to this page.</h1>
                             <h5>Only students can vote.</h5>
                         </div>
-                        <div class="col">
+                        <div class="col-md-5">
                             <img src="images/sammy-17.png" alt="error" class="w-100">
                         </div>
                     </div>
@@ -90,16 +98,16 @@ if (isset($_POST['submit'])) {
             </main>
             <?php
         } else { // if user logged in is a student
-            if (checkIfVoted($user_id, $startDate, $endDate)) { // if user has already voted for current election duration 
+            if (checkIfVoted($user_id, $startDate, $endDate) != 0) { // if user has already voted for current election duration 
             ?>
-            <main>
+                <main>
                     <div class="container">
                         <div class="row align-items-center">
-                            <div class="col">
+                            <div class="col-md-7">
                                 <h1>You have already voted for the current election duration.</h1>
                                 <a href="results.php" class="btn btn-default">View Results Instead</a>
                             </div>
-                            <div class="col">
+                            <div class="col-md-5">
                                 <img src="images/sammy-done.png" alt="error" class="w-100">
                             </div>
                         </div>
@@ -335,11 +343,11 @@ if (isset($_POST['submit'])) {
         <main>
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col">
+                    <div class="col-md-7">
                         <h1>You do not have access to this page.</h1>
                         <h5>Log in as a student to vote.</h5>
                     </div>
-                    <div class="col">
+                    <div class="col-md-5">
                         <img src="images/sammy-17.png" alt="error" class="w-100">
                     </div>
                 </div>

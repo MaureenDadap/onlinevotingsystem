@@ -2,7 +2,7 @@
 require_once 'utils/connection.php';
 require_once 'utils/get-election-times.php';
 
-function countVotes($position)
+function countVotes()
 {
     //TODO catch possible errors
     $totalVotes = 0;
@@ -10,15 +10,10 @@ function countVotes($position)
     $endDate = getEndDate();
 
     $conn = Connect();
-    if ($position != "") {
-        $query = "SELECT COUNT(*) as total FROM votes WHERE position=? AND datetime BETWEEN ? AND ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('sss', $position, $startDate, $endDate);
-    } else {
-        $query = "SELECT COUNT(*) as total FROM votes WHERE datetime BETWEEN ? AND ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('ss', $startDate, $endDate);
-    }
+
+    $query = "SELECT COUNT(*) as total FROM votes WHERE datetime BETWEEN ? AND ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('ss', $startDate, $endDate);
 
     $stmt->execute();
 
