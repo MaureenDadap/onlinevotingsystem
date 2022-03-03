@@ -101,7 +101,7 @@ require_once 'utils/get-candidates.php';
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
                 <?php  } ?>
             </div>
-            <!-- End Secretaries Presidents Row -->
+            <!-- End Secretaries Row -->
 
             <!-- ======= Treasurers Row ======= -->
             <div class="row mb-5">
@@ -128,7 +128,115 @@ require_once 'utils/get-candidates.php';
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
                 <?php  } ?>
             </div>
-            <!-- End Secretaries Presidents Row -->
+            <!-- End Treasurers Row -->
+
+            <!-- ======= Representatives 1 Row ======= -->
+            <div class="row mb-5">
+                <h3>1st Year Representative</h3>
+                <?php
+                if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) { ?>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
+                        <?php
+                        $result = getCandidates("Representative 1");
+                        while ($data = $result->fetch_assoc()) {
+                        ?>
+                            <div class="card candidate p-4">
+                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                    <strong><?php echo $data['section'] ?></strong>
+                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                </div>
+                            </div>
+
+                        <?php  } ?>
+                    </div>
+                <?php  } else { ?>
+                    <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                <?php  } ?>
+            </div>
+            <!-- End Representatives 1 Row -->
+
+            <!-- ======= Representatives 2 Row ======= -->
+            <div class="row mb-5">
+                <h3>2nd Year Representative</h3>
+                <?php
+                if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) { ?>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
+                        <?php
+                        $result = getCandidates("Representative 2");
+                        while ($data = $result->fetch_assoc()) {
+                        ?>
+                            <div class="card candidate p-4">
+                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                    <strong><?php echo $data['section'] ?></strong>
+                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                </div>
+                            </div>
+
+                        <?php  } ?>
+                    </div>
+                <?php  } else { ?>
+                    <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                <?php  } ?>
+            </div>
+            <!-- End Representatives 2 Row -->
+
+            <!-- ======= Representatives 3 Row ======= -->
+            <div class="row mb-5">
+                <h3>3rd Year Representative</h3>
+                <?php
+                if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) { ?>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
+                        <?php
+                        $result = getCandidates("Representative 3");
+                        while ($data = $result->fetch_assoc()) {
+                        ?>
+                            <div class="card candidate p-4">
+                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                    <strong><?php echo $data['section'] ?></strong>
+                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                </div>
+                            </div>
+
+                        <?php  } ?>
+                    </div>
+                <?php  } else { ?>
+                    <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                <?php  } ?>
+            </div>
+            <!-- End Representatives 3 Row -->
+
+            <!-- ======= Representatives 4 Row ======= -->
+            <div class="row mb-5">
+                <h3>4th Year Representative</h3>
+                <?php
+                if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) { ?>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
+                        <?php
+                        $result = getCandidates("Representative 4");
+                        while ($data = $result->fetch_assoc()) {
+                        ?>
+                            <div class="card candidate p-4">
+                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                    <strong><?php echo $data['section'] ?></strong>
+                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                </div>
+                            </div>
+
+                        <?php  } ?>
+                    </div>
+                <?php  } else { ?>
+                    <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                <?php  } ?>
+            </div>
+            <!-- End Representatives 4 Row -->
         </div>
     </main>
     <?php include 'common/footer.php'; ?>
