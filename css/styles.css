@@ -140,7 +140,7 @@ main {
 # ADMIN DASHBOARD
 --------------------------------------------------------------*/
 body.admin {
-  overflow-y: hidden;
+  overflow: hidden;
   background-color: #eff3f6;
 }
 
@@ -149,6 +149,7 @@ main.admin {
   overflow: hidden;
   overflow-y: scroll;
 }
+
 
 .sidebar {
   height: 100%;
@@ -196,15 +197,28 @@ main.admin {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+.admin .ranking .candidate-img {
+  height: 80px;
+  width: 80px;
+}
+
+.admin .ranking.bg-yellow {
+  background-color: #fdf2d6;
+}
+
+.admin .ranking.bg-gray {
+  background-color: #eff3f6;
+}
+
 @media (max-width: 992px) {
   body.admin {
-    overflow-y: auto;
+    overflow-y: scroll;
     /* height: fit-content; */
   }
 
-  main.admin {
-    overflow-y: hidden;
-  }
+  /* main.admin {
+    overflow-y: auto;
+  } */
 }
 
 /*--------------------------------------------------------------
@@ -254,4 +268,9 @@ footer {
   /* background-color: rgb(57, 47, 79); */
   background-color: #5b2448;
   color: #fff;
+}
+
+.footer {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
 }

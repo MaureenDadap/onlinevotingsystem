@@ -8,7 +8,7 @@ require_once 'utils/get-votes.php';
 $startDate = date('y/m/d G:i A', strtotime(getStartDate()));
 $endDate = date('y/m/d G:i A', strtotime(getEndDate()));
 
-$totalVotes = countVotes("");
+$totalVotes = countVotes();
 ?>
 
 <!DOCTYPE html>

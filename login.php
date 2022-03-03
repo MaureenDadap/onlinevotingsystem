@@ -23,7 +23,7 @@ function logIn()
     $stmt->store_result();
 
     if ($stmt->fetch()) {
-        $_SESSION['user_id'] = $id;
+        $_SESSION['id'] = $id;
 
         if ($user_type == 0)
             $_SESSION['user_type'] = 'student';
