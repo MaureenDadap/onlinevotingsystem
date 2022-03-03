@@ -6,8 +6,8 @@ require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
 
 $user_id = $_SESSION['user_id'];
-$startDate;
-$endDate;
+$startDate = getStartDate();
+$endDate = getEndDate();
 
 function checkIfVoted()
 {
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
             </main>
             <?php
         } else { // if user logged in is a student
-            if (checkIfVoted($user_id, '2022-03-02 09:15:30', '2022-03-05 09:15:30')) { // if user has already voted for current election duration 
+            if (checkIfVoted($user_id, $startDate, $endDate)) { // if user has already voted for current election duration 
             ?>
             <main>
                     <div class="container">
