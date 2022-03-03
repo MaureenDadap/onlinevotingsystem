@@ -3,12 +3,12 @@ session_start();
 require_once('common/components.php');
 include('common/website_info.php');
 require_once 'utils/get-election-times.php';
+require_once 'utils/get-votes.php';
 
-$startDate = getStartDate()->format("m/d/y g:i A");
-$endDate = getEndDate()->format("m/d/y g:i A");
-$totalVotes = 0;
+$startDate = date('y/m/d G:i A', strtotime(getStartDate()));
+$endDate = date('y/m/d G:i A', strtotime(getEndDate()));
 
-
+$totalVotes = countVotes("");
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ $totalVotes = 0;
                 <div class="col-md-4">
                     <h1>Election Results</h1>
                     <p><strong>Election duration: </strong><?= $startDate ?> - <?= $endDate ?><br>
-                        <strong>Total Votes: </strong>500
+                        <strong>Total Votes: </strong><?= $totalVotes ?>
                     </p>
                 </div>
             </div>
