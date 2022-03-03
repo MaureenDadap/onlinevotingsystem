@@ -50,9 +50,9 @@ if (isset($_GET['pos'])) {
 
 $totalCandidates = 0;
 $startDate = date('M d, Y', strtotime(getStartDate()));
-$startTime = date('G:i A', strtotime(getStartDate()));
+$startTime = date('g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y', strtotime(getEndDate()));
-$endTime = date('G:i A', strtotime(getEndDate()));
+$endTime = date('g:i A', strtotime(getEndDate()));
 ?>
 
 <!DOCTYPE html>

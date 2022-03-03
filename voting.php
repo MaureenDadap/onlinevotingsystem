@@ -86,11 +86,11 @@ if (isset($_POST['submit'])) {
             <main>
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col">
+                        <div class="col-md-7">
                             <h1>You do not have access to this page.</h1>
                             <h5>Only students can vote.</h5>
                         </div>
-                        <div class="col">
+                        <div class="col-md-5">
                             <img src="images/sammy-17.png" alt="error" class="w-100">
                         </div>
                     </div>
@@ -103,11 +103,11 @@ if (isset($_POST['submit'])) {
                 <main>
                     <div class="container">
                         <div class="row align-items-center">
-                            <div class="col">
+                            <div class="col-md-7">
                                 <h1>You have already voted for the current election duration.</h1>
                                 <a href="results.php" class="btn btn-default">View Results Instead</a>
                             </div>
-                            <div class="col">
+                            <div class="col-md-5">
                                 <img src="images/sammy-done.png" alt="error" class="w-100">
                             </div>
                         </div>
@@ -343,11 +343,11 @@ if (isset($_POST['submit'])) {
         <main>
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col">
+                    <div class="col-md-7">
                         <h1>You do not have access to this page.</h1>
                         <h5>Log in as a student to vote.</h5>
                     </div>
-                    <div class="col">
+                    <div class="col-md-5">
                         <img src="images/sammy-17.png" alt="error" class="w-100">
                     </div>
                 </div>
