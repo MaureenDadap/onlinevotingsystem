@@ -4,31 +4,29 @@ require_once 'connection.php';
 function getStartDate()
 {
     //TODO catch possible errors
-    $endTime = '';
+    $startTime = new DateTime();
     $conn = Connect();
     $query = "SELECT datetime_start FROM election_settings ORDER BY id DESC LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($endTime);
-    $stmt->store_result();
+    $stmt->bind_result($startTime);
 
     $conn->close();
 
-    return $endTime;
+    return $startTime;
 }
 
 function getEndDate()
 {
     //TODO catch possible errors
-    $startTime = '';
+    $endTime = new DateTime();
     $conn = Connect();
     $query = "SELECT datetime_end FROM election_settings ORDER BY id DESC LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($startTime);
-    $stmt->store_result();
+    $stmt->bind_result($endTime);
 
     $conn->close();
 
-    return $startTime;
+    return $endTime;
 }

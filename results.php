@@ -2,6 +2,13 @@
 session_start();
 require_once('common/components.php');
 include('common/website_info.php');
+require_once 'utils/get-election-times.php';
+
+$startDate = getStartDate()->format("m/d/y g:i A");
+$endDate = getEndDate()->format("m/d/y g:i A");
+$totalVotes = 0;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +25,7 @@ include('common/website_info.php');
                 </div>
                 <div class="col-md-4">
                     <h1>Election Results</h1>
-                    <p><strong>Election duration: </strong>February 15, 2022 - February 16, 2022 <br>
+                    <p><strong>Election duration: </strong><?= $startDate ?> - <?= $endDate ?><br>
                         <strong>Total Votes: </strong>500
                     </p>
                 </div>
@@ -28,27 +35,27 @@ include('common/website_info.php');
     <main class="results">
         <div class="container">
             <div class="row text-center justify-content-center my-4">
-               <?=resultsCandidate("President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+                <?= resultsCandidate("President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
             </div>
             <hr>
             <div class="row text-center justify-content-center my-4">
-               <?=resultsCandidate("Vice President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+                <?= resultsCandidate("Vice President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
             </div>
             <hr>
             <div class="row text-center justify-content-center my-4 gy-4">
-               <?=resultsCandidate("Secretary", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("Treasurer", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+                <?= resultsCandidate("Secretary", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                <?= resultsCandidate("Treasurer", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
             </div>
             <hr>
             <div class="row text-center justify-content-center my-4 gy-4">
-               <?=resultsCandidate("1st Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("2nd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("3rd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
-               <?=resultsCandidate("4th Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A");?>
+                <?= resultsCandidate("1st Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                <?= resultsCandidate("2nd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                <?= resultsCandidate("3rd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                <?= resultsCandidate("4th Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
             </div>
         </div>
     </main>
-    <?php include 'common/footer.php';?>
+    <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 
