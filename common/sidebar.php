@@ -13,10 +13,6 @@ include 'website_info.php';
         <a class="nav-link <?php if ($page === 'dashboard') echo ' active'; ?>" href="admin-dashboard.php">
             <span class="bi-speedometer"></span> Admin Dashboard</a>
     </li>
-    <!-- <li class="nav-item">
-        <a class="nav-link <?php if ($page === 'party') echo ' active'; ?>" href="admin-partylist.php">
-            <span class="bi-list"></span> Partylists</a>
-    </li> -->
     <li class="nav-item">
         <a class="nav-link <?php if ($page === 'candidate') echo ' active'; ?>" href="admin-candidates.php">
             <span class="bi-person"></span> Candidates</a>
@@ -27,4 +23,4 @@ include 'website_info.php';
     </li>
     <hr>
     <a href="utils/logout.php" class="btn btn-danger mx-4">Log Out</a>
-</ul>';
+</ul>

@@ -10,18 +10,21 @@ function logIn()
     $username = $_POST['username'];
     $password = $_POST['password'];
     $user_type = 0;
+    $id = -1;
     $conn = Connect();
 
     // SQL query to fetch information of registerd users and finds user match.
-    $query = 'SELECT username, password, is_admin FROM users WHERE username=? AND password=? LIMIT 1';
+    $query = 'SELECT id, username, password, is_admin FROM users WHERE username=? AND password=? LIMIT 1';
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
-    $stmt->bind_result($username, $password, $user_type);
+    $stmt->bind_result($id, $username, $password, $user_type);
     $stmt->store_result();
 
     if ($stmt->fetch()) {
+        $_SESSION['id'] = $id;
+
         if ($user_type == 0)
             $_SESSION['user_type'] = 'student';
         else

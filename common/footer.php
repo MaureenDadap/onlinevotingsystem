@@ -4,8 +4,8 @@ include 'website_info.php';
 
 <footer>
     <div class="container">
-        <div class="row justify-content-center py-5 text-center">
-            <h1><?=$website_name;?></h1>
+        <div class="footer row justify-content-center text-center">
+            <h2><?=$website_name;?></h2>
             <p class="lead">We bring the elections closer to you.</p>
         </div>
     </div>
