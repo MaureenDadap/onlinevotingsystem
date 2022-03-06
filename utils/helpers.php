@@ -9,12 +9,12 @@ require 'vendor/PHPMailer/src/Exception.php';
 require 'vendor/PHPMailer/src/PHPMailer.php';
 require 'vendor/PHPMailer/src/SMTP.php';
 
-function generate_activation_code(): string
+function generateMd5Hash(): string
 {
     return md5(rand(0, 1000));
 }
 
-function send_activation_email(string $email, string $activation_code): void
+function sendActivationEmail(string $email, string $activation_code): void
 {
     // create the activation link
     $activation_link = APP_URL . "/verify.php?email=$email&activation_code=$activation_code";
@@ -23,7 +23,7 @@ function send_activation_email(string $email, string $activation_code): void
     $subject = 'Please activate your E-lections account';
     $message = <<<MESSAGE
             Hi,
-            Please click the following link to activate your account:
+            Please click the following link to activate your account. This link is valid for 1 day.
             $activation_link
             MESSAGE;
 
@@ -31,8 +31,6 @@ function send_activation_email(string $email, string $activation_code): void
     $mail = new PHPMailer(true);
 
     try {
-        //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;

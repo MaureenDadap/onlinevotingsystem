@@ -1,7 +1,101 @@
 <?php
 require_once 'connection.php';
+require_once 'helpers.php';
 
-function adminSignUp()
+/** Checks if user name is already in use by someone in the db
+ */
+function checkUserNameExists($username): bool
+{
+    $conn = Connect();
+    $query = 'SELECT username FROM users WHERE username=?';
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return true;
+        echo 'username exists';
+    }
+    return false;
+}
+
+/** Checks if email is already in use by someone in the db
+ * to prevent duplication of votes
+ */
+function checkEmailExists($email): bool
+{
+    $conn = Connect();
+    $query = 'SELECT email FROM users WHERE email=?';
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
+
+
+function isUserActive($user)
+{
+    return $user['email_authenticated'] === 1;
+}
+
+function deleteUserById(int $id, int $active = 0)
+{
+    $conn = Connect();
+    $query = 'DELETE FROM users WHERE id =? and email_authenticated=?';
+
+    $stmt = $conn->prepare($$query);
+    $stmt->bind_param('ii', $id, $active);
+    return $stmt->execute();
+}
+
+function findUnverifiedUser(string $activation_code, string $email)
+{
+    $conn = Connect();
+    $query = 'SELECT id, activation_code, activation_expiry < now() as expired FROM users WHERE email_authenticated = 0 AND email=?';
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+
+    $user = null;
+
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $user = $row;
+    }
+
+    if ($user) {
+        // already expired, delete the in active user with expired activation code
+        if ((int)$user['expired'] === 1) {
+            deleteUserById($user['id']);
+            return null;
+        }
+        // verify the activation link
+        if ($activation_code === $user['activation_code']) {
+            return $user;
+        }
+    }
+
+    $conn -> close();
+    return null;
+}
+
+function activateUser(int $user_id): bool
+{
+    $conn = Connect();
+    $query = 'UPDATE users SET email_authenticated = 1 WHERE id=?';
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $user_id);
+
+    return $stmt->execute();
+}
+
+function adminSignUp(string $response)
 {
     //TODO SANITIZE AND VALIDATE
     $conn = Connect();
@@ -10,24 +104,32 @@ function adminSignUp()
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $password2 = $conn->escape_string($_POST['password2']);
+    $hash = generateMd5Hash();
     $is_admin = 1;
+    $expiry = 1 * 24 * 60 * 60;
+    $authExpire = date('Y-m-d H:i:s',  time() + $expiry);
 
     if ($password != $password2)
-        echo '<div class="alert alert-danger" role="alert">
-        Pasword does not match.
-        </div>';
+        $response = "password mismatch";
+    else if (checkUserNameExists($username) === true)
+        $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
-        $query = 'INSERT INTO users(username, email, password, is_admin) VALUES(?,?,?,?)';
-
+        $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sssi', $username, $email, $password, $is_admin);
+        $stmt->bind_param('sssiss', $username, $email, $password, $is_admin, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
-        header('location: login.php');
+
+        sendActivationEmail($email, $hash);
+        $response = "success";
     }
+
+    return $response;
 }
 
-function studentSignUp()
+function studentSignUp(string $response)
 {
     $conn = Connect();
 
@@ -48,13 +150,8 @@ function studentSignUp()
         $stmt->bind_param('ssss', $username, $email, $password, $program);
         $stmt->execute();
         $conn->close();
-        header('location: login.php');
+        header('location: verify.php');
     }
-}
-
-function is_user_active($user)
-{
-    return $user['email_authenticated'] === 1;
 }
 
 function logIn()
