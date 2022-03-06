@@ -2,7 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 require_once('common/components.php');
-include('common/website_info.php');
+require_once 'config/website_info.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/get-votes.php';
 
@@ -19,13 +19,14 @@ $totalVotes = countVotes();
 
 <body>
     <?= navbar(""); ?>
-    <?php if ($endDate > $date) { //if election is still ongoing ?>
+    <?php if (($date >= $startDate) || ($date <= $endDate)) : //if election is still ongoing 
+    ?>
         <main>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <h1>Elections are still ongoing.</h1>
-                        <h5>Come back later after the election closes at <?=$endDate?></h5>
+                        <h5>Come back later after the election closes at <?= $endDate ?></h5>
                     </div>
                     <div class="col-md-5">
                         <img src="images/sammy-17.png" alt="error" class="w-100">
@@ -33,7 +34,7 @@ $totalVotes = countVotes();
                 </div>
             </div>
         </main>
-    <?php } else {
+    <?php else : //if election is already closed 
     ?>
         <header class="results py-3">
             <div class="container">
@@ -73,7 +74,7 @@ $totalVotes = countVotes();
                 </div>
             </div>
         </main>
-    <?php } ?>
+    <?php endif ?>
     <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>

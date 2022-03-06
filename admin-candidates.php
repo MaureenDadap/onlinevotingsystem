@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('common/components.php');
-include('common/website_info.php');
+require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 
 require_once 'utils/connection.php';
@@ -209,7 +209,7 @@ function getCandidate($candidateId)
                             </div>
                         </form>
                         <?php
-                        if (getCandidates($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) { ?>
+                        if (getCandidates($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) : ?>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -225,8 +225,7 @@ function getCandidate($candidateId)
                                 <tbody>
                                     <?php
                                     $result = getCandidates($pos_selected);
-                                    while ($data = $result->fetch_assoc()) {
-                                    ?>
+                                    while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
                                             <tr>
                                                 <input type="hidden" name="candidate-id" value="<?php echo $data['id']; ?>">
@@ -242,12 +241,12 @@ function getCandidate($candidateId)
                                                 </td>
                                             </tr>
                                         </form>
-                                    <?php } ?>
+                                    <?php endwhile ?>
                                 </tbody>
                             </table>
-                        <?php  } else { ?>
+                        <?php else : ?>
                             <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                        <?php  } ?>
+                        <?php endif ?>
                     </div>
                 </div>
             </main>
