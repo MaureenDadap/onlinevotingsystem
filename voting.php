@@ -11,6 +11,7 @@ if (isset($_SESSION['id']))
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
 $date = date('M d, Y', time());
+$response = "";
 
 function checkIfVoted($user_id, $startDate, $endDate)
 {
@@ -55,24 +56,38 @@ if (isset($_POST['submit'])) {
     $rep3Id = $_POST['representative-3'];
     $rep4Id = $_POST['representative-4'];
 
-    //insert president vote
-    insertVote($user_id, $presidentId, "President");
-    //insert vice president vote
-    insertVote($user_id, $vPresidentId, "Vice President");
-    //insert secretary vote
-    insertVote($user_id, $secretaryId, "Secretary");
-    //insert treasurer vote
-    insertVote($user_id, $treasurerId, "Treasurer");
-    //insert rep 1 vote
-    insertVote($user_id, $rep1Id, "Representative 1");
-    //insert rep 2 vote
-    insertVote($user_id, $rep2Id, "Representative 2");
-    //insert rep 3 vote
-    insertVote($user_id, $rep3Id, "Representative 3");
-    //insert rep 4 vote
-    insertVote($user_id, $rep4Id, "Representative 4");
+    // reCAPTCHA validation
+    if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+        // reCAPTCHA response verification
+        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . RECAPTCHA_SECRET_KEY . '&response=' . $_POST['g-recaptcha-response']);
 
-    header('location: index.php');
+        // Decode JSON data
+        $response = json_decode($verifyResponse);
+        if ($response->success) {
+            //insert president vote
+            insertVote($user_id, $presidentId, "President");
+            //insert vice president vote
+            insertVote($user_id, $vPresidentId, "Vice President");
+            //insert secretary vote
+            insertVote($user_id, $secretaryId, "Secretary");
+            //insert treasurer vote
+            insertVote($user_id, $treasurerId, "Treasurer");
+            //insert rep 1 vote
+            insertVote($user_id, $rep1Id, "Representative 1");
+            //insert rep 2 vote
+            insertVote($user_id, $rep2Id, "Representative 2");
+            //insert rep 3 vote
+            insertVote($user_id, $rep3Id, "Representative 3");
+            //insert rep 4 vote
+            insertVote($user_id, $rep4Id, "Representative 4");
+
+            header('location: index.php');
+        } else {
+            $response = "captcha failed";
+        }
+    } else {
+        $response = "unchecked";
+    }
 }
 ?>
 
@@ -132,7 +147,7 @@ if (isset($_POST['submit'])) {
                 </header>
                 <main>
                     <div class="container voting">
-                        <form action="" method="POST">
+                        <form action="" method="POST" id="votingForm">
                             <!-- ======= Presidents Row ======= -->
                             <h3 class="text-center">President</h3>
                             <?php
@@ -332,8 +347,23 @@ if (isset($_POST['submit'])) {
                             <?php endif ?>
                             <!-- End Representatives 4 Row -->
 
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-default" name="submit">Submit my Vote</button>
+
+                            <div class="d-flex flex-column align-items-center">
+                                <?php
+                                if ($response === "unchecked") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Plese check on the reCAPTCHA box.
+                                    </div>
+                                <?php
+                                elseif ($response === "captcha failed") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Robot verification failed, please try again.
+                                    </div>
+                                <?php endif ?>
+                                <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_CLIENT_KEY ?>"></div>
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-default" name="submit" id="formBtn">Submit my Vote</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -374,10 +404,20 @@ if (isset($_POST['submit'])) {
 
     <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         window.onbeforeunload = function() {
             return 'Are you sure? Your work will be lost. ';
         };
+
+        // $("#formBtn").submit(function(event) {
+        //     var recaptcha = $("#g-recaptcha-response").val();
+        //     if (recaptcha === "") {
+        //         event.preventDefault();
+        //         alert("Please check the recaptcha");
+        //     }
+        // });
     </script>
 </body>
 
