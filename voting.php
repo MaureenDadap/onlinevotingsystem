@@ -43,6 +43,7 @@ function insertVote($user_id, $candidate_id, $position)
 }
 
 if (isset($_POST['submit'])) {
+    //TODO SANITIZE AND VALIDATE
     $presidentId = $_POST['president'];
     $vPresidentId = $_POST['vice-president'];
     $secretaryId = $_POST['secretary'];
@@ -80,8 +81,8 @@ if (isset($_POST['submit'])) {
 <body>
     <?= navbar("voting"); ?>
     <?php
-    if (isset($_SESSION['user_type'])) {
-        if ($_SESSION['user_type'] === 'admin') { // if user logged in is admin 
+    if (isset($_SESSION['user_type'])) :
+        if ($_SESSION['user_type'] === 'admin') : // if user logged in is admin 
     ?>
             <main>
                 <div class="container">
@@ -97,8 +98,8 @@ if (isset($_POST['submit'])) {
                 </div>
             </main>
             <?php
-        } else { // if user logged in is a student
-            if (checkIfVoted($user_id, $startDate, $endDate) != 0) { // if user has already voted for current election duration 
+        else : // if user logged in is a student
+            if (checkIfVoted($user_id, $startDate, $endDate) != 0) : // if user has already voted for current election duration 
             ?>
                 <main>
                     <div class="container">
@@ -113,7 +114,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                 </main>
-            <?php } else { // if user has not yet voted for current election duration
+            <?php else : // if user has not yet voted for current election duration
             ?>
                 <header class="results py-3">
                     <div class="container">
@@ -133,11 +134,11 @@ if (isset($_POST['submit'])) {
                             <!-- ======= Presidents Row ======= -->
                             <h3 class="text-center">President</h3>
                             <?php
-                            if (getCandidates('President') && getCandidates('President')->num_rows > 0) { ?>
+                            if (getCandidates('President') && getCandidates('President')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("President");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -148,21 +149,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Presidents Row -->
 
                             <!-- ======= Vice Presidents Row ======= -->
                             <h3 class="text-center">Vice President</h3>
                             <?php
-                            if (getCandidates('Vice President') && getCandidates('Vice President')->num_rows > 0) { ?>
+                            if (getCandidates('Vice President') && getCandidates('Vice President')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Vice President");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -173,21 +174,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Vice Presidents Row -->
 
                             <!-- ======= Secretaries Row ======= -->
                             <h3 class="text-center">Secretary</h3>
                             <?php
-                            if (getCandidates('Secretary') && getCandidates('Secretary')->num_rows > 0) { ?>
+                            if (getCandidates('Secretary') && getCandidates('Secretary')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Secretary");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -198,21 +199,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Secretaries Row -->
 
                             <!-- ======= Treasurers Row ======= -->
                             <h3 class="text-center">Treasurer</h3>
                             <?php
-                            if (getCandidates('Treasurer') && getCandidates('Treasurer')->num_rows > 0) { ?>
+                            if (getCandidates('Treasurer') && getCandidates('Treasurer')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Treasurer");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -223,21 +224,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Treasurers Row -->
 
                             <!-- ======= Representatives 1 Row ======= -->
                             <h3 class="text-center">1st Year Representative</h3>
                             <?php
-                            if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) { ?>
+                            if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 1");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -248,21 +249,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Representatives 1 Row -->
 
                             <!-- ======= Representatives 2 Row ======= -->
                             <h3 class="text-center">2nd Year Representative</h3>
                             <?php
-                            if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) { ?>
+                            if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 2");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -273,21 +274,21 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Representatives 2 Row -->
 
                             <!-- ======= Representatives 3 Row ======= -->
                             <h3 class="text-center">3rd Year Representative</h3>
                             <?php
-                            if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) { ?>
+                            if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 3");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -298,21 +299,20 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div> <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Representatives 3 Row -->
 
                             <!-- ======= Representatives 4 Row ======= -->
                             <h3 class="text-center">4th Year Representative</h3>
                             <?php
-                            if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) { ?>
+                            if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) : ?>
                                 <div class="d-flex justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 4");
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
                                             <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
@@ -323,11 +323,11 @@ if (isset($_POST['submit'])) {
                                                 <span><?php echo $data['section'] ?></span>
                                             </div>
                                         </div>
-                                    <?php  } ?>
-                                </div> <?php } else { ?>
-
+                                    <?php endwhile ?>
+                                </div>
+                            <?php else : ?>
                                 <h5 class="py-5 text-center">No candidates in the database.</h5>
-                            <?php  } ?>
+                            <?php endif ?>
                             <!-- End Representatives 4 Row -->
 
                             <div class="d-flex justify-content-center">
@@ -336,9 +336,9 @@ if (isset($_POST['submit'])) {
                         </form>
                     </div>
                 </main>
-        <?php }
-        }
-    } else { //if user is not logged in 
+        <?php endif;
+        endif;
+    else :  //if user is not logged in 
         ?>
         <main>
             <div class="container">
@@ -353,7 +353,7 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
         </main>
-    <?php } ?>
+    <?php endif ?>
 
     <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>

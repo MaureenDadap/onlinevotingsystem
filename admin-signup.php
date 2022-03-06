@@ -6,6 +6,7 @@ include('common/website_info.php');
 
 function adminSignUp()
 {
+    //TODO SANITIZE AND VALIDATE
     $conn = Connect();
 
     $username = $conn->escape_string($_POST['username']);
@@ -74,11 +75,9 @@ function adminSignUp()
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password2" name="password2" minlength="8" required>
                                 </div>
-                                <?php
-                                if (isset($_POST['submit'])) {
+                                <?php if (isset($_POST['submit'])) :
                                     adminSignUp();
-                                }
-                                ?>
+                                endif ?>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                             </form>
                             <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>

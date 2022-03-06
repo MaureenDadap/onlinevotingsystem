@@ -90,10 +90,9 @@ function studentSignUp()
                                     <input type="password" class="form-control" id="password2" name="password2" minlength="8" required>
                                 </div>
                                 <?php
-                                if (isset($_POST['submit'])) {
+                                if (isset($_POST['submit'])) :
                                     studentSignUp();
-                                }
-                                ?>
+                                endif ?>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                             </form>
                             <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>

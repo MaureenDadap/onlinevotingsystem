@@ -6,6 +6,7 @@ require_once 'utils/connection.php';
 
 function logIn()
 {
+    //TODO VALIDATE AND SANITIZE
     // Define $username and $password
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -75,9 +76,9 @@ function logIn()
                                 </div>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-4">Log In</button>
                                 <?php
-                                if (isset($_POST['submit'])) {
+                                if (isset($_POST['submit'])) :
                                     logIn();
-                                } ?>
+                                endif ?>
                             </form>
                             <p class="text-center">Don't have an account? <br> <a href="student-signup.php">Register as Student</a> or <a href="admin-signup.php">Register as Admin</a></p>
                         </div>
@@ -87,7 +88,7 @@ function logIn()
         </div>
     </main>
 
-    <?php include 'common/footer.php';?>
+    <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 

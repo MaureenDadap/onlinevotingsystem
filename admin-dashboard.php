@@ -133,10 +133,10 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                 if ($pos_selected == "")
                                     $pos_selected = "President";
 
-                                if (getCandidatesVotes($pos_selected, null) != false && getCandidates($pos_selected, null)->num_rows > 0) {
+                                if (getCandidatesVotes($pos_selected, null) != false && getCandidates($pos_selected, null)->num_rows > 0) :
                                     $result = getCandidatesVotes($pos_selected, null);
                                     $rank = 1;
-                                    while ($data = $result->fetch_assoc()) { ?>
+                                    while ($data = $result->fetch_assoc()) : ?>
                                         <div class="rounded ranking d-flex flex-row align-items-center m-2 px-5 py-3 <?php if ($rank == 1) echo 'bg-yellow';
                                                                                                                         else echo 'bg-gray' ?>">
                                             <h4 class="my-0 me-3">#<?= $rank ?></h4>
@@ -148,8 +148,8 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                         </div>
                                 <?php
                                         $rank++;
-                                    }
-                                }
+                                    endwhile;
+                                endif;
                                 ?>
                             </div>
                         </div>

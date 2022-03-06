@@ -135,18 +135,18 @@ if (getPartylists()->num_rows === 0) {
                                     <option value="">Choose...</option>
                                     <?php
                                     $result = getPartylists();
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                         $name = $data['name'];
                                         $isSelected = "";
                                         if ($name === $party_selected)
                                             $isSelected = 'selected="selected"';
                                         echo '<option value="' . $name . '"' . $isSelected . '")>' . $name . '</option>';
-                                    } ?>
+                                    endwhile ?>
                                 </select>
                             </div>
                         </form>
                         <?php
-                        if ($party_selected != "") { ?>
+                        if ($party_selected != "") : ?>
                             <h3 class="me-3"><?= $party_selected ?></h3>
                             <table class="table">
                                 <thead>
@@ -163,7 +163,7 @@ if (getPartylists()->num_rows === 0) {
                                 <tbody>
                                     <?php
                                     $result = getCandidates($party_selected);
-                                    while ($data = $result->fetch_assoc()) {
+                                    while ($data = $result->fetch_assoc()) :
                                     ?>
 
                                         <tr>
@@ -176,12 +176,12 @@ if (getPartylists()->num_rows === 0) {
                                             <td><button class="btn btn-default" data-bs-toggle="modal" data-bs-target="#edit-position"><span class="bi-pencil-fill"></span></button></td>
                                         </tr>
 
-                                    <?php } ?>
+                                    <?php endwhile ?>
                                 </tbody>
                             </table>
-                        <?php  } else { ?>
+                        <?php else : ?>
                             <h5 class="py-5 mx-auto">No partylist is selected.</h5>
-                        <?php  } ?>
+                        <?php endif ?>
                     </div>
                 </div>
             </main>
