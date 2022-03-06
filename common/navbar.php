@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg" role="navigation">
     <div class="container">
         <a href="index.php" class="navbar-brand d-flex align-items-center">
@@ -11,10 +10,15 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
             <?php
-            if (isset($_SESSION['user_type'])) {
-                if ($_SESSION['user_type'] === 'admin') { //if admin 
+            if (isset($_SESSION['user_type'])) :
+                if ($_SESSION['user_type'] === 'admin') : //if admin 
             ?>
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="admin-dashboard.php" class="nav-link <?php if ($page === " dashboard") echo ' active' ?>">
                                 <span class="bi-speedometer"></span> Admin Dashboard</a>
@@ -23,20 +27,30 @@
                             <a href="utils/logout.php" class="btn btn-danger">Log out</a>
                         </li>
                     </ul>
-                <?php } else if ($_SESSION['user_type'] === 'student') { //if student
+                <?php elseif ($_SESSION['user_type'] === 'student') : //if student
                 ?>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a href="candidates-list.php" class="nav-link <?php if ($page === "candidates") echo ' active' ?>">
-                                <span class="bi-people-fill"></span> Candidates</a></li>
-                        <li class="nav-item"><a href="voting.php" class="nav-link <?php if ($page === "voting") echo ' active' ?>">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="candidates-list.php" class="nav-link <?php if ($page === "candidates") echo ' active' ?>">
+                                <span class="bi-people-fill"></span> Candidates
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="voting.php" class="nav-link <?php if ($page === "voting") echo ' active' ?>">
                                 <span class="bi-clipboard-check-fill"></span> Voting Ballot
-                            </a></li>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="utils/logout.php" class="btn btn-danger">Log out</a>
                         </li>
                     </ul>
-                <?php }
-            } else { ?>
+                <?php endif;
+            else : ?>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +64,8 @@
                     <li class="nav-item">
                         <a href="login.php" class="btn btn-default">Login</a>
                     </li>
-                </ul> <?php } ?>
+                </ul>
+            <?php endif ?>
         </div>
     </div>
 </nav>

@@ -159,9 +159,10 @@ function studentSignUp(string $response)
         sendActivationEmail($email, $hash);
         $response = "success";
     }
+    return $response;
 }
 
-function logIn()
+function logIn(string $response)
 {
     //TODO VALIDATE AND SANITIZE
     // Define $username and $password
@@ -169,32 +170,38 @@ function logIn()
     $password = $_POST['password'];
     $user_type = 0;
     $id = -1;
+    $emailAuth = 0;
+    $redirect = "";
     $conn = Connect();
 
     // SQL query to fetch information of registerd users and finds user match.
-    $query = 'SELECT id, username, password, is_admin FROM users WHERE username=? AND password=? LIMIT 1';
+    $query = 'SELECT id, username, password, is_admin, email_authenticated FROM users WHERE username=? AND password=? LIMIT 1';
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
-    $stmt->bind_result($id, $username, $password, $user_type);
+    $stmt->bind_result($id, $username, $password, $user_type, $emailAuth);
     $stmt->store_result();
 
     if ($stmt->fetch()) {
-        $_SESSION['id'] = $id;
+        if ($emailAuth === 1) {
+            $_SESSION['id'] = $id;
+            $_SESSION['username'] = $username;
 
-        if ($user_type == 0)
-            $_SESSION['user_type'] = 'student';
-        else
-            $_SESSION['user_type'] = 'admin';
-
-        header("location: index.php");
+            if ($user_type == 0) {
+                $_SESSION['user_type'] = 'student';
+                $redirect = 'index.php';
+            } else {
+                $_SESSION['user_type'] = 'admin';
+                $redirect = 'admin-dashboard.php';
+            }
+            header("location: " . $redirect);
+        } else
+            $response = "not authenticated";
     } else {
-        echo '
-    <div class="alert alert-danger" role="alert">
-    Invalid user!
-    </div>';
+        $response = "wrong credentials";
     }
 
     $conn->close();
+    return $response;
 }

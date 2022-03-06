@@ -73,6 +73,15 @@ a:hover {
   width: 100%;
 }
 
+.navbar-collapse {
+  background-color: #fff;
+}
+
+.navbar-collapse.show {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .navbar-brand img {
   height: 35px;
 }

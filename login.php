@@ -4,6 +4,9 @@ require_once('common/components.php');
 include('config/website_info.php');
 require_once 'utils/auth.php';
 
+$response = "";
+if (isset($_POST['submit']))
+    $response = logIn($response);
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +40,19 @@ require_once 'utils/auth.php';
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
-                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-4">Log In</button>
                                 <?php
-                                if (isset($_POST['submit'])) :
-                                    logIn();
-                                endif ?>
+                                if ($response === "wrong credentials") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Invalid User!
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "not authenticated") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        You must be authenticated in order to log in!
+                                    </div>
+                                <?php endif; ?>
+                                <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Log In</button>
                             </form>
                             <p class="text-center">Don't have an account? <br> <a href="student-signup.php">Register as Student</a> or <a href="admin-signup.php">Register as Admin</a></p>
                         </div>

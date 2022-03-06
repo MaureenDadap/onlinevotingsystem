@@ -34,13 +34,11 @@ $date = date('M d, Y', time())
                 <div class="col-8 shadow-lg py-5 mb-5 bg-white">
                     <h2>The student council election is
                         <?php
-                        if ($date >= $startDate || $date <= $endDate) : //if today is not between start and end of election
-                            //if ($endDate < $date) :
-                        ?>
-                            <strong><span class="text-danger">closed</span></strong>
-                        <?php else :
+                        if ($date >= $startDate && $date <= $endDate) : //if today is not between start and end of election
                         ?>
                             <strong><span class="text-success">ongoing</span></strong>
+                        <?php else : ?>
+                            <strong><span class="text-danger">closed</span></strong>
                         <?php endif ?>
                     </h2>
                     <h5>Open from <?= $startDate ?> - <?= $endDate ?></h5>

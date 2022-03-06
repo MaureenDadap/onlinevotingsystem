@@ -14,7 +14,6 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
     $user = findUnverifiedUser($hash, $email);
     // if user exists and activate the user successfully
     if ($user && activateUser($user['id'])) {
-        echo 'activated';
         $response = "verified";
     } else {
         $response = "invalid";
@@ -48,7 +47,8 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <h1>Invalid Verification.</h1>
-                        <h5>Re-check your verification link or try registering again.</h5>
+                        <h5>You have either already been verified or you entered an invalid verification code.</h5>
+                        <h6>Re-check your verification link or try registering again.</h6>
                     </div>
                     <div class="col-md-5">
                         <img src="images/sammy-page-under-construction.png" alt="error" class="w-100">
