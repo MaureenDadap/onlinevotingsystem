@@ -19,24 +19,6 @@ function checkUserNameExists($username): bool
     return false;
 }
 
-/** Checks if email is already in use by someone in the db
- * to prevent duplication of votes
- */
-function checkEmailExists($email): bool
-{
-    $conn = Connect();
-    $query = 'SELECT email FROM users WHERE email=?';
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        return true;
-    }
-    return false;
-}
-
-
 function isUserActive($user)
 {
     return $user['email_authenticated'] === 1;
@@ -113,8 +95,6 @@ function adminSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
-    else if (checkEmailExists($email) === true)
-        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
@@ -147,8 +127,6 @@ function studentSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
-    else if (checkEmailExists($email) === true)
-        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);

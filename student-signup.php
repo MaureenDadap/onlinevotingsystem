@@ -82,12 +82,6 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 <?php
                                 endif;
-                                if ($response === "email exists") : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        Email is already in use.
-                                    </div>
-                                <?php
-                                endif;
                                 if ($response === "success") : ?>
                                     <div class="alert alert-success" role="alert">
                                         Successfully registered. Check your email for the verification link to successfully setup your account.
