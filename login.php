@@ -1,46 +1,9 @@
 <?php
 session_start();
 require_once('common/components.php');
-include('common/website_info.php');
-require_once 'utils/connection.php';
+include('config/website_info.php');
+require_once 'utils/auth.php';
 
-function logIn()
-{
-    //TODO VALIDATE AND SANITIZE
-    // Define $username and $password
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $user_type = 0;
-    $id = -1;
-    $conn = Connect();
-
-    // SQL query to fetch information of registerd users and finds user match.
-    $query = 'SELECT id, username, password, is_admin FROM users WHERE username=? AND password=? LIMIT 1';
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $stmt->bind_result($id, $username, $password, $user_type);
-    $stmt->store_result();
-
-    if ($stmt->fetch()) {
-        $_SESSION['id'] = $id;
-
-        if ($user_type == 0)
-            $_SESSION['user_type'] = 'student';
-        else
-            $_SESSION['user_type'] = 'admin';
-
-        header("location: index.php");
-    } else {
-        echo '
-    <div class="alert alert-danger" role="alert">
-    Invalid user!
-    </div>';
-    }
-
-    $conn->close();
-}
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +15,7 @@ function logIn()
     <main>
         <div class="container">
             <div class="text-center">
-                <h2>Welcome to <span><?= $website_name ?></span></h2>
+                <h2>Welcome to <span><?= WEBSITE_NAME ?></span></h2>
                 <p>Cast your votes or manage students by logging in.</p>
             </div>
             <div class="row mt-5 justify-content-center align-items-center">

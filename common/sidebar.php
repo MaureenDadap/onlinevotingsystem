@@ -1,11 +1,8 @@
-<?php
-include 'website_info.php';
-?>
 <ul class="nav nav-pills flex-column px-2 py-4 sidebar">
     <li class="nav-item brand">
         <a class="nav-link" href="index.php">
             <img src="images/logo-white.png" alt="logo">
-            <span><?= $website_name; ?></span>
+            <span><?= WEBSITE_NAME; ?></span>
         </a>
     </li>
     <hr>

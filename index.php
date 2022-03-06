@@ -2,7 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 require_once('common/components.php');
-include('common/website_info.php');
+include_once 'config/website_info.php';
 require_once 'utils/get-election-times.php';
 
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
@@ -30,6 +30,9 @@ $date = date('M d, Y', time())
                     <img src="images/sammy-34.png" alt="hero image">
                 </div>
             </div>
+            <form action="verify.php">
+                <input type="submit" class="btn btn-primary">Testing Email</input>
+            </form>
             <div class="row justify-content-center mb-5 text-center">
                 <div class="col-8 shadow-lg py-5 mb-5 bg-white">
                     <h2>The student council election is

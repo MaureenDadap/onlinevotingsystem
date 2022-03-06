@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('common/components.php');
-include('common/website_info.php');
+require_once 'config/website_info.php';
 //hello
 ?>
 

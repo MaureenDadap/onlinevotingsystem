@@ -1,34 +1,8 @@
 <?php
 session_start();
 require_once('common/components.php');
-require_once 'utils/connection.php';
-include('common/website_info.php');
-
-function adminSignUp()
-{
-    //TODO SANITIZE AND VALIDATE
-    $conn = Connect();
-
-    $username = $conn->escape_string($_POST['username']);
-    $email = $conn->escape_string($_POST['email']);
-    $password = $conn->escape_string($_POST['password']);
-    $password2 = $conn->escape_string($_POST['password2']);
-    $is_admin = 1;
-
-    if ($password != $password2)
-        echo '<div class="alert alert-danger" role="alert">
-        Pasword does not match.
-        </div>';
-    else {
-        $query = 'INSERT INTO users(username, email, password, is_admin) VALUES(?,?,?,?)';
-
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('sssi', $username, $email, $password, $is_admin);
-        $stmt->execute();
-        $conn->close();
-        header('location: login.php');
-    }
-}
+require_once 'utils/auth.php';
+include('config/website_info.php');
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +15,7 @@ function adminSignUp()
         <div class="container">
             <header class="text-center mb-5">
                 <h1>Hi, Admin</h1>
-                <h3>Welcome to <span><?= $website_name ?></span></h3>
+                <h3>Welcome to <span><?= WEBSITE_NAME ?></span></h3>
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
