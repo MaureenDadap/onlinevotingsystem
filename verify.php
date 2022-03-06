@@ -16,6 +16,8 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
     if ($user && activateUser($user['id'])) {
         echo 'activated';
         $response = "verified";
+    } else {
+        $response = "invalid";
     }
 }
 ?>
@@ -28,10 +30,35 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
     <?= navbar("") ?>
     <?php if ($response === "verified") : ?>
         <main>
-            <p>Successfully verified account. You can now login.</p>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <h1>You are already verified. You can now log in.</h1>
+                        <a href="login.php" class="btn btn-default">Log In</a>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="images/sammy-done.png" alt="success" class="w-100">
+                    </div>
+                </div>
+            </div>
+        </main>
+    <?php elseif ($response === "invalid") : ?>
+        <main>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <h1>Invalid Verification.</h1>
+                        <h5>Re-check your verification link or try registering again.</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="images/sammy-page-under-construction.png" alt="error" class="w-100">
+                    </div>
+                </div>
+            </div>
         </main>
     <?php endif ?>
     <?php include 'common/footer.php' ?>
+    <script src="js/bootstrap.bundle.js"></script>
 </body>
 
 </html>

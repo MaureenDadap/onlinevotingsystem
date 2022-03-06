@@ -3,6 +3,12 @@ session_start();
 require_once('common/components.php');
 include('config/website_info.php');
 require_once 'utils/auth.php';
+
+$response = "";
+
+if (isset($_POST['submit'])) {
+    $response = studentSignUp($response);
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,9 +70,29 @@ require_once 'utils/auth.php';
                                     <input type="password" class="form-control" id="password2" name="password2" minlength="8" required>
                                 </div>
                                 <?php
-                                if (isset($_POST['submit'])) :
-                                    studentSignUp();
-                                endif ?>
+                                if ($response === "password mismatch") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Pasword does not match.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "username exists") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Username is already in use.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "email exists") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Email is already in use.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "success") : ?>
+                                    <div class="alert alert-success" role="alert">
+                                        Successfully registered. Check your email for the verification link to successfully setup your account.
+                                    </div>
+                                <?php endif ?>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                             </form>
                             <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>

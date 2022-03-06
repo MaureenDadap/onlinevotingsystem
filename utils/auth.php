@@ -80,7 +80,7 @@ function findUnverifiedUser(string $activation_code, string $email)
         }
     }
 
-    $conn -> close();
+    $conn->close();
     return null;
 }
 
@@ -133,24 +133,31 @@ function studentSignUp(string $response)
 {
     $conn = Connect();
 
+    //TODO VALIDATE AND SANITIZE
     $username = $conn->escape_string($_POST['username']);
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $program = $conn->escape_string($_POST['program']);
     $password2 = $conn->escape_string($_POST['password2']);
+    $hash = generateMd5Hash();
+    $expiry = 1 * 24 * 60 * 60;
+    $authExpire = date('Y-m-d H:i:s',  time() + $expiry);
 
     if ($password != $password2)
-        echo '<div class="alert alert-danger" role="alert">
-        Pasword does not match.
-        </div>';
+        $response = "password mismatch";
+    else if (checkUserNameExists($username) === true)
+        $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
-        $query = 'INSERT INTO users(username, email, password, program) VALUES(?,?,?,?)';
-
+        $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('ssss', $username, $email, $password, $program);
+        $stmt->bind_param('ssssss', $username, $email, $password, $program, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
-        header('location: verify.php');
+
+        sendActivationEmail($email, $hash);
+        $response = "success";
     }
 }
 
