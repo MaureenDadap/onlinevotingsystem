@@ -7,8 +7,10 @@ require_once 'utils/get-election-times.php';
 
 if (isset($_SESSION['id']))
     $user_id = $_SESSION['id'];
-$startDate = getStartDate();
-$endDate = getEndDate();
+
+$startDate = date('M d, Y g:i A', strtotime(getStartDate()));
+$endDate = date('M d, Y g:i A', strtotime(getEndDate()));
+$date = date('M d, Y', time());
 
 function checkIfVoted($user_id, $startDate, $endDate)
 {
@@ -98,8 +100,8 @@ if (isset($_POST['submit'])) {
                 </div>
             </main>
             <?php
-        else : // if user logged in is a student
-            if (checkIfVoted($user_id, $startDate, $endDate) != 0) : // if user has already voted for current election duration 
+        elseif ($_SESSION['user_type'] === 'student' && ($date >= $startDate) && ($date <= $endDate)) : // if user logged in is a student and elections are still ongoing
+            if (checkIfVoted($user_id, getStartDate(), getEndDate()) != 0) : // if user has already voted for current election duration 
             ?>
                 <main>
                     <div class="container">
@@ -336,8 +338,23 @@ if (isset($_POST['submit'])) {
                         </form>
                     </div>
                 </main>
+            <?php endif;
+        elseif ($_SESSION['user_type'] === 'student' && !($date >= $startDate) && ($date <= $endDate)) : // if user logged in is a student and elections are closed
+            ?>
+            <main>
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <h1>Elections are closed.</h1>
+                            <h5>Open from <?= $startDate ?> - <?= $endDate ?></h5>
+                        </div>
+                        <div class="col-md-5">
+                            <img src="images/sammy-17.png" alt="error" class="w-100">
+                        </div>
+                    </div>
+                </div>
+            </main>
         <?php endif;
-        endif;
     else :  //if user is not logged in 
         ?>
         <main>

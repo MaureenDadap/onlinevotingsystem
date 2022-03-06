@@ -19,7 +19,7 @@ $totalVotes = countVotes();
 
 <body>
     <?= navbar(""); ?>
-    <?php if ($endDate > $date) : //if election is still ongoing 
+    <?php if (($date >= $startDate) || ($date <= $endDate)) : //if election is still ongoing 
     ?>
         <main>
             <div class="container">
@@ -34,7 +34,8 @@ $totalVotes = countVotes();
                 </div>
             </div>
         </main>
-    <?php else : ?>
+    <?php else : //if election is already closed 
+    ?>
         <header class="results py-3">
             <div class="container">
                 <div class="row justify-content-center align-items-center">

@@ -34,7 +34,8 @@ $date = date('M d, Y', time())
                 <div class="col-8 shadow-lg py-5 mb-5 bg-white">
                     <h2>The student council election is
                         <?php
-                        if ($endDate < $date) :
+                        if ($date >= $startDate || $date <= $endDate) : //if today is not between start and end of election
+                            //if ($endDate < $date) :
                         ?>
                             <strong><span class="text-danger">closed</span></strong>
                         <?php else :
@@ -45,9 +46,12 @@ $date = date('M d, Y', time())
                     <h5>Open from <?= $startDate ?> - <?= $endDate ?></h5>
                     <a href="candidates-list.php" class="my-4 btn btn-lg btn-outline-secondary">View Candidates</a>
                     <?php
-                    if ($endDate < $date) :
+                    if ($endDate <= $date) : //if election is already done
                     ?>
                         <a href="results.php" class="my-4 btn btn-lg btn-default">View Results</a>
+                    <?php elseif ($startDate >= $date) : //if election is not yet open : 
+                    ?>
+                        <a href="voting.php" class="my-4 btn btn-lg btn-default disabled">Vote Here</a>
                     <?php else :
                     ?>
                         <a href="voting.php" class="my-4 btn btn-lg btn-default">Vote Here</a>
