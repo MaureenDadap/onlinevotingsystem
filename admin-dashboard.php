@@ -41,6 +41,11 @@ function countCandidates($totalCandidates)
     return $totalCandidates;
 }
 
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+    header('location: index.php');
+}
+
+
 $pos_selected = "";
 
 if (isset($_GET['pos'])) {
