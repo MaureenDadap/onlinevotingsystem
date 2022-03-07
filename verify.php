@@ -18,6 +18,8 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
     } else {
         $response = "invalid";
     }
+} else {
+    header('location: index.php');
 }
 ?>
 
@@ -33,7 +35,7 @@ if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <h1>You are already verified. You can now log in.</h1>
-                        <a href="login.php" class="btn btn-default">Log In</a>
+                        <a href="login.php" class="btn btn-default">Proceed to Log In</a>
                     </div>
                     <div class="col-md-5">
                         <img src="images/sammy-done.png" alt="success" class="w-100">

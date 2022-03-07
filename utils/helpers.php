@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -20,12 +21,10 @@ function sendActivationEmail(string $email, string $activation_code): void
     $activation_link = APP_URL . "/verify.php?email=$email&activation_code=$activation_code";
 
     // set email subject & body
+    $email_template = './common/email-template.html';
     $subject = 'Please activate your E-lections account';
-    $message = <<<MESSAGE
-            Hi,
-            Please click the following link to activate your account. This link is valid for 1 day.
-            $activation_link
-            MESSAGE;
+    $message = file_get_contents($email_template);
+    $message = str_replace('%activation-link%', $activation_link, $message);
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);

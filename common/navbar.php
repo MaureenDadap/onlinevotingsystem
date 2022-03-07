@@ -15,9 +15,9 @@
             ?>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <span href="" class="nav-link">
                                 <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
-                            </a>
+                            </span>
                         </li>
                         <li class="nav-item">
                             <a href="admin-dashboard.php" class="nav-link <?php if ($page === " dashboard") echo ' active' ?>">
@@ -31,9 +31,9 @@
                 ?>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <span href="" class="nav-link">
                                 <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
-                            </a>
+                            </sp>
                         </li>
                         <li class="nav-item">
                             <a href="candidates-list.php" class="nav-link <?php if ($page === "candidates") echo ' active' ?>">

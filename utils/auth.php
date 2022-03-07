@@ -143,7 +143,6 @@ function studentSignUp(string $response)
 function logIn(string $response)
 {
     //TODO VALIDATE AND SANITIZE
-    // Define $username and $password
     $username = $_POST['username'];
     $password = $_POST['password'];
     $user_type = 0;
@@ -163,6 +162,9 @@ function logIn(string $response)
 
     if ($stmt->fetch()) {
         if ($emailAuth === 1) {
+            // prevent session fixation attack
+            session_regenerate_id();
+
             $_SESSION['id'] = $id;
             $_SESSION['username'] = $username;
 

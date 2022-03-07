@@ -80,8 +80,6 @@ if (isset($_POST['submit'])) {
             insertVote($user_id, $rep3Id, "Representative 3");
             //insert rep 4 vote
             insertVote($user_id, $rep4Id, "Representative 4");
-
-            header('location: index.php');
         } else {
             $response = "captcha failed";
         }
@@ -404,20 +402,11 @@ if (isset($_POST['submit'])) {
 
     <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
-    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         window.onbeforeunload = function() {
             return 'Are you sure? Your work will be lost. ';
         };
-
-        // $("#formBtn").submit(function(event) {
-        //     var recaptcha = $("#g-recaptcha-response").val();
-        //     if (recaptcha === "") {
-        //         event.preventDefault();
-        //         alert("Please check the recaptcha");
-        //     }
-        // });
     </script>
 </body>
 
