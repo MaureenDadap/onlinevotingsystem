@@ -7,7 +7,7 @@ require_once 'utils/get-election-times.php';
 
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
-$date = date('M d, Y', time())
+$date = date('M d, Y g:i A', time());
 ?>
 
 <!DOCTYPE html>

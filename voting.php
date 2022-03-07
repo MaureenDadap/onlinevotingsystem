@@ -10,40 +10,8 @@ if (isset($_SESSION['id']))
 
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
-$date = date('M d, Y', time());
+$date = date('M d, Y g:i A', time());
 $response = "";
-
-function checkIfVoted($user_id, $startDate, $endDate)
-{
-    $conn = Connect();
-    $userVotes = 0;
-    $query = "SELECT COUNT(*) as total FROM votes WHERE user_id =? AND datetime BETWEEN ? AND ?";
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('iss', $user_id, $startDate, $endDate);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        while ($data = $result->fetch_assoc()) {
-            $userVotes = $data['total'];
-        }
-    }
-
-    $conn->close();
-
-    return $userVotes;
-}
-
-function insertVote($user_id, $candidate_id, $position)
-{
-    $conn = Connect();
-    $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('iis', $user_id, $candidate_id, $position);
-    $stmt->execute();
-    $conn->close();
-}
 
 if (isset($_POST['submit'])) {
     //TODO SANITIZE AND VALIDATE
@@ -80,8 +48,6 @@ if (isset($_POST['submit'])) {
             insertVote($user_id, $rep3Id, "Representative 3");
             //insert rep 4 vote
             insertVote($user_id, $rep4Id, "Representative 4");
-
-            header('location: index.php');
         } else {
             $response = "captcha failed";
         }
@@ -404,20 +370,11 @@ if (isset($_POST['submit'])) {
 
     <?php include 'common/footer.php'; ?>
     <script src="js/bootstrap.bundle.js"></script>
-    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         window.onbeforeunload = function() {
             return 'Are you sure? Your work will be lost. ';
         };
-
-        // $("#formBtn").submit(function(event) {
-        //     var recaptcha = $("#g-recaptcha-response").val();
-        //     if (recaptcha === "") {
-        //         event.preventDefault();
-        //         alert("Please check the recaptcha");
-        //     }
-        // });
     </script>
 </body>
 

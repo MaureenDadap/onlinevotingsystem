@@ -3,6 +3,11 @@ session_start();
 require_once('common/components.php');
 require_once 'config/website_info.php';
 //hello
+
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+    header('location: index.php');
+}
+
 ?>
 
 <!DOCTYPE html>

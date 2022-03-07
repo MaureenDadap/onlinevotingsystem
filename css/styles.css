@@ -260,7 +260,7 @@ header.results {
   color: #280f1f;
 }
 
-.results h4 {
+.results h4, .results h5.red {
   font-weight: 700;
   color: #ff6947;
   margin-bottom: 1rem;

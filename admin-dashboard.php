@@ -5,7 +5,7 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/get-election-times.php';
-require_once 'utils/get-votes.php';
+require_once 'utils/helpers-votes.php';
 
 function countVoters()
 {
@@ -40,6 +40,11 @@ function countCandidates($totalCandidates)
     }
     return $totalCandidates;
 }
+
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+    header('location: index.php');
+}
+
 
 $pos_selected = "";
 
@@ -133,8 +138,8 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                 if ($pos_selected == "")
                                     $pos_selected = "President";
 
-                                if (getCandidatesVotes($pos_selected, null) != false && getCandidates($pos_selected, null)->num_rows > 0) :
-                                    $result = getCandidatesVotes($pos_selected, null);
+                                if (getCandidatesVotes($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) :
+                                    $result = getCandidatesVotes($pos_selected);
                                     $rank = 1;
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <div class="rounded ranking d-flex flex-row align-items-center m-2 px-5 py-3 <?php if ($rank == 1) echo 'bg-yellow';

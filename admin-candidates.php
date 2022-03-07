@@ -9,6 +9,10 @@ require_once 'utils/connection.php';
 $pos_selected = "";
 $response = "";
 
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+    header('location: index.php');
+}
+
 if (isset($_GET['pos'])) {
     //TODO VALIDATE/SANITIZE
     $pos_selected = $_GET['pos'];
