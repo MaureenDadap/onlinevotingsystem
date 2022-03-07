@@ -3,12 +3,13 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 require_once('common/components.php');
 require_once 'config/website_info.php';
+require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/get-votes.php';
 
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
-$date = date('M d, Y', time());
+$date = date('M d, Y g:i A', time());
 
 $totalVotes = countVotes();
 ?>
@@ -19,7 +20,7 @@ $totalVotes = countVotes();
 
 <body>
     <?= navbar(""); ?>
-    <?php if (($date >= $startDate) || ($date <= $endDate)) : //if election is still ongoing 
+    <?php if (($date >= $startDate) && ($date <= $endDate)) : //if election is still ongoing 
     ?>
         <main>
             <div class="container">
@@ -53,25 +54,163 @@ $totalVotes = countVotes();
         </header>
         <main class="results">
             <div class="container">
+                <!-- ======= President Row ======= -->
                 <div class="row text-center justify-content-center my-4">
-                    <?= resultsCandidate("President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                    <?php
+                    if (getCandidatesVotes("President", 1) != false && getCandidates("President", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("President", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h4>President</h4>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
                 </div>
+                <!-- End President Row -->
+
                 <hr>
+
+                <!-- ======= Vice President Row ======= -->
                 <div class="row text-center justify-content-center my-4">
-                    <?= resultsCandidate("Vice President", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+                    <?php
+                    if (getCandidatesVotes("Vice President", 1) != false && getCandidates("Vice President", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Vice President", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h4>Vice President</h4>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
                 </div>
+                <!-- End Vice President Row -->
+
                 <hr>
-                <div class="row text-center justify-content-center my-4 gy-4">
-                    <?= resultsCandidate("Secretary", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
-                    <?= resultsCandidate("Treasurer", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+
+                <!-- ======= Secretary and Treasurer Row ======= -->
+                <div class="row text-center justify-content-center my-4">
+                    <?php //Secretary
+                    if (getCandidatesVotes("Secretary", 1) != false && getCandidates("Secretary", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Secretary", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h4>Secretary</h4>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
+
+                    <?php //Treasurer
+                    if (getCandidatesVotes("Treasurer", 1) != false && getCandidates("Treasurer", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Treasurer", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h4>Treasurer</h4>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
                 </div>
+                <!-- End Secretary and Treasurer Row -->
+
                 <hr>
-                <div class="row text-center justify-content-center my-4 gy-4">
-                    <?= resultsCandidate("1st Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
-                    <?= resultsCandidate("2nd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
-                    <?= resultsCandidate("3rd Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
-                    <?= resultsCandidate("4th Year Representative", "Jane Doe", "images/college-student-budget.jpg", "BSCS191A"); ?>
+
+                <!-- ======= Representatives Row ======= -->
+                <div class="row text-center justify-content-center my-4">
+                    <?php //Representative 1
+                    if (getCandidatesVotes("Representative 1", 1) != false && getCandidates("Representative 1", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Representative 1", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h5 class="red">1st Year Representative</h5>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
+
+                    <?php //Representative 2
+                    if (getCandidatesVotes("Representative 2", 1) != false && getCandidates("Representative 2", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Representative 2", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h5 class="red">2nd Year Representative</h5>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
+
+                    <?php //Representative 3
+                    if (getCandidatesVotes("Representative 3", 1) != false && getCandidates("Representative 3", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Representative 3", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h5 class="red">3rd Year Representative</h5>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
+
+                    <?php //Representative 4
+                    if (getCandidatesVotes("Representative 4", 1) != false && getCandidates("Representative 4", 1)->num_rows > 0) :
+                        $result = getCandidatesVotes("Representative 4", 1);
+                        while ($data = $result->fetch_assoc()) : ?>
+                            <div class="col">
+                                <h5 class="red">4th Year Representative</h5>
+                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
+                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
+                                <h6><?php echo $data['section'] ?></h6>
+                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                            </div>
+                        <?php
+                        endwhile;
+                    else : ?>
+                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                    <?php endif ?>
                 </div>
+                <!-- End Representatives Row -->
             </div>
         </main>
     <?php endif ?>
