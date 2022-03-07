@@ -13,38 +13,6 @@ $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
 $date = date('M d, Y g:i A', time());
 $response = "";
 
-function checkIfVoted($user_id, $startDate, $endDate)
-{
-    $conn = Connect();
-    $userVotes = 0;
-    $query = "SELECT COUNT(*) as total FROM votes WHERE user_id =? AND datetime BETWEEN ? AND ?";
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('iss', $user_id, $startDate, $endDate);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        while ($data = $result->fetch_assoc()) {
-            $userVotes = $data['total'];
-        }
-    }
-
-    $conn->close();
-
-    return $userVotes;
-}
-
-function insertVote($user_id, $candidate_id, $position)
-{
-    $conn = Connect();
-    $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('iis', $user_id, $candidate_id, $position);
-    $stmt->execute();
-    $conn->close();
-}
-
 if (isset($_POST['submit'])) {
     //TODO SANITIZE AND VALIDATE
     $presidentId = $_POST['president'];
