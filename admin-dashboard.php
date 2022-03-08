@@ -6,6 +6,7 @@ require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/helpers-votes.php';
+require_once 'utils/auth.php';
 
 function countVoters()
 {
@@ -40,6 +41,8 @@ function countCandidates($totalCandidates)
     }
     return $totalCandidates;
 }
+
+checkInactivity();
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');

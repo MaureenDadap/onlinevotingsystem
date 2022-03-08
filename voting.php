@@ -4,6 +4,9 @@ require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
+require_once 'utils/auth.php';
+
+checkInactivity();
 
 if (isset($_SESSION['id']))
     $user_id = $_SESSION['id'];
@@ -335,7 +338,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 </main>
             <?php endif;
-        elseif ($_SESSION['user_type'] === 'student' && !($date >= $startDate) && ($date <= $endDate)) : // if user logged in is a student and elections are closed
+        else : // if user logged in is a student and elections are closed
             ?>
             <main>
                 <div class="container">

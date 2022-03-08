@@ -18,9 +18,3 @@ function sidebar($page)
   require_once './config/website_info.php';
   require_once('sidebar.php');
 }
-
-
-function resultsCandidate($position, $name, $image, $section)
-{
-  include 'results-candidate.php';
-}

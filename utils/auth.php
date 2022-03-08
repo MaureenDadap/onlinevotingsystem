@@ -163,10 +163,20 @@ function logIn(string $response)
     if ($stmt->fetch()) {
         if ($emailAuth === 1) {
             // prevent session fixation attack
-            session_regenerate_id();
+            session_regenerate_id(true);
+
+            // Anti-CSRF
+            if (array_key_exists("session_token", $_SESSION)) {
+                $session_token = $_SESSION['session_token'];
+            } else {
+                $session_token = "";
+            }
+
+            checkToken($_REQUEST['user_token'], $session_token, 'login.php');
 
             $_SESSION['id'] = $id;
             $_SESSION['username'] = $username;
+            $_SESSION['last_activity'] = time();
 
             if ($user_type == 0) {
                 $_SESSION['user_type'] = 'student';
@@ -184,4 +194,14 @@ function logIn(string $response)
 
     $conn->close();
     return $response;
+}
+
+function checkInactivity()
+{
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 60 * 10)) { //inactive for 10 mins
+        header('location: utils/logout.php');
+    } else {
+        session_regenerate_id(true);
+        $_SESSION['last_activity'] = time();
+    }
 }
