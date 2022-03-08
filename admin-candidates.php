@@ -42,8 +42,46 @@ function getCandidate($candidateId)
 
     return $result;
 }
+function addCandidate(){
+    $conn = Connect();
 
+    if($_POST['submit'] == "add-candidate"){
+        $first_name = $conn->escape_string($_POST['first-name']);
+        $last_name = $conn->escape_string($_POST['last-name']);
+        $position = $conn->escape_string($_POST['position']);
+        $section = $conn->escape_string($_POST['section']);
+        $description = $conn->escape_string($_POST['description']);
+        $image_dir = "images/";
+        $image = $conn->escape_string($_POST['image']);
+        $image_path = $image_dir . $image;
+        if(isset($_POST["submit"]))
+        $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
+        $stmt->execute();
+        $conn->close();
+        header('location: admin-candidates.php');
+    }   
+}
+
+function deleteCandidate(){
+    $conn = Connect();
+    
+    if($_POST['delete']){
+
+        $id = $_POST['delete_id'];
+
+        $query = "DELETE FROM candidates where id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $conn->close();
+        header('location: admin-candidates.php');
+    }
+}
+                    
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,10 +132,15 @@ function getCandidate($candidateId)
                             <input class="form-control" type="file" name="image" required>
                         </div>
                     </div>
+                    <?php
+                        if (isset($_POST['submit'])) {
+                        addCandidate();
+                        }
+                    ?>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit" value="add-candidate" class="btn btn-default">Submit</button>
-                    </div>
+                    </div>                    
                 </form>
             </div>
         </div>
@@ -151,6 +194,7 @@ function getCandidate($candidateId)
                         </div>
                     </div>
                     <div class="modal-footer">
+                        
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit" value="add-candidate" class="btn btn-default">Submit</button>
                     </div>
@@ -164,16 +208,26 @@ function getCandidate($candidateId)
     <div class="modal fade" id="delete-candidate" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
+               
                 <div class="modal-header">
                     <h5 class="modal-title">Delete Candidate</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this candidate?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </div>
+                <form action="" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="delete_id" id="delete_id">
+                        Are you sure you want to delete this candidate?
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" name ="delete" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+                <?php
+                        if (isset($_POST['delete'])) {
+                        deleteCandidate();
+                        }
+                ?>
             </div>
         </div>
     </div>
@@ -213,6 +267,7 @@ function getCandidate($candidateId)
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Picture</th>
                                         <th scope="col">Last Name</th>
                                         <th scope="col">First Name</th>
@@ -230,6 +285,7 @@ function getCandidate($candidateId)
                                         <form action="" method="POST">
                                             <tr>
                                                 <input type="hidden" name="candidate-id" value="<?php echo $data['id']; ?>">
+                                                <td><?php echo $data['id'] ?></td>
                                                 <td><img src="<?php echo $data['image_path'] ?>" alt="" class="rounded"></td>
                                                 <td><?php echo $data['last_name'] ?></td>
                                                 <td><?php echo $data['first_name'] ?></td>
@@ -238,7 +294,7 @@ function getCandidate($candidateId)
                                                 <td><?php echo $data['description'] ?></td>
                                                 <td>
                                                     <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
-                                                    <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
+                                                    <button class="btn btn-danger delete_btn" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
                                                 </td>
                                             </tr>
                                         </form>
