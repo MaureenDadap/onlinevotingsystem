@@ -8,6 +8,7 @@ require_once 'utils/connection.php';
 
 $pos_selected = "";
 $response = "";
+$tempID="";
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');
@@ -24,6 +25,7 @@ if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
 
     if ($_POST['submit'] == "delete") {
         $response = "delete";
+        echo $_POST['candidate-id'];
     } else if ($_POST['submit'] == "edit") {
         $response = "edit";
     }
@@ -58,6 +60,7 @@ function addCandidate(){
         $image_dir = "images/";
         $image = $conn->escape_string($_POST['image']);
         $image_path = $image_dir . $image;
+
         if(isset($_POST["submit"]))
         $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($query);
@@ -68,16 +71,38 @@ function addCandidate(){
     }   
 }
 
+function editCandidate(){
+    $conn = Connect();
+    $ID = $_POST['candidate-id'];
+
+    if($_POST['submit'] == "edit-candidate"){
+        $first_name = $conn->escape_string($_POST['first-name']);
+        $last_name = $conn->escape_string($_POST['last-name']);
+        $position = $conn->escape_string($_POST['position']);
+        $section = $conn->escape_string($_POST['section']);
+        $description = $conn->escape_string($_POST['description']);
+        $image_dir = "images/";
+        $image = $conn->escape_string($_POST['image']);
+        $image_path = $image_dir . $image;
+
+        if(isset($_POST["submit"]))
+        $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?";//dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
+        $stmt->execute();
+        $conn->close();
+        header('location: admin-candidates.php');
+    }   
+}   
+
 function deleteCandidate(){
     $conn = Connect();
-    
+    $ID=$_POST['candidate-id'];
+
     if($_POST['delete']){
-
-        $id = $_POST['delete_id'];
-
         $query = "DELETE FROM candidates where id=?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('i', $id);
+        $stmt->bind_param('i', $ID);
         $stmt->execute();
         $conn->close();
         header('location: admin-candidates.php');
@@ -197,10 +222,15 @@ function deleteCandidate(){
                             <input class="form-control" type="file" name="image" required>
                         </div>
                     </div>
+                    <?php
+                        if (isset($_POST['submit'])) {
+                        editCandidate();
+                        }
+                    ?>
                     <div class="modal-footer">
                         
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit" value="add-candidate" class="btn btn-default">Submit</button>
+                        <button type="submit" name="submit" value="edit-candidate" class="btn btn-default">Submit</button>
                     </div>
                 </form>
             </div>
@@ -219,19 +249,19 @@ function deleteCandidate(){
                 </div>
                 <form action="" method="POST">
                     <div class="modal-body">
-                        <input type="hidden" name="delete_id" id="delete_id">
                         Are you sure you want to delete this candidate?
                     </div>
                     
-                    <div class="modal-footer">
-                        <button type="submit" name ="delete" class="btn btn-danger">Delete</button>
-                    </div>
-                </form>
-                <?php
-                        if (isset($_POST['delete'])) {
+                    <?php
+                        if (isset($_POST['delete'])) {  //submit din dapat nasa loob niyan kaso ginawa ko na delete kasi ayaw gumana pag submit nilalagay ko
                         deleteCandidate();
                         }
-                ?>
+                    ?>
+
+                    <div class="modal-footer">
+                        <button type="submit" name ="delete" value ="delete-candidate" class="btn btn-danger">Delete</button> <!-- dito submit din dapat yung name ng button kaso ginawa ko nalang din delete-->
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -287,7 +317,7 @@ function deleteCandidate(){
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
                                             <tr>
-                                                <input type="hidden" name="candidate-id" value="<?php echo $data['id']; ?>">
+                                                <input type="hidden" name="candidate-id" value="<?php $tempID = $data['id']; echo $tempID;?>">
                                                 <td><?php echo $data['id'] ?></td>
                                                 <td><img src="<?php echo $data['image_path'] ?>" alt="" class="rounded"></td>
                                                 <td><?php echo $data['last_name'] ?></td>
@@ -297,7 +327,7 @@ function deleteCandidate(){
                                                 <td><?php echo $data['description'] ?></td>
                                                 <td>
                                                     <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
-                                                    <button class="btn btn-danger delete_btn" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
+                                                    <button class="btn btn-danger" type="submit" name="delete" value="delete"><span class="bi-trash-fill"></span></button> <!-- dito pinalitan ko yung button name ng delete kesa submit kaso hindi gagana yung modals pero gumagana yung delete function -->
                                                 </td>
                                             </tr>
                                         </form>
