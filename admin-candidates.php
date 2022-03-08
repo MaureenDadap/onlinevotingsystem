@@ -8,7 +8,7 @@ require_once 'utils/connection.php';
 
 $pos_selected = "";
 $response = "";
-$tempID="";
+$candidateId = -1;
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');
@@ -21,94 +21,71 @@ if (isset($_GET['pos'])) {
 
 if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
     //TODO VALIDATE/SANITIZE
-    $id = $_POST['candidate-id'];
+    $candidateId = $_POST['candidate-id'];
 
-    if ($_POST['submit'] == "delete") {
-        $response = "delete";
-        echo $_POST['candidate-id'];
-    } else if ($_POST['submit'] == "edit") {
-        $response = "edit";
+    if ($_POST['submit'] === "delete") {
+        $response = "delete"; // to show the delete modal
+    } else if ($_POST['submit'] === "edit") {
+        $response = "edit"; // to show the edit modal
     }
 }
 
-function getCandidate($candidateId)
-{
+if (isset($_POST['add'])) {
     //TODO VALIDATE/SANITIZE
     $conn = Connect();
+    $first_name = $conn->escape_string($_POST['first-name']);
+    $last_name = $conn->escape_string($_POST['last-name']);
+    $position = $conn->escape_string($_POST['position']);
+    $section = $conn->escape_string($_POST['section']);
+    $description = $conn->escape_string($_POST['description']);
+    $image_dir = "images/";
+    $image = $conn->escape_string($_POST['image']);
+    $image_path = $image_dir . $image;
 
-    $query = "SELECT * FROM candidates WHERE id=?";
+    $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
+    $stmt->execute();
+    $conn->close();
+    header('location: admin-candidates.php');
+}
+
+if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
+    //TODO VALIDATE/SANITIZE
+    $candidateId = $_POST['candidate-id'];
+
+    $conn = Connect();
+    $query = "DELETE FROM candidates where id=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $candidateId);
-
-    $stmt = $conn->prepare($query);
     $stmt->execute();
-    $result = $stmt->get_result();
-
     $conn->close();
-
-    return $result;
-}
-function addCandidate(){
-    $conn = Connect();
-
-    if($_POST['submit'] == "add-candidate"){
-        $first_name = $conn->escape_string($_POST['first-name']);
-        $last_name = $conn->escape_string($_POST['last-name']);
-        $position = $conn->escape_string($_POST['position']);
-        $section = $conn->escape_string($_POST['section']);
-        $description = $conn->escape_string($_POST['description']);
-        $image_dir = "images/";
-        $image = $conn->escape_string($_POST['image']);
-        $image_path = $image_dir . $image;
-
-        if(isset($_POST["submit"]))
-        $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
-        $stmt->execute();
-        $conn->close();
-        header('location: admin-candidates.php');
-    }   
+    header('location: admin-candidates.php');
 }
 
-function editCandidate(){
+if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
+    //TODO VALIDATE/SANITIZE
+    $id = $_POST['candidate-id'];
+
     $conn = Connect();
-    $ID = $_POST['candidate-id'];
 
-    if($_POST['submit'] == "edit-candidate"){
-        $first_name = $conn->escape_string($_POST['first-name']);
-        $last_name = $conn->escape_string($_POST['last-name']);
-        $position = $conn->escape_string($_POST['position']);
-        $section = $conn->escape_string($_POST['section']);
-        $description = $conn->escape_string($_POST['description']);
-        $image_dir = "images/";
-        $image = $conn->escape_string($_POST['image']);
-        $image_path = $image_dir . $image;
+    $first_name = $conn->escape_string($_POST['first-name']);
+    $last_name = $conn->escape_string($_POST['last-name']);
+    $position = $conn->escape_string($_POST['position']);
+    $section = $conn->escape_string($_POST['section']);
+    $description = $conn->escape_string($_POST['description']);
+    $image_dir = "images/";
+    $image = $conn->escape_string($_POST['image']);
+    $image_path = $image_dir . $image;
 
-        if(isset($_POST["submit"]))
-        $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?";//dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
-        $stmt->execute();
-        $conn->close();
-        header('location: admin-candidates.php');
-    }   
-}   
-
-function deleteCandidate(){
-    $conn = Connect();
-    $ID=$_POST['candidate-id'];
-
-    if($_POST['delete']){
-        $query = "DELETE FROM candidates where id=?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('i', $ID);
-        $stmt->execute();
-        $conn->close();
-        header('location: admin-candidates.php');
-    }
+    $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
+    $stmt->execute();
+    $conn->close();
+    header('location: admin-candidates.php');
 }
-                    
+
 ?>
 
 
@@ -161,15 +138,10 @@ function deleteCandidate(){
                             <input class="form-control" type="file" name="image" required>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_POST['submit'])) {
-                        addCandidate();
-                        }
-                    ?>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit" value="add-candidate" class="btn btn-default">Submit</button>
-                    </div>                    
+                        <button type="submit" name="add" class="btn btn-default">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -184,53 +156,69 @@ function deleteCandidate(){
                     <h5 class="modal-title">Edit Candidate Details</h5>
                 </div>
                 <form action="" method="POST">
+                    <?php
+
+                    //For the placeholder texts
+                    $first_name = "First Name";
+                    $last_name = "Last Name";
+                    $section = "Section";
+                    $position = "President";
+                    $description = "Description";
+
+                    if (getCandidateByID($candidateId) != false && getCandidateByID($candidateId)->num_rows > 0) {
+                        $result = getCandidateByID($candidateId);
+                        while ($data = $result->fetch_assoc()) {
+                            //For the placeholder texts
+                            $first_name = $data['first_name'];
+                            $last_name = $data['last_name'];
+                            $section = $data['section'];
+                            $position = $data['position'];
+                            $description = $data['description'];
+                        }
+                    }
+                    ?>
+                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <span class="visually-hidden" id="hidden-id"></span>
 
                             <label class="col-form-label">Name:</label>
                             <div class="col">
-                                <input type="text" name="first-name" class="firstname form-control" placeholder="First Name" required>
+                                <input type="text" name="first-name" class="firstname form-control" value="<?php echo $first_name ?>" required>
                             </div>
                             <div class="col">
-                                <input type="text" name="last-name" class="form-control" placeholder="Last name" required>
+                                <input type="text" name="last-name" class="form-control" value="<?php echo $last_name ?>" required>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Section:</label>
-                            <input type="text" name="section" class="form-control" placeholder="Section" required>
+                            <input type="text" name="section" class="form-control" value="<?php echo $section ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Position:</label>
                             <select class="form-select" name="position" required>
-                                <option value="President">President</option>
-                                <option value="Vice President">Vice President</option>
-                                <option value="Secretary">Secretary</option>
-                                <option value="Treasurer">Treasurer</option>
-                                <option value="Representative 1">1st Year Representative</option>
-                                <option value="Representative 2">2nd Year Representative</option>
-                                <option value="Representative 3">3rd Year Representative</option>
-                                <option value="Representative 4">4th Year Representative</option>
+                                <option value="President" <?php if ($position == "President") echo 'selected="selected"' ?>>President</option>
+                                <option value="Vice President" <?php if ($position == "Vice President") echo 'selected="selected"' ?>>Vice President</option>
+                                <option value="Secretary" <?php if ($position == "Secretary") echo 'selected="selected"' ?>>Secretary</option>
+                                <option value="Treasurer" <?php if ($position == "Treasurer") echo 'selected="selected"' ?>>Treasurer</option>
+                                <option value="Representative 1" <?php if ($position == "Representative 1") echo 'selected="selected"' ?>>1st Year Representative</option>
+                                <option value="Representative 2" <?php if ($position == "Representative 2") echo 'selected="selected"' ?>>2nd Year Representative</option>
+                                <option value="Representative 3" <?php if ($position == "Representative 3") echo 'selected="selected"' ?>>3rd Year Representative</option>
+                                <option value="Representative 4" <?php if ($position == "Representative 4") echo 'selected="selected"' ?>>4th Year Representative</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Description:</label>
-                            <textarea class="form-control" name="description" rows="3" required></textarea>
+                            <textarea class="form-control" name="description" rows="3" required><?php echo $description ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
                             <input class="form-control" type="file" name="image" required>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_POST['submit'])) {
-                        editCandidate();
-                        }
-                    ?>
                     <div class="modal-footer">
-                        
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit" value="edit-candidate" class="btn btn-default">Submit</button>
+                        <button type="submit" name="edit" class="btn btn-default">Submit</button>
                     </div>
                 </form>
             </div>
@@ -242,24 +230,17 @@ function deleteCandidate(){
     <div class="modal fade" id="delete-candidate" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-               
                 <div class="modal-header">
                     <h5 class="modal-title">Delete Candidate</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="" method="POST">
+                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
                     <div class="modal-body">
                         Are you sure you want to delete this candidate?
                     </div>
-                    
-                    <?php
-                        if (isset($_POST['delete'])) {  //submit din dapat nasa loob niyan kaso ginawa ko na delete kasi ayaw gumana pag submit nilalagay ko
-                        deleteCandidate();
-                        }
-                    ?>
-
                     <div class="modal-footer">
-                        <button type="submit" name ="delete" value ="delete-candidate" class="btn btn-danger">Delete</button> <!-- dito submit din dapat yung name ng button kaso ginawa ko nalang din delete-->
+                        <button type="submit" name="delete" class="btn btn-danger">Delete</button>
                     </div>
                 </form>
             </div>
@@ -317,7 +298,7 @@ function deleteCandidate(){
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
                                             <tr>
-                                                <input type="hidden" name="candidate-id" value="<?php $tempID = $data['id']; echo $tempID;?>">
+                                                <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
                                                 <td><?php echo $data['id'] ?></td>
                                                 <td><img src="<?php echo $data['image_path'] ?>" alt="" class="rounded"></td>
                                                 <td><?php echo $data['last_name'] ?></td>
@@ -327,7 +308,7 @@ function deleteCandidate(){
                                                 <td><?php echo $data['description'] ?></td>
                                                 <td>
                                                     <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
-                                                    <button class="btn btn-danger" type="submit" name="delete" value="delete"><span class="bi-trash-fill"></span></button> <!-- dito pinalitan ko yung button name ng delete kesa submit kaso hindi gagana yung modals pero gumagana yung delete function -->
+                                                    <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
                                                 </td>
                                             </tr>
                                         </form>
