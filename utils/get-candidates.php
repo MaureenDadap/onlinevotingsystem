@@ -23,6 +23,23 @@ function getCandidates($position)
     return $result;
 }
 
+function getCandidateByID(int $candidateId)
+{
+    //TODO VALIDATE/SANITIZE
+    $conn = Connect();
+
+    $query = "SELECT * FROM candidates WHERE id=?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $candidateId);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $conn->close();
+
+    return $result;
+}
+
 function getCandidatesVotes($position, int $limit = 0)
 {
     //TODO VALIDATE/SANITIZE
