@@ -3,10 +3,17 @@ session_start();
 require_once('common/components.php');
 include('config/website_info.php');
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
+
+if (isset($_SESSION['username']))
+    header('location: index.php');
 
 $response = "";
 if (isset($_POST['submit']))
     $response = logIn($response);
+
+// Anti-CSRF
+generateSessionToken();
 ?>
 
 <!DOCTYPE html>

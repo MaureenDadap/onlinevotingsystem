@@ -2,7 +2,9 @@
 session_start();
 require_once('common/components.php');
 require_once 'config/website_info.php';
-//hello
+require_once 'utils/auth.php';
+
+checkInactivity();
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');

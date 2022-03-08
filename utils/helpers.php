@@ -53,3 +53,27 @@ function sendActivationEmail(string $email, string $activation_code): void
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
+
+// Token functions --
+function checkToken($user_token, $session_token, $returnURL)
+{  # Validate the given (CSRF) token
+    if ($user_token !== $session_token || !isset($session_token)) {
+        echo 'CSRF token is incorrect';
+        header('location: ' . $returnURL);
+    }
+}
+
+function generateSessionToken()
+{  # Generate a brand new (CSRF) token
+    if (isset($_SESSION['session_token'])) {
+        destroySessionToken();
+    }
+    $_SESSION['session_token'] = md5(uniqid());
+}
+
+function destroySessionToken()
+{  # Destroy any session with the name 'session_token'
+    unset($_SESSION['session_token']);
+}
+
+// -- END (Token functions)

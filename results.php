@@ -6,6 +6,9 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/helpers-votes.php';
+require_once 'utils/auth.php';
+
+checkInactivity();
 
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));

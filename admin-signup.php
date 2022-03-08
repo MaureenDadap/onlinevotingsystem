@@ -4,6 +4,9 @@ require_once('common/components.php');
 require_once 'utils/auth.php';
 require_once 'config/website_info.php';
 
+if (isset($_SESSION['username']))
+    header('location: index.php');
+
 $response = "";
 
 if (isset($_POST['submit'])) {
