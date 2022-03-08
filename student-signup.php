@@ -1,34 +1,14 @@
 <?php
 session_start();
 require_once('common/components.php');
-include('common/website_info.php');
-require_once 'utils/connection.php';
+include('config/website_info.php');
+require_once 'utils/auth.php';
 
-function studentSignUp()
-{
-    $conn = Connect();
+$response = "";
 
-    $username = $conn->escape_string($_POST['username']);
-    $email = $conn->escape_string($_POST['email']);
-    $password = $conn->escape_string($_POST['password']);
-    $program = $conn->escape_string($_POST['program']);
-    $password2 = $conn->escape_string($_POST['password2']);
-
-    if ($password != $password2)
-        echo '<div class="alert alert-danger" role="alert">
-        Pasword does not match.
-        </div>';
-    else {
-        $query = 'INSERT INTO users(username, email, password, program) VALUES(?,?,?,?)';
-
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('ssss', $username, $email, $password, $program);
-        $stmt->execute();
-        $conn->close();
-        header('location: login.php');
-    }
+if (isset($_POST['submit'])) {
+    $response = studentSignUp($response);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +21,7 @@ function studentSignUp()
         <div class="container">
             <header class="text-center mb-5">
                 <h1>Hi, Student</h1>
-                <h3>Welcome to <span><?= $website_name ?></span></h3>
+                <h3>Welcome to <span><?= WEBSITE_NAME ?></span></h3>
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
@@ -90,10 +70,23 @@ function studentSignUp()
                                     <input type="password" class="form-control" id="password2" name="password2" minlength="8" required>
                                 </div>
                                 <?php
-                                if (isset($_POST['submit'])) {
-                                    studentSignUp();
-                                }
-                                ?>
+                                if ($response === "password mismatch") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Pasword does not match.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "username exists") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Username is already in use.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "success") : ?>
+                                    <div class="alert alert-success" role="alert">
+                                        Successfully registered. Check your email for the verification link to successfully setup your account.
+                                    </div>
+                                <?php endif ?>
                                 <button type="submit" name="submit" class="btn btn-lg btn-default w-100 mb-2">Sign Up</button>
                             </form>
                             <p class="text-center">Already have an account? <a href="login.php">Log In</a> instead.</p>

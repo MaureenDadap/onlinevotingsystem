@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('common/components.php');
-include('common/website_info.php');
+require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 ?>
 
@@ -29,11 +29,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>President</h3>
                 <?php
-                if (getCandidates('President') && getCandidates('President')->num_rows > 0) { ?>
+                if (getCandidates('President') && getCandidates('President')->num_rows > 0) : ?>
                     <div class="row row-cols-2 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("President");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -43,11 +43,11 @@ require_once 'utils/get-candidates.php';
                                     <p class="card-text"><?php echo $data['description'] ?></p>
                                 </div>
                             </div>
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Presidents Row -->
 
@@ -55,11 +55,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>Vice President</h3>
                 <?php
-                if (getCandidates('Vice President') && getCandidates('Vice President')->num_rows > 0) { ?>
+                if (getCandidates('Vice President') && getCandidates('Vice President')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Vice President");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -69,11 +69,11 @@ require_once 'utils/get-candidates.php';
                                     <p class="card-text"><?php echo $data['description'] ?></p>
                                 </div>
                             </div>
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Vice Presidents Row -->
 
@@ -81,11 +81,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>Secretary</h3>
                 <?php
-                if (getCandidates('Secretary') && getCandidates('Secretary')->num_rows > 0) { ?>
+                if (getCandidates('Secretary') && getCandidates('Secretary')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Secretary");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -95,11 +95,11 @@ require_once 'utils/get-candidates.php';
                                     <p class="card-text"><?php echo $data['description'] ?></p>
                                 </div>
                             </div>
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Secretaries Row -->
 
@@ -107,11 +107,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>Treasurer</h3>
                 <?php
-                if (getCandidates('Treasurer') && getCandidates('Treasurer')->num_rows > 0) { ?>
+                if (getCandidates('Treasurer') && getCandidates('Treasurer')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Treasurer");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -121,12 +121,11 @@ require_once 'utils/get-candidates.php';
                                     <p class="card-text"><?php echo $data['description'] ?></p>
                                 </div>
                             </div>
-
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Treasurers Row -->
 
@@ -134,11 +133,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>1st Year Representative</h3>
                 <?php
-                if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) { ?>
+                if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Representative 1");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -149,11 +148,11 @@ require_once 'utils/get-candidates.php';
                                 </div>
                             </div>
 
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Representatives 1 Row -->
 
@@ -161,11 +160,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>2nd Year Representative</h3>
                 <?php
-                if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) { ?>
+                if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Representative 2");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -176,11 +175,11 @@ require_once 'utils/get-candidates.php';
                                 </div>
                             </div>
 
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Representatives 2 Row -->
 
@@ -188,11 +187,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>3rd Year Representative</h3>
                 <?php
-                if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) { ?>
+                if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Representative 3");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -203,11 +202,11 @@ require_once 'utils/get-candidates.php';
                                 </div>
                             </div>
 
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Representatives 3 Row -->
 
@@ -215,11 +214,11 @@ require_once 'utils/get-candidates.php';
             <div class="row mb-5">
                 <h3>4th Year Representative</h3>
                 <?php
-                if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) { ?>
+                if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) : ?>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
                         <?php
                         $result = getCandidates("Representative 4");
-                        while ($data = $result->fetch_assoc()) {
+                        while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
                                 <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
@@ -229,12 +228,11 @@ require_once 'utils/get-candidates.php';
                                     <p class="card-text"><?php echo $data['description'] ?></p>
                                 </div>
                             </div>
-
-                        <?php  } ?>
+                        <?php endwhile ?>
                     </div>
-                <?php  } else { ?>
+                <?php else : ?>
                     <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                <?php  } ?>
+                <?php endif ?>
             </div>
             <!-- End Representatives 4 Row -->
         </div>
