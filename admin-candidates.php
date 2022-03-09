@@ -11,6 +11,7 @@ checkInactivity();
 $pos_selected = "";
 $response = "";
 $candidateId = -1;
+$valid_file = "";
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');
@@ -44,12 +45,31 @@ if (isset($_POST['add'])) {
     $image = $conn->escape_string($_POST['image']);
     $image_path = $image_dir . $image;
 
-    $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
-    $stmt->execute();
-    $conn->close();
-    header('location: admin-candidates.php');
+    //Validating Image File
+    $filename = $image;
+
+    $file_ext = explode('.', $filename);
+    $file_ext_check =strtolower(end($file_ext));
+
+    $valid_file_ext = array('png', 'jpg', 'jpeg');
+
+    if(in_array($file_ext_check, $valid_file_ext)){
+        $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
+        $stmt->execute();
+        $conn->close();
+        header('location: admin-candidates.php');
+    }
+    else{
+        $valid_file = "Invalid File";
+        echo $valid_file; //gusto ko sana ilagay to dun sa ilalim ng choose file sa modal kaso hindi ko alam kung pano gawin na hindi sumasara yung modal
+        
+    }
+    
+    
+    
+    
 }
 
 if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
@@ -67,6 +87,8 @@ if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
 
 if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     //TODO VALIDATE/SANITIZE
+    
+
     $id = $_POST['candidate-id'];
 
     $conn = Connect();
@@ -137,7 +159,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
-                            <input class="form-control" type="file" name="image" required>
+                            <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
+                            <?php echo $valid_file?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -215,7 +238,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
-                            <input class="form-control" type="file" name="image" required>
+                            <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
+                            <?php echo $valid_file?>
                         </div>
                     </div>
                     <div class="modal-footer">
