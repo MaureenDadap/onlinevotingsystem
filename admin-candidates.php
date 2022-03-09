@@ -113,8 +113,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
         header('location: admin-candidates.php');
     } else {
         $valid_file = "Invalid File";
-        echo $valid_file; //gusto ko sana ilagay to dun sa ilalim ng choose file sa modal kaso hindi ko alam kung pano gawin na hindi sumasara yung modal
-
+        $candidateId = $id;
+        $response = "edit error"; //created custom response that triggers js script that shows modal
     }
 }
 
@@ -168,7 +168,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
                             <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
-                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid ?>
+                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid 
+                            ?>
                                 <div class="alert alert-danger alert-dismissible my-3" role="alert">
                                     Invalid File!
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -195,7 +196,6 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                 </div>
                 <form action="" method="POST">
                     <?php
-
                     //For the placeholder texts
                     $first_name = "First Name";
                     $last_name = "Last Name";
@@ -252,7 +252,13 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
                             <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
-                            <?php echo $valid_file ?>
+                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid 
+                            ?>
+                                <div class="alert alert-danger alert-dismissible my-3" role="alert">
+                                    Invalid File!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -375,6 +381,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
             deleteModal.show();
         } else if (response == "add error") {
             addModal.show();
+        } else if (response == "edit error") {
+            editModal.show();
         }
     </script>
 </body>
