@@ -102,12 +102,29 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $image = $conn->escape_string($_POST['image']);
     $image_path = $image_dir . $image;
 
-    $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
-    $stmt->execute();
-    $conn->close();
-    header('location: admin-candidates.php');
+    //Validating Image File
+    $filename = $image;
+
+    $file_ext = explode('.', $filename);
+    $file_ext_check =strtolower(end($file_ext));
+
+    $valid_file_ext = array('png', 'jpg', 'jpeg');
+
+    if(in_array($file_ext_check, $valid_file_ext)){
+        $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
+        $stmt->execute();
+        $conn->close();
+        header('location: admin-candidates.php');
+    }
+    else{
+        $valid_file = "Invalid File";
+        echo $valid_file; //gusto ko sana ilagay to dun sa ilalim ng choose file sa modal kaso hindi ko alam kung pano gawin na hindi sumasara yung modal
+        
+    }
+
+    
 }
 
 ?>
