@@ -49,27 +49,21 @@ if (isset($_POST['add'])) {
     $filename = $image;
 
     $file_ext = explode('.', $filename);
-    $file_ext_check =strtolower(end($file_ext));
+    $file_ext_check = strtolower(end($file_ext));
 
     $valid_file_ext = array('png', 'jpg', 'jpeg');
 
-    if(in_array($file_ext_check, $valid_file_ext)){
+    if (in_array($file_ext_check, $valid_file_ext)) {
         $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
         $stmt->execute();
         $conn->close();
         header('location: admin-candidates.php');
-    }
-    else{
+    } else {
         $valid_file = "Invalid File";
-        echo $valid_file; //gusto ko sana ilagay to dun sa ilalim ng choose file sa modal kaso hindi ko alam kung pano gawin na hindi sumasara yung modal
-        
+        $response = "add error"; //created custom response that triggers js script that shows modal
     }
-    
-    
-    
-    
 }
 
 if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
@@ -87,7 +81,7 @@ if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
 
 if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     //TODO VALIDATE/SANITIZE
-    
+
 
     $id = $_POST['candidate-id'];
 
@@ -106,25 +100,22 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $filename = $image;
 
     $file_ext = explode('.', $filename);
-    $file_ext_check =strtolower(end($file_ext));
+    $file_ext_check = strtolower(end($file_ext));
 
     $valid_file_ext = array('png', 'jpg', 'jpeg');
 
-    if(in_array($file_ext_check, $valid_file_ext)){
+    if (in_array($file_ext_check, $valid_file_ext)) {
         $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
         $stmt->execute();
         $conn->close();
         header('location: admin-candidates.php');
-    }
-    else{
+    } else {
         $valid_file = "Invalid File";
         echo $valid_file; //gusto ko sana ilagay to dun sa ilalim ng choose file sa modal kaso hindi ko alam kung pano gawin na hindi sumasara yung modal
-        
-    }
 
-    
+    }
 }
 
 ?>
@@ -177,7 +168,12 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
                             <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
-                            <?php echo $valid_file?>
+                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid ?>
+                                <div class="alert alert-danger alert-dismissible my-3" role="alert">
+                                    Invalid File!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -256,7 +252,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
                             <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg" required>
-                            <?php echo $valid_file?>
+                            <?php echo $valid_file ?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -370,12 +366,15 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     <script src="js/jquery-3.6.0.min.js"></script>
     <script>
         var response = "<?php echo $response ?>";
+        var addModal = new bootstrap.Modal($('#add-candidate'));
         var editModal = new bootstrap.Modal($('#edit-candidate'));
         var deleteModal = new bootstrap.Modal($('#delete-candidate'));
         if (response == "edit") {
             editModal.show();
         } else if (response == "delete") {
             deleteModal.show();
+        } else if (response == "add error") {
+            addModal.show();
         }
     </script>
 </body>
