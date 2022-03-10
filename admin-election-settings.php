@@ -4,6 +4,7 @@ require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
 
 checkInactivity();
 
@@ -24,6 +25,9 @@ $close = date('Y-m-d\TH:i', strtotime(getEndDate()));
 $response = "";
 
 if (isset($_POST['submit'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-election-settings.php');
+
     //TODO VALIDATE SANITIZE
     $conn = Connect();
 
@@ -76,6 +80,7 @@ if (isset($_POST['submit'])) {
                         <div class="col-lg-6">
                             <div class=" col admin card">
                                 <form action="" method="POST">
+                                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
                                     <h5>Set Election Opening</h5>
                                     <input type="datetime-local" class="date my-2" name="start" id="start" value='<?php echo $start; ?>' required>
                                     <h5 class="mt-2">Set Election Closing</h5>

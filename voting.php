@@ -5,6 +5,8 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
+require_once 'utils/helpers-votes.php';
 
 checkInactivity();
 
@@ -17,15 +19,26 @@ $date = date('M d, Y g:i A', time());
 $response = "";
 
 if (isset($_POST['submit'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'voting.php');
+
     //TODO SANITIZE AND VALIDATE
-    $presidentId = $_POST['president'];
-    $vPresidentId = $_POST['vice-president'];
-    $secretaryId = $_POST['secretary'];
-    $treasurerId = $_POST['treasurer'];
-    $rep1Id = $_POST['representative-1'];
-    $rep2Id = $_POST['representative-2'];
-    $rep3Id = $_POST['representative-3'];
-    $rep4Id = $_POST['representative-4'];
+    if (isset($_POST['president']))
+        $presidentId = $_POST['president'];
+    if (isset($_POST['vice-president']))
+        $vPresidentId = $_POST['vice-president'];
+    if (isset($_POST['secretary']))
+        $secretaryId = $_POST['secretary'];
+    if (isset($_POST['treasurer']))
+        $treasurerId = $_POST['treasurer'];
+    if (isset($_POST['representative-1']))
+        $rep1Id = $_POST['representative-1'];
+    if (isset($_POST['representative-2']))
+        $rep2Id = $_POST['representative-2'];
+    if (isset($_POST['representative-3']))
+        $rep3Id = $_POST['representative-3'];
+    if (isset($_POST['representative-4']))
+        $rep4Id = $_POST['representative-4'];
 
     // reCAPTCHA validation
     if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
@@ -36,21 +49,36 @@ if (isset($_POST['submit'])) {
         $response = json_decode($verifyResponse);
         if ($response->success) {
             //insert president vote
-            insertVote($user_id, $presidentId, "President");
+            if (!empty($presidentId))
+                insertVote($user_id, $presidentId, "President");
+
             //insert vice president vote
-            insertVote($user_id, $vPresidentId, "Vice President");
+            if (!empty($vPresidentId))
+                insertVote($user_id, $vPresidentId, "Vice President");
+
             //insert secretary vote
-            insertVote($user_id, $secretaryId, "Secretary");
+            if (!empty($secretaryId))
+                insertVote($user_id, $secretaryId, "Secretary");
+
             //insert treasurer vote
-            insertVote($user_id, $treasurerId, "Treasurer");
+            if (!empty($treasurerId))
+                insertVote($user_id, $treasurerId, "Treasurer");
+
             //insert rep 1 vote
-            insertVote($user_id, $rep1Id, "Representative 1");
+            if (!empty($rep1Id))
+                insertVote($user_id, $rep1Id, "Representative 1");
+
             //insert rep 2 vote
-            insertVote($user_id, $rep2Id, "Representative 2");
+            if (!empty($rep2Id))
+                insertVote($user_id, $rep2Id, "Representative 2");
+
             //insert rep 3 vote
-            insertVote($user_id, $rep3Id, "Representative 3");
+            if (!empty($rep3Id))
+                insertVote($user_id, $rep3Id, "Representative 3");
+
             //insert rep 4 vote
-            insertVote($user_id, $rep4Id, "Representative 4");
+            if (!empty($rep4Id))
+                insertVote($user_id, $rep4Id, "Representative 4");
         } else {
             $response = "captcha failed";
         }
@@ -117,6 +145,8 @@ if (isset($_POST['submit'])) {
                 <main>
                     <div class="container voting">
                         <form action="" method="POST" id="votingForm">
+                            <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
+
                             <!-- ======= Presidents Row ======= -->
                             <h3 class="text-center">President</h3>
                             <?php

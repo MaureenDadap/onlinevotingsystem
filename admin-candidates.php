@@ -5,6 +5,7 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
 
 checkInactivity();
 
@@ -17,11 +18,13 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
 }
 
 if (isset($_GET['pos'])) {
-    //TODO VALIDATE/SANITIZE
     $pos_selected = $_GET['pos'];
 }
 
 if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
     //TODO VALIDATE/SANITIZE
     $candidateId = $_POST['candidate-id'];
 
@@ -33,6 +36,9 @@ if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
 }
 
 if (isset($_POST['add'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
     //TODO VALIDATE/SANITIZE
     $conn = Connect();
     $first_name = $conn->escape_string($_POST['first-name']);
@@ -53,6 +59,9 @@ if (isset($_POST['add'])) {
 }
 
 if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
     //TODO VALIDATE/SANITIZE
     $candidateId = $_POST['candidate-id'];
 
@@ -66,6 +75,9 @@ if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
 }
 
 if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
     //TODO VALIDATE/SANITIZE
     $id = $_POST['candidate-id'];
 
@@ -87,7 +99,6 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $conn->close();
     header('location: admin-candidates.php');
 }
-
 ?>
 
 
@@ -104,6 +115,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <h5 class="modal-title">Add New Candidate</h5>
                 </div>
                 <form action="" method="POST">
+                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <label class="col-form-label">Name:</label>
@@ -179,6 +191,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         }
                     }
                     ?>
+                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
                     <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
@@ -237,6 +250,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="" method="POST">
+                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
                     <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
                     <div class="modal-body">
                         Are you sure you want to delete this candidate?
@@ -299,6 +313,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                                     $result = getCandidates($pos_selected);
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
+                                            <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
                                             <tr>
                                                 <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
                                                 <td><?php echo $data['id'] ?></td>
