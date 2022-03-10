@@ -25,8 +25,7 @@ if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
     // Check Anti-CSRF token
     checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
 
-    //TODO VALIDATE/SANITIZE
-    $candidateId = $_POST['candidate-id'];
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
 
     if ($_POST['submit'] === "delete") {
         $response = "delete"; // to show the delete modal
@@ -62,8 +61,7 @@ if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
     // Check Anti-CSRF token
     checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
 
-    //TODO VALIDATE/SANITIZE
-    $candidateId = $_POST['candidate-id'];
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
 
     $conn = Connect();
     $query = "DELETE FROM candidates where id=?";
@@ -78,11 +76,10 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     // Check Anti-CSRF token
     checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
 
-    //TODO VALIDATE/SANITIZE
-    $id = $_POST['candidate-id'];
-
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
     $conn = Connect();
 
+    //TODO VALIDATE/SANITIZE
     $first_name = $conn->escape_string($_POST['first-name']);
     $last_name = $conn->escape_string($_POST['last-name']);
     $position = $conn->escape_string($_POST['position']);

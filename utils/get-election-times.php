@@ -4,7 +4,6 @@ require_once 'connection.php';
 function getStartDate()
 {
     //TODO catch possible errors
-    //$startTime = new DateTime();
     $startTime = '';
     $conn = Connect();
     $query = "SELECT datetime_start FROM election_settings ORDER BY id DESC LIMIT 1";

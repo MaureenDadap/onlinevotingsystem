@@ -28,11 +28,10 @@ if (isset($_POST['submit'])) {
     // Check Anti-CSRF token
     checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-election-settings.php');
 
-    //TODO VALIDATE SANITIZE
     $conn = Connect();
 
-    $start = $_POST['start'];
-    $close = $_POST['close'];
+    $start = preg_replace("([^0-9/:\-T])", "", $_POST['start']); //allows only nums, : / - , and T
+    $close = preg_replace("([^0-9/:\-T])", "", $_POST['close']);
 
     if ($close <= $start) {
         $response = "invalid date";

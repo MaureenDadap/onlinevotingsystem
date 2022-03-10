@@ -10,7 +10,6 @@ require_once 'utils/auth.php';
 
 function countVoters()
 {
-    //TODO catch possible errors
     $totalVoters = 0;
     $is_admin = 0;
     $conn = Connect();
@@ -52,7 +51,6 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
 $pos_selected = "";
 
 if (isset($_GET['pos'])) {
-    //TODO VALIDATE/SANITIZE
     $pos_selected = $_GET['pos'];
 }
 

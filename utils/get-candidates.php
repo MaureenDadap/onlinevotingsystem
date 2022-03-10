@@ -4,7 +4,7 @@ require_once 'get-election-times.php';
 
 function getCandidates($position)
 {
-    //TODO VALIDATE/SANITIZE
+    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $conn = Connect();
     if ($position != "") {
         $query = "SELECT * FROM candidates WHERE position=?";
@@ -25,7 +25,7 @@ function getCandidates($position)
 
 function getCandidateByID(int $candidateId)
 {
-    //TODO VALIDATE/SANITIZE
+    $candidateId = filter_var($candidateId, FILTER_SANITIZE_NUMBER_INT);
     $conn = Connect();
 
     $query = "SELECT * FROM candidates WHERE id=?";
@@ -42,7 +42,9 @@ function getCandidateByID(int $candidateId)
 
 function getCandidatesVotes($position, int $limit = 0)
 {
-    //TODO VALIDATE/SANITIZE
+    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+
     $conn = Connect();
     $startDate = getStartDate();
     $endDate = getEndDate();

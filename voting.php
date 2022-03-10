@@ -22,23 +22,22 @@ if (isset($_POST['submit'])) {
     // Check Anti-CSRF token
     checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'voting.php');
 
-    //TODO SANITIZE AND VALIDATE
     if (isset($_POST['president']))
-        $presidentId = $_POST['president'];
+        $presidentId = filter_var($_POST['president'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['vice-president']))
-        $vPresidentId = $_POST['vice-president'];
+        $vPresidentId = filter_var($_POST['vice-president'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['secretary']))
-        $secretaryId = $_POST['secretary'];
+        $secretaryId = filter_var($_POST['secretary'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['treasurer']))
-        $treasurerId = $_POST['treasurer'];
+        $treasurerId = filter_var($_POST['treasurer'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['representative-1']))
-        $rep1Id = $_POST['representative-1'];
+        $rep1Id = filter_var($_POST['representative-1'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['representative-2']))
-        $rep2Id = $_POST['representative-2'];
+        $rep2Id = filter_var($_POST['representative-2'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['representative-3']))
-        $rep3Id = $_POST['representative-3'];
+        $rep3Id = filter_var($_POST['representative-3'], FILTER_SANITIZE_NUMBER_INT);
     if (isset($_POST['representative-4']))
-        $rep4Id = $_POST['representative-4'];
+        $rep4Id = filter_var($_POST['representative-4'], FILTER_SANITIZE_NUMBER_INT);
 
     // reCAPTCHA validation
     if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
@@ -48,37 +47,41 @@ if (isset($_POST['submit'])) {
         // Decode JSON data
         $response = json_decode($verifyResponse);
         if ($response->success) {
-            //insert president vote
-            if (!empty($presidentId))
-                insertVote($user_id, $presidentId, "President");
+            try {
+                //insert president vote
+                if (!empty($presidentId))
+                    insertVote($user_id, $presidentId, "President");
 
-            //insert vice president vote
-            if (!empty($vPresidentId))
-                insertVote($user_id, $vPresidentId, "Vice President");
+                //insert vice president vote
+                if (!empty($vPresidentId))
+                    insertVote($user_id, $vPresidentId, "Vice President");
 
-            //insert secretary vote
-            if (!empty($secretaryId))
-                insertVote($user_id, $secretaryId, "Secretary");
+                //insert secretary vote
+                if (!empty($secretaryId))
+                    insertVote($user_id, $secretaryId, "Secretary");
 
-            //insert treasurer vote
-            if (!empty($treasurerId))
-                insertVote($user_id, $treasurerId, "Treasurer");
+                //insert treasurer vote
+                if (!empty($treasurerId))
+                    insertVote($user_id, $treasurerId, "Treasurer");
 
-            //insert rep 1 vote
-            if (!empty($rep1Id))
-                insertVote($user_id, $rep1Id, "Representative 1");
+                //insert rep 1 vote
+                if (!empty($rep1Id))
+                    insertVote($user_id, $rep1Id, "Representative 1");
 
-            //insert rep 2 vote
-            if (!empty($rep2Id))
-                insertVote($user_id, $rep2Id, "Representative 2");
+                //insert rep 2 vote
+                if (!empty($rep2Id))
+                    insertVote($user_id, $rep2Id, "Representative 2");
 
-            //insert rep 3 vote
-            if (!empty($rep3Id))
-                insertVote($user_id, $rep3Id, "Representative 3");
+                //insert rep 3 vote
+                if (!empty($rep3Id))
+                    insertVote($user_id, $rep3Id, "Representative 3");
 
-            //insert rep 4 vote
-            if (!empty($rep4Id))
-                insertVote($user_id, $rep4Id, "Representative 4");
+                //insert rep 4 vote
+                if (!empty($rep4Id))
+                    insertVote($user_id, $rep4Id, "Representative 4");
+            } catch (Exception $e) {
+                echo 'something went wrong';
+            }
         } else {
             $response = "captcha failed";
         }
