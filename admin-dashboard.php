@@ -136,12 +136,11 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                     </div>
                                 </form>
                                 <h5 class="mb-3"><strong>Ranking</strong></h5>
-
                                 <?php
                                 if ($pos_selected == "")
                                     $pos_selected = "President";
 
-                                if (getCandidatesVotes($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) :
+                                if (getCandidatesVotes($pos_selected) != false && getCandidatesVotes($pos_selected)->num_rows > 0) :
                                     $result = getCandidatesVotes($pos_selected);
                                     $rank = 1;
                                     while ($data = $result->fetch_assoc()) : ?>
@@ -154,11 +153,12 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                                 <strong class=""><?php echo $data['VOTES'] ?> Votes</strong>
                                             </div>
                                         </div>
-                                <?php
+                                    <?php
                                         $rank++;
                                     endwhile;
-                                endif;
-                                ?>
+                                else : ?>
+                                    <h5 class="py-5 mx-auto">Insufficient Votes.</h5>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>
