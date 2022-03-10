@@ -23,22 +23,36 @@ function getCandidates($position)
     return $result;
 }
 
-function getCandidatesVotes($position, $id)
+function getCandidatesVotes($position, int $limit = 0)
 {
     //TODO VALIDATE/SANITIZE
     $conn = Connect();
     $startDate = getStartDate();
     $endDate = getEndDate();
 
-    if ($id == "") {
-        $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.position=? AND b.datetime BETWEEN ? AND ? GROUP BY a.id ORDER BY VOTES DESC";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('sss', $position, $startDate, $endDate);
-    } else {
-        $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.id=? AND b.datetime BETWEEN ? AND ? ORDER BY VOTES DESC LIMIT 1";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('iss', $id, $startDate, $endDate);
+    // if ($id == null) {
+    if ($limit === 0) {  //gets everyone ranked
+        $query = "SELECT a.*, count(*) as VOTES 
+                    FROM candidates a JOIN votes b ON a.id = b.candidate_id 
+                    WHERE a.position=? 
+                    AND b.datetime BETWEEN ? AND ? 
+                    GROUP BY a.id 
+                    ORDER BY VOTES DESC";
+    } else if ($limit === 1) { //gets top 1 from rank
+        $query = "SELECT a.*, count(*) as VOTES
+                    FROM candidates a JOIN votes b ON a.id = b.candidate_id 
+                    WHERE a.position=? 
+                    AND b.datetime BETWEEN ? AND ? 
+                    GROUP BY a.id 
+                    ORDER BY VOTES DESC LIMIT 1";
     }
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('sss', $position, $startDate, $endDate);
+    // } else { //gets by id
+    //     $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.id=? AND b.datetime BETWEEN ? AND ? ORDER BY VOTES DESC LIMIT 1";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bind_param('iss', $id, $startDate, $endDate);
+    // }
 
     $stmt->execute();
     $result = $stmt->get_result();
