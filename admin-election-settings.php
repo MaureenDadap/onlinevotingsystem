@@ -20,6 +20,7 @@ $endTime = date('g:i A', strtotime(getEndDate()));
 //dates that are placeholder for input fields
 $start = date('Y-m-d\TH:i', strtotime(getStartDate()));
 $close = date('Y-m-d\TH:i', strtotime(getEndDate()));
+
 $response = "";
 
 if (isset($_POST['submit'])) {
