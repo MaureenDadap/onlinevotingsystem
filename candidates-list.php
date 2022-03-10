@@ -3,6 +3,9 @@ session_start();
 require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
+require_once 'utils/auth.php';
+
+checkInactivity();
 ?>
 
 <!DOCTYPE html>
