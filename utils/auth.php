@@ -14,14 +14,24 @@ function checkUserNameExists($username): bool
     $result = $stmt->get_result();
     if ($result && $result->num_rows > 0) {
         return true;
-        echo 'username exists';
     }
     return false;
 }
 
-function isUserActive($user)
+/** Checks if email is already in use by someone in the db
+ */
+function checkEmailExists($email): bool
 {
-    return $user['email_authenticated'] === 1;
+    $conn = Connect();
+    $query = 'SELECT email FROM users WHERE email=?';
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return true;
+    }
+    return false;
 }
 
 function deleteUserById(int $id, int $active = 0)
@@ -82,7 +92,7 @@ function adminSignUp(string $response)
     //TODO SANITIZE AND VALIDATE
     $conn = Connect();
 
-    $username = $conn->escape_string($_POST['username']);
+    $username = $conn->escape_string(trim($_POST['username']));
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $password2 = $conn->escape_string($_POST['password2']);
@@ -96,6 +106,8 @@ function adminSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
@@ -115,7 +127,7 @@ function studentSignUp(string $response)
     $conn = Connect();
 
     //TODO VALIDATE AND SANITIZE
-    $username = $conn->escape_string($_POST['username']);
+    $username = $conn->escape_string(trim($_POST['username']));
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $program = $conn->escape_string($_POST['program']);
@@ -129,6 +141,8 @@ function studentSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
