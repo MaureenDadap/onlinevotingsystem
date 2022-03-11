@@ -52,11 +52,11 @@ if (isset($_POST['add'])) {
     $target_file = $image_dir . $image;
 
     //Filter input
-    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING);
-    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING);
+    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
     $new_position = filter_var($position, FILTER_SANITIZE_STRING);
-    $new_section = filter_var($section, FILTER_SANITIZE_STRING);
-    $new_description = filter_var($description, FILTER_SANITIZE_STRING);
+    $new_section = filter_var($section, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_description = filter_var($description, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
     //Validating Image File
     $filename = $image;
@@ -120,11 +120,11 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $target_file = $image_dir . $image;
 
     //Filter input
-    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING);
-    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING);
+    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
     $new_position = filter_var($position, FILTER_SANITIZE_STRING);
-    $new_section = filter_var($section, FILTER_SANITIZE_STRING);
-    $new_description = filter_var($description, FILTER_SANITIZE_STRING);
+    $new_section = filter_var($section, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_description = filter_var($description, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
     //Validating Image File
     $filename = $image;
