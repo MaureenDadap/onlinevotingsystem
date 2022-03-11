@@ -6,7 +6,7 @@ require_once 'utils/auth.php';
 
 $response = "";
 
-if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_code']) && !empty($_GET['activation_code'])) {
+if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_code']) && !empty($_GET['activation_code'])) {    
     // TODO VALIDATE AND SANITIZE
     $email = $_GET['email']; // Set email variable
     $hash = $_GET['activation_code']; // Set hash variable

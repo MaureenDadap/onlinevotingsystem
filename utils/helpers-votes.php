@@ -31,6 +31,7 @@ function countVotes()
 
 function checkIfVoted($user_id, $startDate, $endDate)
 {
+    //todo validate sanitize
     $conn = Connect();
     $userVotes = 0;
     $query = "SELECT COUNT(*) as total FROM votes WHERE user_id =? AND datetime BETWEEN ? AND ?";
@@ -52,7 +53,11 @@ function checkIfVoted($user_id, $startDate, $endDate)
 
 function insertVote($user_id, $candidate_id, $position)
 {
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+    $candidate_id = filter_var($candidate_id, FILTER_SANITIZE_NUMBER_INT);
+    
     $conn = Connect();
+    $position = $conn->escape_string($position);
     $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
 
     $stmt = $conn->prepare($query);

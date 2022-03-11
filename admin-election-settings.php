@@ -4,6 +4,7 @@ require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-election-times.php';
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
 
 checkInactivity();
 
@@ -24,11 +25,13 @@ $close = date('Y-m-d\TH:i', strtotime(getEndDate()));
 $response = "";
 
 if (isset($_POST['submit'])) {
-    //TODO VALIDATE SANITIZE
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-election-settings.php');
+
     $conn = Connect();
 
-    $start = $_POST['start'];
-    $close = $_POST['close'];
+    $start = preg_replace("([^0-9/:\-T])", "", $_POST['start']); //allows only 0-9 : / - , and T
+    $close = preg_replace("([^0-9/:\-T])", "", $_POST['close']); //allows only 0-9 : / - , and T
 
     if ($close <= $start) {
         $response = "invalid date";
@@ -63,23 +66,24 @@ if (isset($_POST['submit'])) {
                             <div class="admin card text-center">
                                 <div class="alert-success mb-3 p-3 rounded">
                                     <h6>Election Start</h6>
-                                    <h2><?= $startDate ?></h2>
-                                    <h4><?= $startTime ?></h4>
+                                    <h2><?php escapeString($startDate) ?></h2>
+                                    <h4><?php escapeString($startTime) ?></h4>
                                 </div>
                                 <div class="alert-danger p-3 rounded">
                                     <h6>Election End</h6>
-                                    <h2><?= $endDate ?></h2>
-                                    <h4><?= $endTime ?></h4>
+                                    <h2><?php escapeString($endDate) ?></h2>
+                                    <h4><?php escapeString($endTime) ?></h4>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class=" col admin card">
                                 <form action="" method="POST">
+                                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                                     <h5>Set Election Opening</h5>
-                                    <input type="datetime-local" class="date my-2" name="start" id="start" value='<?php echo $start; ?>' required>
+                                    <input type="datetime-local" class="date my-2" name="start" id="start" value='<?php escapeString($start) ?>' required>
                                     <h5 class="mt-2">Set Election Closing</h5>
-                                    <input type="datetime-local" class="my-2" name="close" id="close" value='<?php echo $close; ?>' required> <br>
+                                    <input type="datetime-local" class="my-2" name="close" id="close" value='<?php escapeString($close) ?>' required> <br>
                                     <button type="submit" name="submit" class="btn btn-default my-2">Submit</button>
                                     <?php if ($response === "invalid date") : ?>
                                         <div class="alert alert-danger" role="alert">
