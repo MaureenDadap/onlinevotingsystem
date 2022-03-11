@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
         <div class="container">
             <header class="text-center mb-5">
                 <h1>Hi, Admin</h1>
-                <h3>Welcome to <span><?= WEBSITE_NAME ?></span></h3>
+                <h3>Welcome to <span><?php escapeString(WEBSITE_NAME)?></span></h3>
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
