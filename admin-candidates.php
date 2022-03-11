@@ -41,25 +41,34 @@ if (isset($_POST['add'])) {
     $position = $conn->escape_string($_POST['position']);
     $section = $conn->escape_string($_POST['section']);
     $description = $conn->escape_string($_POST['description']);
+
     $image_dir = "images/";
-    $image = $conn->escape_string($_POST['image']);
-    $image_path = $image_dir . $image;
+    $image = basename($_FILES["image"]["name"]);
+    $target_file = $image_dir . $image;
 
     //Validating Image File
     $filename = $image;
 
     $file_ext = explode('.', $filename);
     $file_ext_check = strtolower(end($file_ext));
-
+    
     $valid_file_ext = array('png', 'jpg', 'jpeg');
 
     if (in_array($file_ext_check, $valid_file_ext)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        $image_path = $target_file;
+
         $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
         $stmt->execute();
         $conn->close();
         header('location: admin-candidates.php');
+        }
+        else {
+            $valid_file = "Image upload failed.";
+            $response = "add error";
+        }
     } else {
         $valid_file = "Invalid File";
         $response = "add error"; //created custom response that triggers js script that shows modal
