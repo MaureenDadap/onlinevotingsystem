@@ -45,7 +45,7 @@ if (isset($_POST['add'])) {
     $position = $conn->escape_string($_POST['position']);
     $section = $conn->escape_string($_POST['section']);
     $description = $conn->escape_string($_POST['description']);
-    $image_dir = "images/";
+    $image_dir = "images/uploads";
     $image = $conn->escape_string($_POST['image']);
     $image_path = $image_dir . $image;
 
