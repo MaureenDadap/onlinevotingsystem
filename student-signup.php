@@ -10,9 +10,6 @@ if (isset($_SESSION['username']))
 $response = "";
 
 if (isset($_POST['submit'])) {
-    // Check Anti-CSRF token
-    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'student-signup.php');
-
     $response = studentSignUp($response);
 }
 ?>
@@ -39,7 +36,7 @@ if (isset($_POST['submit'])) {
                         <div class="card-header">Create Account</div>
                         <div class="card-body">
                             <form action="" method="POST">
-                                <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
+                                <!-- <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>"> -->
 
                                 <label for="email" class="form-label">Email</label>
                                 <div class="input-group mb-2">

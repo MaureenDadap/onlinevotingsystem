@@ -112,7 +112,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <h5 class="modal-title">Add New Candidate</h5>
                 </div>
                 <form action="" method="POST">
-                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <label class="col-form-label">Name:</label>
@@ -188,8 +188,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         }
                     }
                     ?>
-                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
-                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                    <input type="hidden" name="candidate-id" value="<?php escapeString($candidateId) ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <span class="visually-hidden" id="hidden-id"></span>
@@ -221,7 +221,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Description:</label>
-                            <textarea class="form-control" name="description" rows="3" required><?php echo $description ?></textarea>
+                            <textarea class="form-control" name="description" rows="3" required><?php escapeString($description) ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
@@ -247,8 +247,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="" method="POST">
-                    <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
-                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                    <input type="hidden" name="candidate-id" value="<?php escapeString($candidateId) ?>">
                     <div class="modal-body">
                         Are you sure you want to delete this candidate?
                     </div>
@@ -310,16 +310,16 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                                     $result = getCandidates($pos_selected);
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
-                                            <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
+                                            <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                                             <tr>
                                                 <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
-                                                <td><?php echo $data['id'] ?></td>
-                                                <td><img src="<?php echo $data['image_path'] ?>" alt="" class="rounded"></td>
-                                                <td><?php echo $data['last_name'] ?></td>
-                                                <td><?php echo $data['first_name'] ?></td>
-                                                <td><?php echo $data['position'] ?></td>
-                                                <td><?php echo $data['section'] ?></td>
-                                                <td><?php echo $data['description'] ?></td>
+                                                <td><?php escapeString($data['id']) ?></td>
+                                                <td><img src="<?php escapeString($data['image_path']) ?>" alt="" class="rounded"></td>
+                                                <td><?php escapeString($data['last_name']) ?></td>
+                                                <td><?php escapeString($data['first_name']) ?></td>
+                                                <td><?php escapeString($data['position']) ?></td>
+                                                <td><?php escapeString($data['section']) ?></td>
+                                                <td><?php escapeString($data['description']) ?></td>
                                                 <td>
                                                     <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
                                                     <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>

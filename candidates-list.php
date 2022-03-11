@@ -39,11 +39,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
                         <?php endwhile ?>
@@ -65,11 +65,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
                         <?php endwhile ?>
@@ -91,11 +91,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
                         <?php endwhile ?>
@@ -117,11 +117,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
                         <?php endwhile ?>
@@ -143,11 +143,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
 
@@ -170,11 +170,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
 
@@ -197,11 +197,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
 
@@ -224,11 +224,11 @@ checkInactivity();
                         while ($data = $result->fetch_assoc()) :
                         ?>
                             <div class="card candidate p-4">
-                                <img src="<?php echo $data['image_path'] ?>" class="candidate-img" alt="candidate">
+                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                    <strong><?php echo $data['section'] ?></strong>
-                                    <p class="card-text"><?php echo $data['description'] ?></p>
+                                    <h5 class="card-title"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                    <strong><?php escapeString($data['section']) ?></strong>
+                                    <p class="card-text"><?php escapeString($data['description']) ?></p>
                                 </div>
                             </div>
                         <?php endwhile ?>

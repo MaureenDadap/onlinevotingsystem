@@ -10,6 +10,11 @@ require 'vendor/PHPMailer/src/Exception.php';
 require 'vendor/PHPMailer/src/PHPMailer.php';
 require 'vendor/PHPMailer/src/SMTP.php';
 
+function escapeString(string $input)
+{
+    echo htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+}
+
 function generateMd5Hash(): string
 {
     return md5(rand(0, 1000));

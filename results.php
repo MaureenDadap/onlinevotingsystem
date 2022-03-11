@@ -65,10 +65,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h4>President</h4>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -88,10 +88,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h4>Vice President</h4>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -111,10 +111,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h4>Secretary</h4>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -128,10 +128,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h4>Treasurer</h4>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -151,10 +151,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h5 class="red">1st Year Representative</h5>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -168,10 +168,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h5 class="red">2nd Year Representative</h5>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -185,10 +185,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h5 class="red">3rd Year Representative</h5>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;
@@ -202,10 +202,10 @@ $totalVotes = countVotes();
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
                                 <h5 class="red">4th Year Representative</h5>
-                                <img class="candidate-img" alt="candidate" src="<?php echo $data['image_path'] ?>">
-                                <h5><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                <h6><?php echo $data['section'] ?></h6>
-                                <h6 class="text-success"><?php echo $data['VOTES'] ?> Votes</h6>
+                                <img class="candidate-img" alt="candidate" src="<?php escapeString($data['image_path']) ?>">
+                                <h5><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                <h6><?php escapeString($data['section']) ?></h6>
+                                <h6 class="text-success"><?php escapeString($data['VOTES']) ?> Votes</h6>
                             </div>
                         <?php
                         endwhile;

@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                 if (!empty($rep4Id))
                     insertVote($user_id, $rep4Id, "Representative 4");
             } catch (Exception $e) {
-                echo 'something went wrong';
+                echo 'Something went wrong';
             }
         } else {
             $response = "captcha failed";
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
                 <main>
                     <div class="container voting">
                         <form action="" method="POST" id="votingForm">
-                            <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>">
+                            <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
 
                             <!-- ======= Presidents Row ======= -->
                             <h3 class="text-center">President</h3>
@@ -160,12 +160,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="president" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="president" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -185,12 +185,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="vice-president" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="vice-president" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -210,12 +210,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="secretary" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="secretary" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -235,12 +235,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="treasurer" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="treasurer" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -260,12 +260,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-1" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="representative-1" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -285,12 +285,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-2" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="representative-2" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -310,12 +310,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-3" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="representative-3" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -334,12 +334,12 @@ if (isset($_POST['submit'])) {
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
                                         <div class="voting card m-3">
-                                            <img src="<?php echo $data['image_path'] ?>" class="h-75 candidate-img" alt="candidate-img">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
                                             <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-4" value="<?php echo $data['id'] ?>" required>
-                                                <strong><label class="form-check-label"><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></label></strong>
+                                                <input class="form-check-input" type="radio" name="representative-4" value="<?php escapeString($data['id']) ?>" required>
+                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
                                                 <br>
-                                                <span><?php echo $data['section'] ?></span>
+                                                <span><?php escapeString($data['section']) ?></span>
                                             </div>
                                         </div>
                                     <?php endwhile ?>

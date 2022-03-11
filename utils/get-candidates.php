@@ -73,3 +73,37 @@ function getCandidatesVotes(string $position, int $limit = 0)
 
     return $result;
 }
+
+function countCandidates()
+{
+    $totalCandidates = 0;
+    $result = getCandidates("");
+    if ($result && $result->num_rows > 0) {
+        while ($result->fetch_assoc()) {
+            $totalCandidates++;
+        }
+    }
+    return $totalCandidates;
+}
+
+function countVoters()
+{
+    $totalVoters = 0;
+    $is_admin = 0;
+    $conn = Connect();
+    $query = "SELECT COUNT(*) as total FROM users WHERE is_admin=?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $is_admin);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        while ($data = $result->fetch_assoc()) {
+            $totalVoters = $data['total'];
+        }
+    }
+
+    $conn->close();
+    return $totalVoters;
+}
