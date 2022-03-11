@@ -55,9 +55,9 @@ function insertVote($user_id, $candidate_id, $position)
 {
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
     $candidate_id = filter_var($candidate_id, FILTER_SANITIZE_NUMBER_INT);
-    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+    
     $conn = Connect();
+    $position = $conn->escape_string($position);
     $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
 
     $stmt = $conn->prepare($query);
