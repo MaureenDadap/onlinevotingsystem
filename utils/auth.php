@@ -144,16 +144,13 @@ function studentSignUp(string $response)
 
 function logIn(string $response)
 {
-    //TODO VALIDATE AND SANITIZE
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
+    $conn = Connect();
+    $username = $conn->escape_string($_POST['username']);
+    $password = $conn->escape_string($_POST['password']);
     $user_type = 0;
     $id = -1;
     $emailAuth = 0;
     $redirect = "";
-
-    $conn = Connect();
 
     // SQL query to fetch information of registerd users and finds user match.
     $query = 'SELECT id, username, password, is_admin, email_authenticated FROM users WHERE username=? LIMIT 1';

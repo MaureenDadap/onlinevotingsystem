@@ -26,7 +26,6 @@ function getStartDate()
 function getEndDate()
 {
     //TODO catch possible errors
-    //$endTime = new DateTime();
     $endTime = '';
     $conn = Connect();
     $query = "SELECT datetime_end FROM election_settings ORDER BY id DESC LIMIT 1";

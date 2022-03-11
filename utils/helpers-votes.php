@@ -53,7 +53,10 @@ function checkIfVoted($user_id, $startDate, $endDate)
 
 function insertVote($user_id, $candidate_id, $position)
 {
-    //todo validate sanitize
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+    $candidate_id = filter_var($candidate_id, FILTER_SANITIZE_NUMBER_INT);
+    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
     $conn = Connect();
     $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
 

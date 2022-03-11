@@ -4,8 +4,8 @@ require_once 'get-election-times.php';
 
 function getCandidates($position)
 {
-    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $conn = Connect();
+    $position = $conn->escape_string($position);
     if ($position != "") {
         $query = "SELECT * FROM candidates WHERE position=?";
         $stmt = $conn->prepare($query);
@@ -25,9 +25,9 @@ function getCandidates($position)
 
 function getCandidateByID(int $candidateId)
 {
-    $candidateId = filter_var($candidateId, FILTER_SANITIZE_NUMBER_INT);
     $conn = Connect();
 
+    $candidateId = (int) $conn->escape_string($candidateId);
     $query = "SELECT * FROM candidates WHERE id=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $candidateId);
@@ -40,16 +40,15 @@ function getCandidateByID(int $candidateId)
     return $result;
 }
 
-function getCandidatesVotes($position, int $limit = 0)
+function getCandidatesVotes(string $position, int $limit = 0)
 {
-    $position = filter_var($position, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
-
     $conn = Connect();
+    $position = $conn->escape_string($position);
+    $limit = (int) $conn->escape_string($limit);
     $startDate = getStartDate();
     $endDate = getEndDate();
+    $query = "";
 
-    // if ($id == null) {
     if ($limit === 0) {  //gets everyone ranked
         $query = "SELECT a.*, count(*) as VOTES 
                     FROM candidates a JOIN votes b ON a.id = b.candidate_id 
@@ -67,12 +66,6 @@ function getCandidatesVotes($position, int $limit = 0)
     }
     $stmt = $conn->prepare($query);
     $stmt->bind_param('sss', $position, $startDate, $endDate);
-    // } else { //gets by id
-    //     $query = "SELECT a.*, count(*) as VOTES FROM candidates a JOIN votes b ON a.id = b.candidate_id WHERE a.id=? AND b.datetime BETWEEN ? AND ? ORDER BY VOTES DESC LIMIT 1";
-    //     $stmt = $conn->prepare($query);
-    //     $stmt->bind_param('iss', $id, $startDate, $endDate);
-    // }
-
     $stmt->execute();
     $result = $stmt->get_result();
 

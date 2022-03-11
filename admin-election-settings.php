@@ -30,8 +30,8 @@ if (isset($_POST['submit'])) {
 
     $conn = Connect();
 
-    $start = preg_replace("([^0-9/:\-T])", "", $_POST['start']); //allows only nums, : / - , and T
-    $close = preg_replace("([^0-9/:\-T])", "", $_POST['close']);
+    $start = preg_replace("([^0-9/:\-T])", "", $_POST['start']); //allows only 0-9 : / - , and T
+    $close = preg_replace("([^0-9/:\-T])", "", $_POST['close']); //allows only 0-9 : / - , and T
 
     if ($close <= $start) {
         $response = "invalid date";
