@@ -12,6 +12,7 @@ checkInactivity();
 $pos_selected = "";
 $response = "";
 $candidateId = -1;
+$valid_file = "";
 
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
     header('location: index.php');
@@ -45,16 +46,37 @@ if (isset($_POST['add'])) {
     $position = $conn->escape_string($_POST['position']);
     $section = $conn->escape_string($_POST['section']);
     $description = $conn->escape_string($_POST['description']);
-    $image_dir = "images/";
-    $image = $conn->escape_string($_POST['image']);
-    $image_path = $image_dir . $image;
 
-    $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
-    $stmt->execute();
-    $conn->close();
-    header('location: admin-candidates.php');
+    $image_dir = "images/uploads/";
+    $image = basename($_FILES["image"]["name"]);
+    $target_file = $image_dir . $image;
+
+    //Validating Image File
+    $filename = $image;
+
+    $file_ext = explode('.', $filename);
+    $file_ext_check = strtolower(end($file_ext));
+
+    $valid_file_ext = array('png', 'jpg', 'jpeg', 'webp', 'bmp');
+
+    if (in_array($file_ext_check, $valid_file_ext)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            $image_path = $target_file;
+
+            $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
+            $stmt->execute();
+            $conn->close();
+            header('location: admin-candidates.php');
+        } else { // if upload failed
+            $valid_file = "Image upload failed.";
+            $response = "add error";
+        }
+    } else { // if not image
+        $valid_file = "Invalid File";
+        $response = "add error"; //created custom response that triggers js script that shows modal
+    }
 }
 
 if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
@@ -85,16 +107,36 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $position = $conn->escape_string($_POST['position']);
     $section = $conn->escape_string($_POST['section']);
     $description = $conn->escape_string($_POST['description']);
-    $image_dir = "images/";
-    $image = $conn->escape_string($_POST['image']);
-    $image_path = $image_dir . $image;
 
-    $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $candidateId);
-    $stmt->execute();
-    $conn->close();
-    header('location: admin-candidates.php');
+    $image_dir = "images/uploads/";
+    $image = basename($_FILES["image"]["name"]);
+    $target_file = $image_dir . $image;
+
+    //Validating Image File
+    $filename = $image;
+
+    $file_ext = explode('.', $filename);
+    $file_ext_check = strtolower(end($file_ext));
+
+    $valid_file_ext = array('png', 'jpg', 'jpeg');
+
+    if (in_array($file_ext_check, $valid_file_ext)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            $image_path = $target_file;
+            $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $candidateId);
+            $stmt->execute();
+            $conn->close();
+            header('location: admin-candidates.php');
+        } else { //if not image
+            $valid_file = "Image upload failed.";
+            $response = "add error";
+        }
+    } else { // if upload failed
+        $valid_file = "Invalid File";
+        $response = "edit error"; //created custom response that triggers js script that shows modal
+    }
 }
 ?>
 
@@ -111,7 +153,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Candidate</h5>
                 </div>
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
@@ -146,7 +188,14 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
-                            <input class="form-control" type="file" name="image" required>
+                            <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg, .webp, .bmp" required>
+                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid 
+                            ?>
+                                <div class="alert alert-danger alert-dismissible my-3" role="alert">
+                                    Invalid File!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -166,9 +215,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Candidate Details</h5>
                 </div>
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <?php
-
                     //For the placeholder texts
                     $first_name = "First Name";
                     $last_name = "Last Name";
@@ -225,7 +273,14 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
-                            <input class="form-control" type="file" name="image" required>
+                            <input class="form-control" type="file" name="image" accept=".png, .jpg, .jpeg, .webp, .bmp" required>
+                            <?php if ($valid_file === "Invalid File") : //shows error alert if file was invalid 
+                            ?>
+                                <div class="alert alert-danger alert-dismissible my-3" role="alert">
+                                    Invalid File!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -341,12 +396,17 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     <script src="js/jquery-3.6.0.min.js"></script>
     <script>
         var response = "<?php echo $response ?>";
+        var addModal = new bootstrap.Modal($('#add-candidate'));
         var editModal = new bootstrap.Modal($('#edit-candidate'));
         var deleteModal = new bootstrap.Modal($('#delete-candidate'));
         if (response == "edit") {
             editModal.show();
         } else if (response == "delete") {
             deleteModal.show();
+        } else if (response == "add error") {
+            addModal.show();
+        } else if (response == "edit error") {
+            editModal.show();
         }
     </script>
 </body>
