@@ -14,14 +14,24 @@ function checkUserNameExists($username): bool
     $result = $stmt->get_result();
     if ($result && $result->num_rows > 0) {
         return true;
-        echo 'username exists';
     }
     return false;
 }
 
-function isUserActive($user)
+/** Checks if email is already in use by someone in the db
+ */
+function checkEmailExists($email): bool
 {
-    return $user['email_authenticated'] === 1;
+    $conn = Connect();
+    $query = 'SELECT email FROM users WHERE email=?';
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return true;
+    }
+    return false;
 }
 
 function deleteUserById(int $id, int $active = 0)
@@ -82,11 +92,12 @@ function adminSignUp(string $response)
     //TODO SANITIZE AND VALIDATE
     $conn = Connect();
 
-    $username = $conn->escape_string($_POST['username']);
+    $username = $conn->escape_string(trim($_POST['username']));
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $password2 = $conn->escape_string($_POST['password2']);
-    $hash = generateMd5Hash();
+    $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+    $hash = generateMd5Hash(); //for activation code
     $is_admin = 1;
     $expiry = 1 * 24 * 60 * 60;
     $authExpire = date('Y-m-d H:i:s',  time() + $expiry);
@@ -95,10 +106,12 @@ function adminSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sssiss', $username, $email, $password, $is_admin, $hash, $authExpire);
+        $stmt->bind_param('sssiss', $username, $email, $hashedPass, $is_admin, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
 
@@ -114,12 +127,13 @@ function studentSignUp(string $response)
     $conn = Connect();
 
     //TODO VALIDATE AND SANITIZE
-    $username = $conn->escape_string($_POST['username']);
+    $username = $conn->escape_string(trim($_POST['username']));
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $program = $conn->escape_string($_POST['program']);
     $password2 = $conn->escape_string($_POST['password2']);
-    $hash = generateMd5Hash();
+    $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+    $hash = generateMd5Hash(); //for activation code
     $expiry = 1 * 24 * 60 * 60;
     $authExpire = date('Y-m-d H:i:s',  time() + $expiry);
 
@@ -127,10 +141,12 @@ function studentSignUp(string $response)
         $response = "password mismatch";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
+    else if (checkEmailExists($email) === true)
+        $response = "email exists";
     else {
         $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('ssssss', $username, $email, $password, $program, $hash, $authExpire);
+        $stmt->bind_param('ssssss', $username, $email, $hashedPass, $program, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
 
@@ -142,52 +158,57 @@ function studentSignUp(string $response)
 
 function logIn(string $response)
 {
-    //TODO VALIDATE AND SANITIZE
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $conn = Connect();
+    $username = $conn->escape_string($_POST['username']);
+    $password = $conn->escape_string($_POST['password']);
     $user_type = 0;
     $id = -1;
     $emailAuth = 0;
     $redirect = "";
-    $conn = Connect();
 
     // SQL query to fetch information of registerd users and finds user match.
-    $query = 'SELECT id, username, password, is_admin, email_authenticated FROM users WHERE username=? AND password=? LIMIT 1';
+    $query = 'SELECT id, username, password, is_admin, email_authenticated FROM users WHERE username=? LIMIT 1';
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
-    $stmt->bind_result($id, $username, $password, $user_type, $emailAuth);
+    $stmt->bind_result($id, $username, $hashedPass, $user_type, $emailAuth);
     $stmt->store_result();
 
-    if ($stmt->fetch()) {
-        if ($emailAuth === 1) {
-            // prevent session fixation attack
-            session_regenerate_id(true);
 
-            // Anti-CSRF
-            if (array_key_exists("session_token", $_SESSION)) {
-                $session_token = $_SESSION['session_token'];
-            } else {
-                $session_token = "";
-            }
+    if ($stmt->fetch()) { //user was found
+        if (password_verify($password, $hashedPass)) { // if password input matched pw saved in db
+            if ($emailAuth === 1) { //check if authenticated
 
-            checkToken($_REQUEST['user_token'], $session_token, 'login.php');
+                // prevent session fixation attack
+                session_regenerate_id(true);
 
-            $_SESSION['id'] = $id;
-            $_SESSION['username'] = $username;
-            $_SESSION['last_activity'] = time();
+                // Anti-CSRF
+                if (array_key_exists("session_token", $_SESSION)) {
+                    $session_token = $_SESSION['session_token'];
+                } else {
+                    $session_token = "";
+                }
 
-            if ($user_type == 0) {
-                $_SESSION['user_type'] = 'student';
-                $redirect = 'index.php';
-            } else {
-                $_SESSION['user_type'] = 'admin';
-                $redirect = 'admin-dashboard.php';
-            }
-            header("location: " . $redirect);
-        } else
-            $response = "not authenticated";
+                checkToken($_REQUEST['user_token'], $session_token, 'login.php');
+
+                $_SESSION['id'] = $id;
+                $_SESSION['username'] = $username;
+                $_SESSION['last_activity'] = time();
+
+                if ($user_type == 0) {
+                    $_SESSION['user_type'] = 'student';
+                    $redirect = 'index.php';
+                } else {
+                    $_SESSION['user_type'] = 'admin';
+                    $redirect = 'admin-dashboard.php';
+                }
+                header("location: " . $redirect);
+            } else
+                $response = "not authenticated";
+        } else {
+            $response = "wrong credentials";
+        }
     } else {
         $response = "wrong credentials";
     }
@@ -196,6 +217,8 @@ function logIn(string $response)
     return $response;
 }
 
+/** Checks how long user is inactive and logs out automatically if inactive for set amount of time
+ */
 function checkInactivity()
 {
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 60 * 10)) { //inactive for 10 mins

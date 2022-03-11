@@ -5,6 +5,7 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/auth.php';
+require_once 'utils/helpers.php';
 
 checkInactivity();
 
@@ -18,13 +19,14 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
 }
 
 if (isset($_GET['pos'])) {
-    //TODO VALIDATE/SANITIZE
     $pos_selected = $_GET['pos'];
 }
 
 if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
-    //TODO VALIDATE/SANITIZE
-    $candidateId = $_POST['candidate-id'];
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
 
     if ($_POST['submit'] === "delete") {
         $response = "delete"; // to show the delete modal
@@ -34,6 +36,9 @@ if (isset($_POST['submit']) && isset($_POST['candidate-id'])) {
 }
 
 if (isset($_POST['add'])) {
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
     //TODO VALIDATE/SANITIZE
     $conn = Connect();
     $first_name = $conn->escape_string($_POST['first-name']);
@@ -76,8 +81,10 @@ if (isset($_POST['add'])) {
 }
 
 if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
-    //TODO VALIDATE/SANITIZE
-    $candidateId = $_POST['candidate-id'];
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
+
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
 
     $conn = Connect();
     $query = "DELETE FROM candidates where id=?";
@@ -89,13 +96,13 @@ if (isset($_POST['delete']) && isset($_POST['candidate-id'])) {
 }
 
 if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
-    //TODO VALIDATE/SANITIZE
+    // Check Anti-CSRF token
+    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'admin-candidates.php');
 
-
-    $id = $_POST['candidate-id'];
-
+    $candidateId = filter_var($_POST['candidate-id'], FILTER_SANITIZE_NUMBER_INT);
     $conn = Connect();
 
+    //TODO VALIDATE/SANITIZE
     $first_name = $conn->escape_string($_POST['first-name']);
     $last_name = $conn->escape_string($_POST['last-name']);
     $position = $conn->escape_string($_POST['position']);
@@ -122,11 +129,9 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
         header('location: admin-candidates.php');
     } else {
         $valid_file = "Invalid File";
-        $candidateId = $id;
         $response = "edit error"; //created custom response that triggers js script that shows modal
     }
 }
-
 ?>
 
 
@@ -143,6 +148,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <h5 class="modal-title">Add New Candidate</h5>
                 </div>
                 <form action="" method="POST">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <label class="col-form-label">Name:</label>
@@ -224,7 +230,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         }
                     }
                     ?>
-                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                    <input type="hidden" name="candidate-id" value="<?php escapeString($candidateId) ?>">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <span class="visually-hidden" id="hidden-id"></span>
@@ -256,7 +263,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Description:</label>
-                            <textarea class="form-control" name="description" rows="3" required><?php echo $description ?></textarea>
+                            <textarea class="form-control" name="description" rows="3" required><?php escapeString($description) ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Picture:</label>
@@ -289,7 +296,8 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="" method="POST">
-                    <input type="hidden" name="candidate-id" value="<?php echo $candidateId ?>">
+                    <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                    <input type="hidden" name="candidate-id" value="<?php escapeString($candidateId) ?>">
                     <div class="modal-body">
                         Are you sure you want to delete this candidate?
                     </div>
@@ -351,15 +359,16 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
                                     $result = getCandidates($pos_selected);
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <form action="" method="POST">
+                                            <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
                                             <tr>
                                                 <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
-                                                <td><?php echo $data['id'] ?></td>
-                                                <td><img src="<?php echo $data['image_path'] ?>" alt="" class="rounded"></td>
-                                                <td><?php echo $data['last_name'] ?></td>
-                                                <td><?php echo $data['first_name'] ?></td>
-                                                <td><?php echo $data['position'] ?></td>
-                                                <td><?php echo $data['section'] ?></td>
-                                                <td><?php echo $data['description'] ?></td>
+                                                <td><?php escapeString($data['id']) ?></td>
+                                                <td><img src="<?php escapeString($data['image_path']) ?>" alt="" class="rounded"></td>
+                                                <td><?php escapeString($data['last_name']) ?></td>
+                                                <td><?php escapeString($data['first_name']) ?></td>
+                                                <td><?php escapeString($data['position']) ?></td>
+                                                <td><?php escapeString($data['section']) ?></td>
+                                                <td><?php escapeString($data['description']) ?></td>
                                                 <td>
                                                     <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
                                                     <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>

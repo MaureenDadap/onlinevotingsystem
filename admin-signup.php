@@ -3,6 +3,7 @@ session_start();
 require_once('common/components.php');
 require_once 'utils/auth.php';
 require_once 'config/website_info.php';
+require_once 'utils/helpers.php';
 
 if (isset($_SESSION['username']))
     header('location: index.php');
@@ -24,7 +25,7 @@ if (isset($_POST['submit'])) {
         <div class="container">
             <header class="text-center mb-5">
                 <h1>Hi, Admin</h1>
-                <h3>Welcome to <span><?= WEBSITE_NAME ?></span></h3>
+                <h3>Welcome to <span><?php escapeString(WEBSITE_NAME)?></span></h3>
                 <p>Get started by creating your account.</p>
             </header>
             <div class="row justify-content-center">
@@ -36,6 +37,8 @@ if (isset($_POST['submit'])) {
                         <div class="card-header">Create Account</div>
                         <div class="card-body">
                             <form action="" method="POST">
+                                <!-- <input type="hidden" name="user_token" value="<?php echo $_SESSION['session_token'] ?>"> -->
+
                                 <label for="email" class="form-label">Email</label>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text bi-envelope-fill"></span>
@@ -68,6 +71,12 @@ if (isset($_POST['submit'])) {
                                 if ($response === "username exists") : ?>
                                     <div class="alert alert-danger" role="alert">
                                         Username is already in use.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "email exists") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Email is already in use.
                                     </div>
                                 <?php
                                 endif;

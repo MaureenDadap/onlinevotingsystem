@@ -8,39 +8,6 @@ require_once 'utils/get-election-times.php';
 require_once 'utils/helpers-votes.php';
 require_once 'utils/auth.php';
 
-function countVoters()
-{
-    //TODO catch possible errors
-    $totalVoters = 0;
-    $is_admin = 0;
-    $conn = Connect();
-    $query = "SELECT COUNT(*) as total FROM users WHERE is_admin=?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $is_admin);
-
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        while ($data = $result->fetch_assoc()) {
-            $totalVoters = $data['total'];
-        }
-    }
-
-    $conn->close();
-    return $totalVoters;
-}
-
-function countCandidates($totalCandidates)
-{
-    $result = getCandidates("");
-    if ($result && $result->num_rows > 0) {
-        while ($result->fetch_assoc()) {
-            $totalCandidates++;
-        }
-    }
-    return $totalCandidates;
-}
 
 checkInactivity();
 
@@ -52,7 +19,6 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
 $pos_selected = "";
 
 if (isset($_GET['pos'])) {
-    //TODO VALIDATE/SANITIZE
     $pos_selected = $_GET['pos'];
 }
 
@@ -99,19 +65,20 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                             <h5>Election Voters</h5>
                             <div class="admin card py-5 text-center flex-row justify-content-around">
                                 <div>
-                                    <h1><?php echo countVoters() ?></h1>
+                                    <h1><?php escapeString(countVoters()) ?></h1>
                                     <h6>Voters</h6>
                                 </div>
                                 <div>
-                                    <h1><?php echo countVotes() ?></h1>
-                                    <h6>Total Votes</h6>
+                                    <h1><?php escapeString(countVotes()) ?></h1>
+                                    <h6 class="mb-0">Total Votes</h6>
+                                    <span class="small text-muted">(For current election duration)</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <h5>Election Candidates</h5>
                             <div class="admin card py-5 text-center">
-                                <h1><?php echo countCandidates($totalCandidates); ?></h1>
+                                <h1><?php escapeString(countCandidates()) ?></h1>
                                 <h6>Candidates</h6>
                             </div>
                         </div>
@@ -136,29 +103,29 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                     </div>
                                 </form>
                                 <h5 class="mb-3"><strong>Ranking</strong></h5>
-
                                 <?php
                                 if ($pos_selected == "")
                                     $pos_selected = "President";
 
-                                if (getCandidatesVotes($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) :
+                                if (getCandidatesVotes($pos_selected) != false && getCandidatesVotes($pos_selected)->num_rows > 0) :
                                     $result = getCandidatesVotes($pos_selected);
                                     $rank = 1;
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <div class="rounded ranking d-flex flex-row align-items-center m-2 px-5 py-3 <?php if ($rank == 1) echo 'bg-yellow';
                                                                                                                         else echo 'bg-gray' ?>">
                                             <h4 class="my-0 me-3">#<?= $rank ?></h4>
-                                            <img src="<?php echo $data['image_path'] ?>" class="candidate-img my-0 me-3" alt="candidate image">
+                                            <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img my-0 me-3" alt="candidate image">
                                             <div>
-                                                <h5 class=""><?php echo $data['first_name'] . ' ' . $data['last_name'] ?></h5>
-                                                <strong class=""><?php echo $data['VOTES'] ?> Votes</strong>
+                                                <h5 class=""><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>
+                                                <strong class=""><?php escapeString($data['VOTES']) ?> Votes</strong>
                                             </div>
                                         </div>
-                                <?php
+                                    <?php
                                         $rank++;
                                     endwhile;
-                                endif;
-                                ?>
+                                else : ?>
+                                    <h5 class="py-5 mx-auto">Insufficient Votes.</h5>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>
