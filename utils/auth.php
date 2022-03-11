@@ -192,6 +192,8 @@ function logIn(string $response)
                 header("location: " . $redirect);
             } else
                 $response = "not authenticated";
+        } else {
+            $response = "wrong credentials";
         }
     } else {
         $response = "wrong credentials";

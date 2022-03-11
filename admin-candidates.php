@@ -91,7 +91,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
 
     $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $id);
+    $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $candidateId);
     $stmt->execute();
     $conn->close();
     header('location: admin-candidates.php');
