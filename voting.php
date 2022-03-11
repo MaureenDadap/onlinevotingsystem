@@ -362,7 +362,7 @@ if (isset($_POST['submit'])) {
                                         Robot verification failed, please try again.
                                     </div>
                                 <?php endif ?>
-                                <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_CLIENT_KEY ?>"></div>
+                                <div class="g-recaptcha" data-sitekey="<?php escapeString(RECAPTCHA_CLIENT_KEY) ?>"></div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-default" name="submit" id="formBtn">Submit my Vote</button>
                                 </div>
