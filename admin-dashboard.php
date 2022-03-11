@@ -102,7 +102,8 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                 </div>
                                 <div>
                                     <h1><?php echo countVotes() ?></h1>
-                                    <h6>Total Votes</h6>
+                                    <h6 class="mb-0">Total Votes</h6>
+                                    <span class="small text-muted">(For current election duration)</span>
                                 </div>
                             </div>
                         </div>

@@ -60,7 +60,7 @@ $totalVotes = countVotes();
                 <!-- ======= President Row ======= -->
                 <div class="row text-center justify-content-center my-4">
                     <?php
-                    if (getCandidatesVotes("President", 1) != false && getCandidates("President", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("President", 1) != false && getCandidatesVotes("President", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("President", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -73,7 +73,7 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
                 </div>
                 <!-- End President Row -->
@@ -83,7 +83,7 @@ $totalVotes = countVotes();
                 <!-- ======= Vice President Row ======= -->
                 <div class="row text-center justify-content-center my-4">
                     <?php
-                    if (getCandidatesVotes("Vice President", 1) != false && getCandidates("Vice President", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Vice President", 1) != false && getCandidatesVotes("Vice President", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Vice President", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -96,7 +96,7 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
                 </div>
                 <!-- End Vice President Row -->
@@ -106,7 +106,7 @@ $totalVotes = countVotes();
                 <!-- ======= Secretary and Treasurer Row ======= -->
                 <div class="row text-center justify-content-center my-4">
                     <?php //Secretary
-                    if (getCandidatesVotes("Secretary", 1) != false && getCandidates("Secretary", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Secretary", 1) != false && getCandidatesVotes("Secretary", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Secretary", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -119,11 +119,11 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
 
                     <?php //Treasurer
-                    if (getCandidatesVotes("Treasurer", 1) != false && getCandidates("Treasurer", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Treasurer", 1) != false && getCandidatesVotes("Treasurer", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Treasurer", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -136,7 +136,7 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
                 </div>
                 <!-- End Secretary and Treasurer Row -->
@@ -146,7 +146,7 @@ $totalVotes = countVotes();
                 <!-- ======= Representatives Row ======= -->
                 <div class="row text-center justify-content-center my-4">
                     <?php //Representative 1
-                    if (getCandidatesVotes("Representative 1", 1) != false && getCandidates("Representative 1", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Representative 1", 1) != false && getCandidatesVotes("Representative 1", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Representative 1", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -159,11 +159,11 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
 
                     <?php //Representative 2
-                    if (getCandidatesVotes("Representative 2", 1) != false && getCandidates("Representative 2", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Representative 2", 1) != false && getCandidatesVotes("Representative 2", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Representative 2", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -176,11 +176,11 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
 
                     <?php //Representative 3
-                    if (getCandidatesVotes("Representative 3", 1) != false && getCandidates("Representative 3", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Representative 3", 1) != false && getCandidatesVotes("Representative 3", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Representative 3", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -193,11 +193,11 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
 
                     <?php //Representative 4
-                    if (getCandidatesVotes("Representative 4", 1) != false && getCandidates("Representative 4", 1)->num_rows > 0) :
+                    if (getCandidatesVotes("Representative 4", 1) != false && getCandidatesVotes("Representative 4", 1)->num_rows > 0) :
                         $result = getCandidatesVotes("Representative 4", 1);
                         while ($data = $result->fetch_assoc()) : ?>
                             <div class="col">
@@ -210,7 +210,7 @@ $totalVotes = countVotes();
                         <?php
                         endwhile;
                     else : ?>
-                        <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                        <h6 class="py-5 mx-auto">No candidate for this position or insufficient votes.</h6>
                     <?php endif ?>
                 </div>
                 <!-- End Representatives Row -->
