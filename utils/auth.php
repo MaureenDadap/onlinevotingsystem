@@ -89,7 +89,6 @@ function activateUser(int $user_id): bool
 
 function adminSignUp(string $response)
 {
-    //TODO SANITIZE AND VALIDATE
     $conn = Connect();
 
     $username = $conn->escape_string(trim($_POST['username']));
@@ -104,10 +103,14 @@ function adminSignUp(string $response)
 
     if ($password != $password2)
         $response = "password mismatch";
+    else if (!preg_match("#[0-9]+#", $password) || !preg_match("#[a-zA-Z]+#", $password))
+        $response = "invalid password";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
     else if (checkEmailExists($email) === true)
         $response = "email exists";
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        $response = "invalid email";
     else {
         $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
@@ -126,7 +129,6 @@ function studentSignUp(string $response)
 {
     $conn = Connect();
 
-    //TODO VALIDATE AND SANITIZE
     $username = $conn->escape_string(trim($_POST['username']));
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
@@ -139,10 +141,14 @@ function studentSignUp(string $response)
 
     if ($password != $password2)
         $response = "password mismatch";
+    else if (!preg_match("#[0-9]+#", $password) || !preg_match("#[a-zA-Z]+#", $password))
+        $response = "invalid password";
     else if (checkUserNameExists($username) === true)
         $response = "username exists";
     else if (checkEmailExists($email) === true)
         $response = "email exists";
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        $response = "invalid email";
     else {
         $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
