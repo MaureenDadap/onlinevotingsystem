@@ -30,7 +30,7 @@ $totalVotes = countVotes();
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <h1>Elections are still ongoing.</h1>
-                        <h5>Come back later after the election closes at <?= $endDate ?></h5>
+                        <h5>Come back later after the election closes at <?php escapeString($endDate) ?></h5>
                     </div>
                     <div class="col-md-5">
                         <img src="images/sammy-17.png" alt="error" class="w-100">
@@ -48,8 +48,8 @@ $totalVotes = countVotes();
                     </div>
                     <div class="col-md-4">
                         <h1>Election Results</h1>
-                        <p><strong>Election duration: </strong><?= $startDate ?> - <?= $endDate ?><br>
-                            <strong>Total Votes: </strong><?= $totalVotes ?>
+                        <p><strong>Election duration: </strong><?php escapeString($startDate) ?> - <?php escapeString($endDate) ?><br>
+                            <strong>Total Votes: </strong><?php escapeString($totalVotes) ?>
                         </p>
                     </div>
                 </div>

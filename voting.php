@@ -16,79 +16,12 @@ if (isset($_SESSION['id']))
 $startDate = date('M d, Y g:i A', strtotime(getStartDate()));
 $endDate = date('M d, Y g:i A', strtotime(getEndDate()));
 $date = date('M d, Y g:i A', time());
+$ballotID = generateMd5Hash();
 $response = "";
 
-if (isset($_POST['submit'])) {
-    // Check Anti-CSRF token
-    checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'voting.php');
-
-    if (isset($_POST['president']))
-        $presidentId = filter_var($_POST['president'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['vice-president']))
-        $vPresidentId = filter_var($_POST['vice-president'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['secretary']))
-        $secretaryId = filter_var($_POST['secretary'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['treasurer']))
-        $treasurerId = filter_var($_POST['treasurer'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['representative-1']))
-        $rep1Id = filter_var($_POST['representative-1'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['representative-2']))
-        $rep2Id = filter_var($_POST['representative-2'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['representative-3']))
-        $rep3Id = filter_var($_POST['representative-3'], FILTER_SANITIZE_NUMBER_INT);
-    if (isset($_POST['representative-4']))
-        $rep4Id = filter_var($_POST['representative-4'], FILTER_SANITIZE_NUMBER_INT);
-
-    // reCAPTCHA validation
-    if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
-        // reCAPTCHA response verification
-        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . RECAPTCHA_SECRET_KEY . '&response=' . $_POST['g-recaptcha-response']);
-
-        // Decode JSON data
-        $response = json_decode($verifyResponse);
-        if ($response->success) {
-            try {
-                //insert president vote
-                if (!empty($presidentId))
-                    insertVote($user_id, $presidentId, "President");
-
-                //insert vice president vote
-                if (!empty($vPresidentId))
-                    insertVote($user_id, $vPresidentId, "Vice President");
-
-                //insert secretary vote
-                if (!empty($secretaryId))
-                    insertVote($user_id, $secretaryId, "Secretary");
-
-                //insert treasurer vote
-                if (!empty($treasurerId))
-                    insertVote($user_id, $treasurerId, "Treasurer");
-
-                //insert rep 1 vote
-                if (!empty($rep1Id))
-                    insertVote($user_id, $rep1Id, "Representative 1");
-
-                //insert rep 2 vote
-                if (!empty($rep2Id))
-                    insertVote($user_id, $rep2Id, "Representative 2");
-
-                //insert rep 3 vote
-                if (!empty($rep3Id))
-                    insertVote($user_id, $rep3Id, "Representative 3");
-
-                //insert rep 4 vote
-                if (!empty($rep4Id))
-                    insertVote($user_id, $rep4Id, "Representative 4");
-            } catch (Exception $e) {
-                echo 'Something went wrong';
-            }
-        } else {
-            $response = "captcha failed";
-        }
-    } else {
-        $response = "unchecked";
-    }
-}
+// echo getStartDate();
+// echo getEndDate();
+// echo checkIfVoted($user_id, getStartDate(), getEndDate());
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +49,7 @@ if (isset($_POST['submit'])) {
             </main>
             <?php
         elseif ($_SESSION['user_type'] === 'student' && ($date >= $startDate) && ($date <= $endDate)) : // if user logged in is a student and elections are still ongoing
-            if (checkIfVoted($user_id, getStartDate(), getEndDate()) != 0) : // if user has already voted for current election duration 
+            if (checkIfVoted($user_id, getStartDate(), getEndDate()) !== 0) : // if user has already voted for current election duration 
             ?>
                 <main>
                     <div class="container">
@@ -147,9 +80,11 @@ if (isset($_POST['submit'])) {
                 </header>
                 <main>
                     <div class="container voting">
-                        <form action="" method="POST" id="votingForm">
+                        <form action="voting-review.php" method="POST" id="votingForm">
                             <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                            <input type="hidden" name="ballot-id" value="<?php escapeString($ballotID) ?>">
 
+                            <div class="text-center mb-3"><em class="text-muted small">Ballot ID: <?php escapeString($ballotID) ?> </em></div>
                             <!-- ======= Presidents Row ======= -->
                             <h3 class="text-center">President</h3>
                             <?php
@@ -349,20 +284,7 @@ if (isset($_POST['submit'])) {
                             <?php endif ?>
                             <!-- End Representatives 4 Row -->
 
-
                             <div class="d-flex flex-column align-items-center">
-                                <?php
-                                if ($response === "unchecked") : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        Plese check on the reCAPTCHA box.
-                                    </div>
-                                <?php
-                                elseif ($response === "captcha failed") : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        Robot verification failed, please try again.
-                                    </div>
-                                <?php endif ?>
-                                <div class="g-recaptcha" data-sitekey="<?php escapeString(RECAPTCHA_CLIENT_KEY) ?>"></div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-default" name="submit" id="formBtn">Submit my Vote</button>
                                 </div>
@@ -378,7 +300,7 @@ if (isset($_POST['submit'])) {
                     <div class="row align-items-center">
                         <div class="col-md-7">
                             <h1>Elections are closed.</h1>
-                            <h5>Open from <?= $startDate ?> - <?= $endDate ?></h5>
+                            <h5>Open from <?php escapeString($startDate) ?> - <?php escapeString($endDate) ?></h5>
                         </div>
                         <div class="col-md-5">
                             <img src="images/sammy-17.png" alt="error" class="w-100">

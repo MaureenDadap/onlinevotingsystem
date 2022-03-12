@@ -44,7 +44,7 @@ $date = date('M d, Y g:i A', time());
                             <strong><span class="text-danger">closed</span></strong>
                         <?php endif ?>
                     </h2>
-                    <h5>Open from <?= $startDate ?> - <?= $endDate ?></h5>
+                    <h5>Open from <?php escapeString($startDate) ?> - <?php escapeString($endDate) ?></h5>
                     <a href="candidates-list.php" class="my-4 btn btn-lg btn-outline-secondary">View Candidates</a>
                     <?php
                     if ($endDate <= $date) : //if election is already done

@@ -12,7 +12,8 @@ require 'vendor/PHPMailer/src/SMTP.php';
 
 function escapeString(string $input)
 {
-    echo htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    if ($input != null)
+        echo htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
 }
 
 function generateMd5Hash(): string

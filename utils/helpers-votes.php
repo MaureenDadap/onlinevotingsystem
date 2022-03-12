@@ -11,7 +11,7 @@ function countVotes()
 
     $conn = Connect();
 
-    $query = "SELECT COUNT(*) as total FROM votes WHERE datetime BETWEEN ? AND ?";
+    $query = "SELECT COUNT(*) as total FROM votes WHERE datetime BETWEEN ? AND ? GROUP BY ballot_id";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('ss', $startDate, $endDate);
 
@@ -51,17 +51,17 @@ function checkIfVoted($user_id, $startDate, $endDate)
     return $userVotes;
 }
 
-function insertVote($user_id, $candidate_id, $position)
+function insertVote($ballot_id, $user_id, $candidate_id, $position)
 {
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
     $candidate_id = filter_var($candidate_id, FILTER_SANITIZE_NUMBER_INT);
     
     $conn = Connect();
     $position = $conn->escape_string($position);
-    $query = 'INSERT INTO votes(user_id, candidate_id, position) VALUES(?,?,?)';
+    $query = 'INSERT INTO votes(ballot_id, user_id, candidate_id, position) VALUES(?,?,?,?)';
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('iis', $user_id, $candidate_id, $position);
+    $stmt->bind_param('siis', $ballot_id, $user_id, $candidate_id, $position);
     $stmt->execute();
     $conn->close();
 }

@@ -2,7 +2,7 @@
     <li class="nav-item brand">
         <a class="nav-link" href="index.php">
             <img src="images/logo-white.png" alt="logo">
-            <span><?= WEBSITE_NAME; ?></span>
+            <span><?php escapeString(WEBSITE_NAME) ?></span>
         </a>
     </li>
     <hr>
