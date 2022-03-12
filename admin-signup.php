@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password" name="password" minlength="8" required>
                                 </div>
-                                <p class="form-text text-muted mb-2">Password must be at least 8 characters long.</p>
+                                <p class="form-text text-muted mb-2">Password must be at least 8 characters long, with at least 1 number and 1 letter.</p>
 
                                 <label for="password2" class="form-label">Re-type your password</label>
                                 <div class="input-group mb-4">
