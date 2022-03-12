@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
                                     <span class="input-group-text bi-lock-fill"></span>
                                     <input type="password" class="form-control" id="password" name="password" minlength="8" required>
                                 </div>
-                                <p class="form-text text-muted mb-2">Password must be at least 8 characters long.</p>
+                                <p class="form-text text-muted mb-2">Password must be at least 8 characters long, with at least 1 number and 1 letter</p>
 
                                 <label for="password2" class="form-label">Re-type your password</label>
                                 <div class="input-group mb-4">
@@ -75,21 +75,33 @@ if (isset($_POST['submit'])) {
                                     <input type="password" class="form-control" id="password2" name="password2" minlength="8" required>
                                 </div>
                                 <?php
+                                if ($response === "email exists") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Email is already in use.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "invalid email") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Email is invalid.
+                                    </div>
+                                <?php
+                                endif;
                                 if ($response === "password mismatch") : ?>
                                     <div class="alert alert-danger" role="alert">
                                         Pasword does not match.
                                     </div>
                                 <?php
                                 endif;
-                                if ($response === "username exists") : ?>
+                                if ($response === "invalid password") : ?>
                                     <div class="alert alert-danger" role="alert">
-                                        Username is already in use.
+                                        Password must atleast have 1 number, and 1 letter!
                                     </div>
                                 <?php
                                 endif;
-                                if ($response === "email exists") : ?>
+                                if ($response === "username exists") : ?>
                                     <div class="alert alert-danger" role="alert">
-                                        Email is already in use.
+                                        Username is already in use.
                                     </div>
                                 <?php
                                 endif;
