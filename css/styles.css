@@ -249,8 +249,6 @@ main.admin {
 
 .voting .candidate-img {
   width: 100%;
-  /* width: auto;
-  object-fit: cover; */
   border-radius: 0;
 }
 
