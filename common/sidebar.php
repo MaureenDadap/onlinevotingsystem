@@ -2,7 +2,7 @@
     <li class="nav-item brand">
         <a class="nav-link" href="index.php">
             <img src="images/logo-white.png" alt="logo">
-            <span><?= WEBSITE_NAME; ?></span>
+            <span><?php escapeString(WEBSITE_NAME) ?></span>
         </a>
     </li>
     <hr>
@@ -13,6 +13,10 @@
     <li class="nav-item">
         <a class="nav-link <?php if ($page === 'candidate') echo ' active'; ?>" href="admin-candidates.php">
             <span class="bi-person"></span> Candidates</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link <?php if ($page === 'voters') echo ' active'; ?>" href="admin-voters.php">
+            <span class="bi-people"></span> Voters</a>
     </li>
     <li class="nav-item">
         <a class="nav-link <?php if ($page === 'settings') echo ' active'; ?>" href="admin-election-settings.php">

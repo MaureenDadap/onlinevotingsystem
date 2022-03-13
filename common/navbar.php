@@ -2,7 +2,7 @@
     <div class="container">
         <a href="index.php" class="navbar-brand d-flex align-items-center">
             <img src="images/logo.png" alt="logo" class="d-inline-block align-top">
-            <span><?= WEBSITE_NAME; ?></span>
+            <span><?php escapeString(WEBSITE_NAME) ?></span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"><i class="bi-list"></i></span>
@@ -31,9 +31,9 @@
                 ?>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <span href="" class="nav-link">
+                            <a href="profile.php" class="nav-link <?php if ($page === "profile") echo ' active' ?>">
                                 <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
-                            </sp>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="candidates-list.php" class="nav-link <?php if ($page === "candidates") echo ' active' ?>">

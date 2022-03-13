@@ -10,6 +10,7 @@ if (isset($_SESSION['username']))
 
 $response = "";
 
+//if already logged in
 if (isset($_POST['submit'])) {
     $response = adminSignUp($response);
 }
@@ -49,6 +50,12 @@ if (isset($_POST['submit'])) {
                                     <span class="input-group-text bi-person-fill"></span>
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
+                                <label for="name" class="form-label">Full Name</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text bi-person-fill"></span>
+                                    <input type="text" name="first-name" placeholder="First name" class="form-control" required>
+                                    <input type="text" name="last-name" placeholder="Last name" class="form-control" required>
+                                </div>
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text bi-lock-fill"></span>
@@ -71,6 +78,12 @@ if (isset($_POST['submit'])) {
                                 if ($response === "invalid email") : ?>
                                     <div class="alert alert-danger" role="alert">
                                         Email is invalid.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "student email") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Student email is not allowed.
                                     </div>
                                 <?php
                                 endif;

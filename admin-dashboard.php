@@ -5,16 +5,17 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/get-election-times.php';
+require_once 'utils/get-voters.php';
 require_once 'utils/helpers-votes.php';
 require_once 'utils/auth.php';
 
 
 checkInactivity();
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+//Check if user is logged out or is not an admin
+if (!isset($_SESSION['user_type']) || (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin")) {
     header('location: index.php');
 }
-
 
 $pos_selected = "";
 
@@ -49,13 +50,13 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                             <div class="admin card py-5 text-center flex-row justify-content-around">
                                 <div>
                                     <h6 class="text-success">Election Start</h6>
-                                    <h2><?= $startDate ?></h2>
-                                    <h4><?= $startTime ?></h4>
+                                    <h2><?php escapeString($startDate) ?></h2>
+                                    <h4><?php escapeString($startTime) ?></h4>
                                 </div>
                                 <div>
                                     <h6 class="text-danger">Election End</h6>
-                                    <h2><?= $endDate ?></h2>
-                                    <h4><?= $endTime ?></h4>
+                                    <h2><?php escapeString($endDate) ?></h2>
+                                    <h4><?php escapeString($endTime) ?></h4>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +114,7 @@ $endTime = date('g:i A', strtotime(getEndDate()));
                                     while ($data = $result->fetch_assoc()) : ?>
                                         <div class="rounded ranking d-flex flex-row align-items-center m-2 px-5 py-3 <?php if ($rank == 1) echo 'bg-yellow';
                                                                                                                         else echo 'bg-gray' ?>">
-                                            <h4 class="my-0 me-3">#<?= $rank ?></h4>
+                                            <h4 class="my-0 me-3">#<?php escapeString($rank) ?></h4>
                                             <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img my-0 me-3" alt="candidate image">
                                             <div>
                                                 <h5 class=""><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></h5>

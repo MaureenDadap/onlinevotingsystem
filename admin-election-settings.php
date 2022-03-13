@@ -8,7 +8,8 @@ require_once 'utils/helpers.php';
 
 checkInactivity();
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+//Check if user is logged out or is not an admin
+if (!isset($_SESSION['user_type']) || (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin")) {
     header('location: index.php');
 }
 
