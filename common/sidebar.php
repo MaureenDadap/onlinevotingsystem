@@ -15,6 +15,10 @@
             <span class="bi-person"></span> Candidates</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link <?php if ($page === 'voters') echo ' active'; ?>" href="admin-voters.php">
+            <span class="bi-people"></span> Voters</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link <?php if ($page === 'settings') echo ' active'; ?>" href="admin-election-settings.php">
             <span class="bi-gear"></span> Election Settings</a>
     </li>

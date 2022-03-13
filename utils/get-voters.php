@@ -38,3 +38,27 @@ function getVoterByID($user_id)
 
     return $result;
 }
+
+function getVotersByProgram($program = "")
+{
+    $conn = Connect();
+    $program = $conn->escape_string($program);
+    $email_auth = 1;
+    $is_admin = 0;
+
+    if ($program === "") {
+        $query = "SELECT * FROM users WHERE is_admin = ? AND email_authenticated = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ii', $is_admin, $email_auth);
+    } else if ($program !== "") {
+        $query = "SELECT * FROM users WHERE program = ? AND email_authenticated = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('si', $program, $email_auth);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $conn->close();
+
+    return $result;
+}
