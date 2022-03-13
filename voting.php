@@ -86,18 +86,20 @@ $response = "";
                             <h3 class="text-center">President</h3>
                             <?php
                             if (getCandidates('President') && getCandidates('President')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("President");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="president" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="president" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -111,18 +113,20 @@ $response = "";
                             <h3 class="text-center">Vice President</h3>
                             <?php
                             if (getCandidates('Vice President') && getCandidates('Vice President')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Vice President");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="vice-president" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="vice-president" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -136,18 +140,20 @@ $response = "";
                             <h3 class="text-center">Secretary</h3>
                             <?php
                             if (getCandidates('Secretary') && getCandidates('Secretary')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Secretary");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="secretary" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="secretary" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -161,18 +167,20 @@ $response = "";
                             <h3 class="text-center">Treasurer</h3>
                             <?php
                             if (getCandidates('Treasurer') && getCandidates('Treasurer')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Treasurer");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="treasurer" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="treasurer" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -186,18 +194,20 @@ $response = "";
                             <h3 class="text-center">1st Year Representative</h3>
                             <?php
                             if (getCandidates('Representative 1') && getCandidates('Representative 1')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 1");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-1" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="representative-1" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -211,18 +221,20 @@ $response = "";
                             <h3 class="text-center">2nd Year Representative</h3>
                             <?php
                             if (getCandidates('Representative 2') && getCandidates('Representative 2')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 2");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-2" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="representative-2" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -236,18 +248,20 @@ $response = "";
                             <h3 class="text-center">3rd Year Representative</h3>
                             <?php
                             if (getCandidates('Representative 3') && getCandidates('Representative 3')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 3");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-3" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="representative-3" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>
@@ -260,18 +274,20 @@ $response = "";
                             <h3 class="text-center">4th Year Representative</h3>
                             <?php
                             if (getCandidates('Representative 4') && getCandidates('Representative 4')->num_rows > 0) : ?>
-                                <div class="d-flex justify-content-center mb-5">
+                                <div class="row justify-content-center mb-5">
                                     <?php
                                     $result = getCandidates("Representative 4");
                                     while ($data = $result->fetch_assoc()) :
                                     ?>
-                                        <div class="voting card m-3">
-                                            <img src="<?php escapeString($data['image_path']) ?>" class="h-75 candidate-img" alt="candidate-img">
-                                            <div class="form-check align-self-center text-center m-3">
-                                                <input class="form-check-input" type="radio" name="representative-4" value="<?php escapeString($data['id']) ?>" required>
-                                                <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
-                                                <br>
-                                                <span><?php escapeString($data['section']) ?></span>
+                                        <div class="col-xl-3 col-md-4 col-sm-6 ">
+                                            <div class="voting card m-3">
+                                                <img src="<?php escapeString($data['image_path']) ?>" class="candidate-img" alt="candidate-img">
+                                                <div class="form-check align-self-center text-center m-3">
+                                                    <input class="form-check-input" type="radio" name="representative-4" value="<?php escapeString($data['id']) ?>" required>
+                                                    <strong><label class="form-check-label"><?php escapeString($data['first_name'] . ' ' . $data['last_name']) ?></label></strong>
+                                                    <br>
+                                                    <span><?php escapeString($data['section']) ?></span>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endwhile ?>

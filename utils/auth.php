@@ -39,7 +39,7 @@ function deleteUserById(int $id, int $active = 0)
     $conn = Connect();
     $query = 'DELETE FROM users WHERE id =? and email_authenticated=?';
 
-    $stmt = $conn->prepare($$query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param('ii', $id, $active);
     return $stmt->execute();
 }
