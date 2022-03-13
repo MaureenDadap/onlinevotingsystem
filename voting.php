@@ -19,9 +19,6 @@ $date = date('M d, Y g:i A', time());
 $ballotID = generateMd5Hash();
 $response = "";
 
-// echo getStartDate();
-// echo getEndDate();
-// echo checkIfVoted($user_id, getStartDate(), getEndDate());
 ?>
 
 <!DOCTYPE html>

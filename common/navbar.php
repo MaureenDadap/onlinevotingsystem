@@ -31,9 +31,9 @@
                 ?>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <span href="" class="nav-link">
+                            <a href="profile.php" class="nav-link <?php if ($page === "profile") echo ' active' ?>">
                                 <span class="bi-person-circle"></span> Hi, <?php echo $_SESSION['username']; ?>
-                            </sp>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="candidates-list.php" class="nav-link <?php if ($page === "candidates") echo ' active' ?>">

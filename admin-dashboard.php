@@ -5,6 +5,7 @@ require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
 require_once 'utils/connection.php';
 require_once 'utils/get-election-times.php';
+require_once 'utils/get-voters.php';
 require_once 'utils/helpers-votes.php';
 require_once 'utils/auth.php';
 
