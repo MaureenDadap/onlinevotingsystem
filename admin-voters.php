@@ -85,11 +85,11 @@ if (isset($_POST['delete']) && isset($_POST['voter-id'])) {
         <div class="col-xl-10 col-lg-9 col-md-8">
             <main class="admin">
                 <div class="container">
-                    <h1>Election Candidates</h1>
+                    <h1>Election Voters</h1>
                     <hr>
                     <div class="admin card mt-3">
                         <form action="" class="d-flex align-items-center mb-4">
-                            <span class="me-3">Filter by position: </span>
+                            <span class="me-3">Filter by program: </span>
                             <div>
                                 <select class="form-select" id="program" name="program" onchange="window.location = 'admin-voters.php?program=' + this.value">
                                     <option value="">All</option>
