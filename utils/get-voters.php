@@ -4,10 +4,11 @@ function countVoters()
 {
     $totalVoters = 0;
     $is_admin = 0;
+    $e_auth = 1;
     $conn = Connect();
-    $query = "SELECT COUNT(*) as total FROM users WHERE is_admin=?";
+    $query = "SELECT COUNT(*) as total FROM users WHERE is_admin=? AND email_authenticated=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $is_admin);
+    $stmt->bind_param('ii', $is_admin, $e_auth);
 
     $stmt->execute();
 
