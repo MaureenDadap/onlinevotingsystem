@@ -14,7 +14,8 @@ $response = "";
 $candidateId = -1;
 $valid_file = "";
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin") {
+//Check if user is logged out or is not an admin
+if (!isset($_SESSION['user_type']) || (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "admin")) {
     header('location: index.php');
 }
 
@@ -131,7 +132,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
 
     $file_ext = explode('.', $filename);
     $file_ext_check = strtolower(end($file_ext));
-    
+
     $valid_file_ext = array('png', 'jpg', 'jpeg');
 
     if (in_array($file_ext_check, $valid_file_ext)) {
@@ -329,83 +330,82 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
         </div>
     </div>
     <!-- End Delete Candidate Modal -->
+        <div class="row">
+            <div class="col-xl-2 col-lg-3 col-md-4">
+                <?= sidebar("candidate") ?>
+            </div>
+            <div class="col-xl-10 col-lg-9 col-md-8">
+                <main class="admin">
+                    <div class="container">
+                        <h1>Election Candidates</h1>
+                        <hr>
+                        <button id="new-candidate-btn" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#add-candidate">
+                            <span class="bi-plus-lg"></span> Add New Candidate</button>
 
-    <div class="row">
-        <div class="col-xl-2 col-lg-3 col-md-4">
-            <?= sidebar("candidate") ?>
-        </div>
-        <div class="col-xl-10 col-lg-9 col-md-8">
-            <main class="admin">
-                <div class="container">
-                    <h1>Election Candidates</h1>
-                    <hr>
-                    <button id="new-candidate-btn" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#add-candidate">
-                        <span class="bi-plus-lg"></span> Add New Candidate</button>
-
-                    <div class="admin card mt-3">
-                        <form action="" class="d-flex align-items-center mb-4">
-                            <span class="me-3">Filter by position: </span>
-                            <div>
-                                <select class="form-select" name="position" onchange="window.location = 'admin-candidates.php?pos=' + this.value">
-                                    <option value="">All</option>
-                                    <option value="President" <?php if ($pos_selected == "President") echo 'selected="selected"' ?>>President</option>
-                                    <option value="Vice President" <?php if ($pos_selected == "Vice President") echo 'selected="selected"' ?>>Vice President</option>
-                                    <option value="Secretary" <?php if ($pos_selected == "Secretary") echo 'selected="selected"' ?>>Secretary</option>
-                                    <option value="Treasurer" <?php if ($pos_selected == "Treasurer") echo 'selected="selected"' ?>>Treasurer</option>
-                                    <option value="Representative 1" <?php if ($pos_selected == "Representative 1") echo 'selected="selected"' ?>>1st Year Representative</option>
-                                    <option value="Representative 2" <?php if ($pos_selected == "Representative 2") echo 'selected="selected"' ?>>2nd Year Representative</option>
-                                    <option value="Representative 3" <?php if ($pos_selected == "Representative 3") echo 'selected="selected"' ?>>3rd Year Representative</option>
-                                    <option value="Representative 4" <?php if ($pos_selected == "Representative 4") echo 'selected="selected"' ?>>4th Year Representative</option>
-                                </select>
-                            </div>
-                        </form>
-                        <?php
-                        if (getCandidates($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) : ?>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Picture</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Position</th>
-                                        <th scope="col">Section</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $result = getCandidates($pos_selected);
-                                    while ($data = $result->fetch_assoc()) : ?>
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
-                                            <tr>
-                                                <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
-                                                <td><?php escapeString($data['id']) ?></td>
-                                                <td><img src="<?php escapeString($data['image_path']) ?>" alt="" class="rounded"></td>
-                                                <td><?php escapeString($data['last_name']) ?></td>
-                                                <td><?php escapeString($data['first_name']) ?></td>
-                                                <td><?php escapeString($data['position']) ?></td>
-                                                <td><?php escapeString($data['section']) ?></td>
-                                                <td><?php escapeString($data['description']) ?></td>
-                                                <td>
-                                                    <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
-                                                    <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
-                                                </td>
-                                            </tr>
-                                        </form>
-                                    <?php endwhile ?>
-                                </tbody>
-                            </table>
-                        <?php else : ?>
-                            <h5 class="py-5 mx-auto">No candidates in the database.</h5>
-                        <?php endif ?>
+                        <div class="admin card mt-3">
+                            <form action="" class="d-flex align-items-center mb-4">
+                                <span class="me-3">Filter by position: </span>
+                                <div>
+                                    <select class="form-select" name="position" onchange="window.location = 'admin-candidates.php?pos=' + this.value">
+                                        <option value="">All</option>
+                                        <option value="President" <?php if ($pos_selected == "President") echo 'selected="selected"' ?>>President</option>
+                                        <option value="Vice President" <?php if ($pos_selected == "Vice President") echo 'selected="selected"' ?>>Vice President</option>
+                                        <option value="Secretary" <?php if ($pos_selected == "Secretary") echo 'selected="selected"' ?>>Secretary</option>
+                                        <option value="Treasurer" <?php if ($pos_selected == "Treasurer") echo 'selected="selected"' ?>>Treasurer</option>
+                                        <option value="Representative 1" <?php if ($pos_selected == "Representative 1") echo 'selected="selected"' ?>>1st Year Representative</option>
+                                        <option value="Representative 2" <?php if ($pos_selected == "Representative 2") echo 'selected="selected"' ?>>2nd Year Representative</option>
+                                        <option value="Representative 3" <?php if ($pos_selected == "Representative 3") echo 'selected="selected"' ?>>3rd Year Representative</option>
+                                        <option value="Representative 4" <?php if ($pos_selected == "Representative 4") echo 'selected="selected"' ?>>4th Year Representative</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <?php
+                            if (getCandidates($pos_selected) != false && getCandidates($pos_selected)->num_rows > 0) : ?>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Picture</th>
+                                            <th scope="col">Last Name</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Position</th>
+                                            <th scope="col">Section</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $result = getCandidates($pos_selected);
+                                        while ($data = $result->fetch_assoc()) : ?>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="user_token" value="<?php escapeString($_SESSION['session_token']) ?>">
+                                                <tr>
+                                                    <input type="hidden" name="candidate-id" value="<?php echo $data['id'] ?>">
+                                                    <td><?php escapeString($data['id']) ?></td>
+                                                    <td><img src="<?php escapeString($data['image_path']) ?>" alt="" class="rounded"></td>
+                                                    <td><?php escapeString($data['last_name']) ?></td>
+                                                    <td><?php escapeString($data['first_name']) ?></td>
+                                                    <td><?php escapeString($data['position']) ?></td>
+                                                    <td><?php escapeString($data['section']) ?></td>
+                                                    <td><?php escapeString($data['description']) ?></td>
+                                                    <td>
+                                                        <button class="btn btn-default" type="submit" name="submit" value="edit"><span class="bi-pencil-fill"></span></button>
+                                                        <button class="btn btn-danger" type="submit" name="submit" value="delete"><span class="bi-trash-fill"></span></button>
+                                                    </td>
+                                                </tr>
+                                            </form>
+                                        <?php endwhile ?>
+                                    </tbody>
+                                </table>
+                            <?php else : ?>
+                                <h5 class="py-5 mx-auto">No candidates in the database.</h5>
+                            <?php endif ?>
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
-    </div>
     <script src="js/bootstrap.bundle.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script>

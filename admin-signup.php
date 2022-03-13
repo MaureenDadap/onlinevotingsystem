@@ -10,6 +10,7 @@ if (isset($_SESSION['username']))
 
 $response = "";
 
+//if already logged in
 if (isset($_POST['submit'])) {
     $response = adminSignUp($response);
 }

@@ -13,9 +13,7 @@ $response = "";
 $ballotID = "";
 
 //Check if user is logged out or is not a student
-if (!isset($_SESSION['user_type']))
-    header('location: index.php');
-else if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student") {
+if (!isset($_SESSION['user_type']) || (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student")) {
     header('location: index.php');
 }
 

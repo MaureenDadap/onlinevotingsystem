@@ -7,9 +7,8 @@ require_once 'utils/auth.php';
 $response = "";
 
 if (isset($_GET['email']) && !empty($_GET['email']) and isset($_GET['activation_code']) && !empty($_GET['activation_code'])) {    
-    // TODO VALIDATE AND SANITIZE
-    $email = $_GET['email']; // Set email variable
-    $hash = $_GET['activation_code']; // Set hash variable
+    $email = filter_var($_GET['email'], FILTER_SANITIZE_EMAIL); // Set email variable
+    $hash = filter_var($_GET['activation_code'], FILTER_SANITIZE_FULL_SPECIAL_CHARS); // Set hash variable
 
     $user = findUnverifiedUser($hash, $email);
     // if user exists and activate the user successfully

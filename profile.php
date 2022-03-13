@@ -8,7 +8,8 @@ require_once 'utils/auth.php';
 
 checkInactivity();
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student") {
+//Check if user is logged out or is not a student
+if (!isset($_SESSION['user_type']) || (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student")) {
     header('location: index.php');
 }
 
