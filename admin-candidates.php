@@ -51,6 +51,13 @@ if (isset($_POST['add'])) {
     $image = basename($_FILES["image"]["name"]);
     $target_file = $image_dir . $image;
 
+    //Filter input
+    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_position = filter_var($position, FILTER_SANITIZE_STRING);
+    $new_section = filter_var($section, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_description = filter_var($description, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+
     //Validating Image File
     $filename = $image;
 
@@ -65,7 +72,7 @@ if (isset($_POST['add'])) {
 
             $query = "INSERT INTO candidates(id,last_name,first_name,position,section,description,image_path) values(?,?,?,?,?,?,?)";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param('issssss', $id, $last_name, $first_name, $position, $section, $description, $image_path);
+            $stmt->bind_param('issssss', $id, $new_last_name, $new_first_name, $new_position, $new_section, $new_description, $image_path);
             $stmt->execute();
             $conn->close();
             header('location: admin-candidates.php');
@@ -112,12 +119,19 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
     $image = basename($_FILES["image"]["name"]);
     $target_file = $image_dir . $image;
 
+    //Filter input
+    $new_first_name = filter_var($first_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_last_name = filter_var($last_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_position = filter_var($position, FILTER_SANITIZE_STRING);
+    $new_section = filter_var($section, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $new_description = filter_var($description, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+
     //Validating Image File
     $filename = $image;
 
     $file_ext = explode('.', $filename);
     $file_ext_check = strtolower(end($file_ext));
-
+    
     $valid_file_ext = array('png', 'jpg', 'jpeg');
 
     if (in_array($file_ext_check, $valid_file_ext)) {
@@ -125,7 +139,7 @@ if (isset($_POST['edit']) && isset($_POST['candidate-id'])) {
             $image_path = $target_file;
             $query = "UPDATE candidates SET last_name = ?, first_name = ?, position = ?, section = ?, description = ?, image_path = ? WHERE id = ?"; //dito pag pinalitan ko yung question mark ng static number pati pag inalis yung "i" at $id sa line 91 gumagana naman siya
             $stmt = $conn->prepare($query);
-            $stmt->bind_param('ssssssi', $last_name, $first_name, $position, $section, $description, $image_path, $candidateId);
+            $stmt->bind_param('ssssssi', $new_last_name, $new_first_name, $new_position, $new_section, $new_description, $image_path, $candidateId);
             $stmt->execute();
             $conn->close();
             header('location: admin-candidates.php');
