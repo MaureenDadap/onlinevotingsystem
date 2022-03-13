@@ -9,18 +9,19 @@ require_once 'utils/helpers.php';
 require_once 'utils/helpers-votes.php';
 
 checkInactivity();
+$response = "";
+$ballotID = "";
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student") {
+//Check if user is logged out or is not a student
+if (!isset($_SESSION['user_type']))
+    header('location: index.php');
+else if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== "student") {
     header('location: index.php');
 }
 
-if (!isset($_POST['submit']))
-    header('location: voting.php');
-
+//check if user id exists
 if (isset($_SESSION['id']))
     $user_id = $_SESSION['id'];
-
-$response = "";
 
 if (isset($_POST['vote'])) {
     // Check Anti-CSRF token
@@ -94,9 +95,17 @@ if (isset($_POST['vote'])) {
             $response = "captcha failed";
         }
     } else {
+        $presidentId = $presidentId;
         $response = "unchecked";
     }
 }
+
+//expecting to see values from voting page here, if it doesnt exist
+//then it must mean it was reloaded due to error
+//so if both dont exist then it did not come from voting and must
+//have been accessed directly by url 
+if (!isset($_POST['submit']) && !isset($_POST['vote']))
+    header('location: voting.php');
 
 function printCandidates(String $position)
 {
