@@ -92,6 +92,8 @@ function adminSignUp(string $response)
     $conn = Connect();
 
     $username = $conn->escape_string(trim($_POST['username']));
+    $firstName = $conn->escape_string($_POST['first-name']);
+    $lastName = $conn->escape_string($_POST['last-name']);
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $password2 = $conn->escape_string($_POST['password2']);
@@ -112,9 +114,9 @@ function adminSignUp(string $response)
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         $response = "invalid email";
     else {
-        $query = 'INSERT INTO users(username, email, password, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
+        $query = 'INSERT INTO users(username, email, password, first_name, last_name, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sssiss', $username, $email, $hashedPass, $is_admin, $hash, $authExpire);
+        $stmt->bind_param('sssssiss', $username, $email, $hashedPass, $firstName, $lastName, $is_admin, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
 
@@ -130,6 +132,10 @@ function studentSignUp(string $response)
     $conn = Connect();
 
     $username = $conn->escape_string(trim($_POST['username']));
+    $firstName = $conn->escape_string($_POST['first-name']);
+    $lastName = $conn->escape_string($_POST['last-name']);
+    $idYear = $conn->escape_string($_POST['id-year']);
+    $idNum = $conn->escape_string($_POST['id-num']);
     $email = $conn->escape_string($_POST['email']);
     $password = $conn->escape_string($_POST['password']);
     $program = $conn->escape_string($_POST['program']);
@@ -149,10 +155,13 @@ function studentSignUp(string $response)
         $response = "email exists";
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         $response = "invalid email";
+    else if (!preg_match("#[0-9]+#", $idYear) || !preg_match("#[0-9]+#", $idNum))
+        $response = "invalid student-id";
     else {
-        $query = 'INSERT INTO users(username, email, password, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?)';
+        $studentID = $idYear.'-'.$idNum;
+        $query = 'INSERT INTO users(username, email, password, first_name, last_name, student_id, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('ssssss', $username, $email, $hashedPass, $program, $hash, $authExpire);
+        $stmt->bind_param('sssssssss', $username, $email, $hashedPass, $firstName, $lastName, $studentID, $program, $hash, $authExpire);
         $stmt->execute();
         $conn->close();
 

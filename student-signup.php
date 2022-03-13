@@ -48,6 +48,18 @@ if (isset($_POST['submit'])) {
                                     <span class="input-group-text bi-person-fill"></span>
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
+                                <label for="name" class="form-label">Full Name</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text bi-person-fill"></span>
+                                    <input type="text" name="first-name" placeholder="First name" class="form-control" required>
+                                    <input type="text" name="last-name" placeholder="Last name" class="form-control" required>
+                                </div>
+                                <label for="id" class="form-label">Student ID</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" name="id-year" class="form-control" placeholder="2018" required>
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" name="id-num" class="form-control" placeholder="000001" required>
+                                </div>
                                 <label for="program" class="form-label">Program</label>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text bi-easel2-fill"></span>
@@ -84,6 +96,12 @@ if (isset($_POST['submit'])) {
                                 if ($response === "invalid email") : ?>
                                     <div class="alert alert-danger" role="alert">
                                         Email is invalid.
+                                    </div>
+                                <?php
+                                endif;
+                                if ($response === "invalid student-id") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Student ID is invalid.
                                     </div>
                                 <?php
                                 endif;
