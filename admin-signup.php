@@ -81,6 +81,12 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 <?php
                                 endif;
+                                if ($response === "student email") : ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Student email is not allowed.
+                                    </div>
+                                <?php
+                                endif;
                                 if ($response === "password mismatch") : ?>
                                     <div class="alert alert-danger" role="alert">
                                         Pasword does not match.

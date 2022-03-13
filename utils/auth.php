@@ -113,6 +113,8 @@ function adminSignUp(string $response)
         $response = "email exists";
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         $response = "invalid email";
+    else if (preg_match("/@students./", $email))
+        $response = "student email";
     else {
         $query = 'INSERT INTO users(username, email, password, first_name, last_name, is_admin, activation_code, activation_expiry) VALUES(?,?,?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
@@ -158,7 +160,7 @@ function studentSignUp(string $response)
     else if (!preg_match("#[0-9]+#", $idYear) || !preg_match("#[0-9]+#", $idNum))
         $response = "invalid student-id";
     else {
-        $studentID = $idYear.'-'.$idNum;
+        $studentID = $idYear . '-' . $idNum;
         $query = 'INSERT INTO users(username, email, password, first_name, last_name, student_id, program, activation_code, activation_expiry) VALUES(?,?,?,?,?,?,?,?,?)';
         $stmt = $conn->prepare($query);
         $stmt->bind_param('sssssssss', $username, $email, $hashedPass, $firstName, $lastName, $studentID, $program, $hash, $authExpire);
