@@ -4,12 +4,12 @@ require_once('common/components.php');
 include('config/website_info.php');
 require_once 'utils/auth.php';
 
+//if already logged in
 if (isset($_SESSION['username']))
     header('location: index.php');
 
 $response = "";
 
-//if already logged in
 if (isset($_POST['submit'])) {
     $response = studentSignUp($response);
 }

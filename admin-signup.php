@@ -5,12 +5,12 @@ require_once 'utils/auth.php';
 require_once 'config/website_info.php';
 require_once 'utils/helpers.php';
 
+//if already logged in
 if (isset($_SESSION['username']))
     header('location: index.php');
 
 $response = "";
 
-//if already logged in
 if (isset($_POST['submit'])) {
     $response = adminSignUp($response);
 }
