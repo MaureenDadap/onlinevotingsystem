@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Manila');
 require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-election-times.php';

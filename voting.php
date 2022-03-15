@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Manila');
 require_once('common/components.php');
 require_once 'config/website_info.php';
 require_once 'utils/get-candidates.php';
@@ -13,9 +14,10 @@ checkInactivity();
 if (isset($_SESSION['id']))
     $user_id = $_SESSION['id'];
 
-$startDate = date('M d, Y g:i A', strtotime(getStartDate()));
-$endDate = date('M d, Y g:i A', strtotime(getEndDate()));
+$startDate = strtotime(getStartDate());
+$endDate = strtotime(getEndDate());
 $date = date('M d, Y g:i A', time());
+$date = strtotime($date);
 $ballotID = generateMd5Hash();
 $response = "";
 
@@ -313,7 +315,7 @@ $response = "";
                     <div class="row align-items-center">
                         <div class="col-md-7">
                             <h1>Elections are closed.</h1>
-                            <h5>Open from <?php escapeString($startDate) ?> - <?php escapeString($endDate) ?></h5>
+                            <h5>Open from <?php escapeString(date('M d, Y g:i A',$startDate)) ?> - <?php escapeString(date('M d, Y g:i A',$endDate)) ?></h5>
                         </div>
                         <div class="col-md-5">
                             <img src="images/sammy-17.png" alt="error" class="w-100">
