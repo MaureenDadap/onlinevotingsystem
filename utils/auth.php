@@ -157,7 +157,7 @@ function studentSignUp(string $response)
         $response = "email exists";
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         $response = "invalid email";
-    else if (!preg_match("#[0-9]+#", $idYear) || !preg_match("#[0-9]+#", $idNum))
+    else if (!preg_match("#[0-9]#", $idYear) || !preg_match("#[0-9]#", $idNum))
         $response = "invalid student-id";
     else {
         $studentID = $idYear . '-' . $idNum;
